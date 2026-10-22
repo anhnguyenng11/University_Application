@@ -33,41 +33,30 @@ class Student:
         Returns the list of subjects the student is enrolled in.
         
         """
-        return self.subject
-    
-    def enrol_subj(self):
-        if len(self.subjects) >= 4:
-            print("You have already enrolled in 4 subjects.")
-        while len(self.subjects) < 4:
-            k = len(self.subjects)
-            random_subject = random.randint(1, 999)
-            self.subjects.append(random_subject)
-            
-            print(f"Subject {k+1} enrolled: {random_subject}")
-            
-    def marks(self):
-        random_mark = random.randint(25, 100) # mark as generated >=25 and <=100
-        self.marks = random_mark
-        """ 
-        how to associate the mark with the subject????
-        """
+        return self.subjects
+
+class Subject:
+    def __init__(self):
+        self.enrol_sub = random_subject = random.randint(1, 999)
+        self.marks = random.randint(25, 100) # mark as generated >=25 and <=100
+        self.grade = self.defgrade()
         
-    def grade(self):
+
+    def defgrade(self):
             
-        if self.mark >= 85:
-            grade = 'HD'
-        elif self.mark >= 75:
-            grade = 'D'
-        elif self.mark >= 65:
-            grade = 'C'
-        elif self.mark >= 50:
-            grade = 'P'
+        if self.marks >= 85:
+            defgrade = 'HD'
+        elif self.marks >= 75:
+            defgrade = 'D'
+        elif self.marks >= 65:
+            defgrade = 'C'
+        elif self.marks >= 50:
+            defgrade = 'P'
         else:
-            grade = 'Z'
+            defgrade = 'Z'
+        
+        return defgrade
          
 ##testing
-student1 = Student(1,2,3,4)
-student1.enrol_subj()
-
-
-
+test = Subject()
+print(test.enrol_sub, test.marks, test.grade)
