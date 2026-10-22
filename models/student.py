@@ -27,4 +27,38 @@ class Student:
         """
         return self.student_id
 
-    # TODO: Implement additional methods for the Student class as needed, such as getters and setters for name, email, and password.
+class Subject:
+    def __init__(self, subjectid, mark, grade):
+        """
+        subjectid = unique, randomly generated 3-digit, from 001 to 999
+        mark = random generated >=25 and <=100
+        grade = depends on mark = ?????
+        """
+        self.subjectid = subjectid
+        self.mark = mark
+        self.grade = grade
+        
+        
+    random_subject = random.randint(1, 999) ## assigned when enrolled --- enrol function? 
+    subjectid = random_subject
+    
+    random_mark = random.randint(25, 100) # mark as generated >=25 and <=100
+    mark = random_mark
+    
+    if mark >= 85:
+        grade = 'HD'
+    elif mark >= 75:
+        grade = 'D'
+    elif mark >= 65:
+        grade = 'C'
+    elif mark >= 50:
+        grade = 'P'
+    else:
+        grade = 'Z'
+
+
+
+
+##test
+print(f"[  Subject::{Subject.subjectid} -- Mark = {Subject.mark} -- grade =   {Subject.grade} ]")
+print(Student.student_id) 
