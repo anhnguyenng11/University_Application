@@ -2,6 +2,7 @@
 Student Class Module.
 This module defines the Student class, which represents a student in the university system.
 """
+import random 
 
 class Student:
     def __init__(self, student_id, name, email, password):
@@ -17,7 +18,7 @@ class Student:
         self.name = name
         self.email = email
         self.password = password
-        self.subject = []  
+        self.subjects = []  
 
     def get_student_id(self):
         """
@@ -26,39 +27,47 @@ class Student:
         :return: Student ID
         """
         return self.student_id
-
-class Subject:
-    def __init__(self, subjectid, mark, grade):
-        """
-        subjectid = unique, randomly generated 3-digit, from 001 to 999
-        mark = random generated >=25 and <=100
-        grade = depends on mark = ?????
-        """
-        self.subjectid = subjectid
-        self.mark = mark
-        self.grade = grade
-        
-        
-    random_subject = random.randint(1, 999) ## assigned when enrolled --- enrol function? 
-    subjectid = random_subject
     
-    random_mark = random.randint(25, 100) # mark as generated >=25 and <=100
-    mark = random_mark
+    def get_subjects(self):
+        """
+        Returns the list of subjects the student is enrolled in.
+        
+        """
+        return self.subject
     
-    if mark >= 85:
-        grade = 'HD'
-    elif mark >= 75:
-        grade = 'D'
-    elif mark >= 65:
-        grade = 'C'
-    elif mark >= 50:
-        grade = 'P'
-    else:
-        grade = 'Z'
+    def enrol_subj(self):
+        if len(self.subjects) >= 4:
+            print("You have already enrolled in 4 subjects.")
+        while len(self.subjects) < 4:
+            k = len(self.subjects)
+            random_subject = random.randint(1, 999)
+            self.subjects.append(random_subject)
+            
+            print(f"Subject {k+1} enrolled: {random_subject}")
+            
+    def mark(self):
+        random_mark = random.randint(25, 100) # mark as generated >=25 and <=100
+        self.mark = random_mark
+        """ 
+        how to associate the mark with the subject????
+        """
+        
+    def grade(self):
+            
+        if self.mark >= 85:
+            grade = 'HD'
+        elif self.mark >= 75:
+            grade = 'D'
+        elif self.mark >= 65:
+            grade = 'C'
+        elif self.mark >= 50:
+            grade = 'P'
+        else:
+            grade = 'Z'
+         
+##testing
+student1 = Student(1,2,3,4)
+student1.enrol_subj()
 
 
 
-
-##test
-print(f"[  Subject::{Subject.subjectid} -- Mark = {Subject.mark} -- grade =   {Subject.grade} ]")
-print(Student.student_id) 
