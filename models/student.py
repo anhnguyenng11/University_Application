@@ -45,9 +45,9 @@ class Student:
             
             print(f"Subject {k+1} enrolled: {random_subject}")
             
-    def mark(self):
+    def marks(self):
         random_mark = random.randint(25, 100) # mark as generated >=25 and <=100
-        self.mark = random_mark
+        self.marks = random_mark
         """ 
         how to associate the mark with the subject????
         """
