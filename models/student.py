@@ -17,6 +17,7 @@ class Student:
         self.name = name
         self.email = email
         self.password = password
+        self.subject = []  
 
     def get_student_id(self):
         """
