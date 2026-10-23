@@ -35,5 +35,6 @@ def student_subsystem():
     print("Student Subsystem is under construction.")
 
 if __name__ == "__main__":
-    student_db = Database().read_students(DATABASE_NAME)
+    student_db = Database().read_students_from_database(DATABASE_NAME)
+    print(f"Loaded {student_db[0]} student records from the database.")
     main_system()
