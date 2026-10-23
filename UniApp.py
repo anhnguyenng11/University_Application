@@ -1,13 +1,13 @@
 """
 Command Line Interface (CLIUniApp) Main Launcher. 
+
 This module is the entry point for the interactive terminal application. 
 It runs the main CLI loop, presenting the top-level navigation menus for the Admin Subsystem, Student Subsystem, and System Exit.
 
 """
 
 from models.database import Database
-
-database_name = "students.data"
+from utils.constants import DATABASE_NAME
 
 def main_system():
     """
@@ -35,5 +35,5 @@ def student_subsystem():
     print("Student Subsystem is under construction.")
 
 if __name__ == "__main__":
-    student_db = Database().read_students(database_name)
+    student_db = Database().read_students(DATABASE_NAME)
     main_system()
