@@ -2,6 +2,7 @@
 Student Class Module.
 This module defines the Student class, which represents a student in the university system.
 """
+import random 
 
 class Student:
     def __init__(self, student_id, name, email, password):
