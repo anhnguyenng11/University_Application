@@ -1,31 +1,27 @@
-import random
-from utils.constants import HD_GRADE_THRESHOLD, D_GRADE_THRESHOLD, C_GRADE_THRESHOLD, P_GRADE_THRESHOLD
-
 class Subject:
-    def __init__(self):
-        """
-        Initializes a new Subject instance with a random enrollment subject, marks, and grade.
-        """
-        self.enrol_sub = random_subject = random.randint(1, 999)
-        self.marks = random.randint(25, 100) # mark as generated >=25 and <=100
-        self.grade = self.defgrade()
-        
+    def __init__(self, subject_id: str, mark: int) -> None:
+        if not (subject_id.isdigit() and len(subject_id) == 3
+                and 1 <= int(subject_id) <= 999):
+            raise ValueError("Invalid subject ID.")
 
-    def defgrade(self):
-            
-        if self.marks >= HD_GRADE_THRESHOLD:
-            defgrade = 'HD'
-        elif self.marks >= D_GRADE_THRESHOLD:
-            defgrade = 'D'
-        elif self.marks >= C_GRADE_THRESHOLD:
-            defgrade = 'C'
-        elif self.marks >= P_GRADE_THRESHOLD:
-            defgrade = 'P'
+        if not isinstance(mark, int) or isinstance(mark, bool) or not 25 <= mark <= 100:
+            raise ValueError("Mark must be between 25 and 100.")
+
+        self.subject_id = subject_id
+        self.mark = mark
+        self.grade = self.calculate_grade()
+
+    def calculate_grade(self) -> str:
+        if self.mark < 50:
+            return "Z"
+        elif self.mark < 65:
+            return "P"
+        elif self.mark < 75:
+            return "C"
+        elif self.mark < 85:
+            return "D"
         else:
-            defgrade = 'Z'
-        
-        return defgrade
-         
-##testing
-test = Subject()
-print(test.enrol_sub, test.marks, test.grade)
+            return "HD"
+
+    def get_pass_fail_status(self) -> str:
+        return "PASS" if self.mark >= 50 else "FAIL"
