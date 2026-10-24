@@ -17,6 +17,6 @@ class Subject:
 
     def get_pass_fail_status(self) -> str:
         if self.mark >= 50:
-            return True
+            return "PASS"
         else:
-            return False
+            return "FAIL"

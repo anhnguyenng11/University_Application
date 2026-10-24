@@ -52,9 +52,11 @@ class Student:
     def change_password(self, new_password: str) -> None:
         self.password = new_password
 
-    def average_mark(self) -> float | None:
+
+
+    def get_overall_status(self) -> tuple[float | None, str, str]:
         if len(self.subjects) == 0:
-            return None
+            return None, "N/A", "N/A"
 
         total_mark = 0
 
@@ -62,15 +64,25 @@ class Student:
             total_mark += subject.mark
 
         average = total_mark / len(self.subjects)
-        return average
 
-    def get_overall_status(self) -> str:
-        if len(self.subjects) < 4:
-            return "PENDING"
-
-        average = self.average_mark()
-
-        if average >= 50:
-            return "PASS"
+        # Calculate overall grade
+        if average < 50:
+            grade = "Z"
+        elif average < 65:
+            grade = "P"
+        elif average < 75:
+            grade = "C"
+        elif average < 85:
+            grade = "D"
         else:
-            return "FAIL"
+            grade = "HD"
+
+        # Calculate overall status
+        if average >= 50:
+            status = "PASS"
+        else:
+            status = "FAIL"
+
+        return average, status, grade
+
+

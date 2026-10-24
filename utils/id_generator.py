@@ -17,10 +17,7 @@ class IDGenerator:
             if student_id not in existing_ids:
                 return student_id
 
-            number += 1
-
-            if number > 99999999:
-                number = 1
+            number = (number % 99999999) + 1
 
             if number == start_number:
                 raise ValueError("No available student IDs.")
@@ -39,10 +36,7 @@ class IDGenerator:
             if subject_id not in existing_ids:
                 return subject_id
 
-            number += 1
-
-            if number > 99999:
-                number = 1
+            number = (number % 99999) + 1
 
             if number == start_number:
                 raise ValueError("No available subject IDs.")

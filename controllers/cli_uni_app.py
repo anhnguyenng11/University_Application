@@ -1,10 +1,19 @@
 
 from views.cli_view import CLIView
+from controllers.student_controller import StudentController
+from controllers.admin_controller import AdminController
 
 
 class CLIUniApp:
-    def __init__(self, view: CLIView) -> None:
+    def __init__(
+        self,
+        view: CLIView,
+        student_controller: StudentController,
+        admin_controller: AdminController
+    ) -> None:
         self.view = view
+        self.student_controller = student_controller
+        self.admin_controller = admin_controller
 
     def start(self) -> None:
         self.show_main_menu()
@@ -13,14 +22,16 @@ class CLIUniApp:
         while True:
             choice = self.view.show_main_menu()
 
-            if choice == "A":
-                self.view.show_message("Admin login is not implemented yet.")
+            match choice:
+                case "A":
+                    self.admin_controller.start()
 
-            elif choice == "S":
-                self.view.show_message("Student menu is not implemented yet.")
+                case "S":
+                    self.student_controller.start()
 
-            elif choice == "X":
-                self.view.show_message("Exiting University System.")
-                return
-            else:
-                self.view.show_message("Invalid option. Please try again.")
+                case "X":
+                    self.view.show_message("Exiting University System.")
+                    return
+
+                case _:
+                    self.view.show_message("Invalid option. Please try again.")
