@@ -1,8 +1,6 @@
-
-from views.student_view import StudentView
+from views.cli.student_view import StudentView
 from models.student import Student
 from models.student_service import StudentService
-
 
 class StudentController:
     def __init__(
@@ -14,9 +12,6 @@ class StudentController:
         self.student_service = student_service
 
     def start(self) -> None:
-        self.show_student_menu()
-
-    def show_student_menu(self) -> None:
         while True:
             choice = self.view.show_student_menu()
 

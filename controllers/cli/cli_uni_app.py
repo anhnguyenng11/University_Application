@@ -1,7 +1,7 @@
 
-from views.cli_view import CLIView
-from controllers.student_controller import StudentController
-from controllers.admin_controller import AdminController
+from views.cli.cli_view import CLIView
+from controllers.cli.student_controller import StudentController
+from controllers.cli.admin_controller import AdminController
 
 
 class CLIUniApp:
@@ -16,9 +16,6 @@ class CLIUniApp:
         self.admin_controller = admin_controller
 
     def start(self) -> None:
-        self.show_main_menu()
-
-    def show_main_menu(self) -> None:
         while True:
             choice = self.view.show_main_menu()
 
@@ -35,3 +32,4 @@ class CLIUniApp:
 
                 case _:
                     self.view.show_message("Invalid option. Please try again.")
+

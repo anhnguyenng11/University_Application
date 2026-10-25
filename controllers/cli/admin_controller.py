@@ -1,5 +1,5 @@
 
-from views.cli_view import CLIView
+from views.cli.cli_view import CLIView
 
 
 class AdminController:

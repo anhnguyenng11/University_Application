@@ -47,6 +47,13 @@
                     "mark": 42
                 }
             ]
+        },
+        {
+            "student_id": "90153714",
+            "name": "hello",
+            "email": "hello@student.uts.edu.au",
+            "password": "Password#3",
+            "subjects": []
         }
     ]
 }
