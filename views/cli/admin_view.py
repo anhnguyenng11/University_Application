@@ -1,4 +1,4 @@
-from views.base_cli_view import BaseCLIView
+from views.cli.base_cli_view import BaseCLIView
 
 
 class AdminView(BaseCLIView):

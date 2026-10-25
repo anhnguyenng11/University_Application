@@ -1,0 +1,95 @@
+
+from tkinter import ttk
+from views.gui.base_gui_view import BaseGUIView
+
+
+class LoginView(BaseGUIView):
+    def __init__(self, parent, on_login, on_register, on_back):
+        super().__init__(parent)
+
+        style = ttk.Style()
+        style.configure(
+            "Login.TButton",
+            font=("", 18)
+        )
+        style.configure(
+            "Login.TLabel",
+            font=("", 18)
+        )
+
+        content = ttk.Frame(self)
+        content.pack(expand=True)
+
+        # Title
+        ttk.Label(
+            content,
+            text="Student Login",
+            font=("", 30, "bold")
+        ).pack()
+
+        ttk.Frame(content, height=50).pack()
+
+        # Input Frame
+        input_frame = ttk.Frame(content)
+        input_frame.pack(fill="x")
+
+        
+        # Email
+        ttk.Label(
+            input_frame,
+            text="Email",
+            style="Login.TLabel"
+        ).pack(anchor="w", pady=5)
+
+        email_entry = ttk.Entry(
+            input_frame,
+            font=("", 18)
+        )
+        email_entry.pack(fill="x")
+
+        ttk.Frame(input_frame, height=25).pack()
+
+        # Password
+        ttk.Label(
+            input_frame,
+            text="Password",
+            style="Login.TLabel"
+        ).pack(anchor="w", pady=5)
+
+        password_entry = ttk.Entry(
+            input_frame,
+            font=("", 18),
+            show="*"
+        )
+        password_entry.pack(fill="x")
+
+
+        ttk.Frame(content, height=40).pack()
+
+        # Buttons
+        button_frame = ttk.Frame(content, width=450, height=235)
+        button_frame.pack()
+
+        ttk.Button(
+            button_frame,
+            text="Login",
+            command=lambda: on_login(
+                email_entry.get(),
+                password_entry.get()
+            ),
+            style="Login.TButton"
+        ).place(x=0, y=0, width=450, height=65)
+
+        ttk.Button(
+            button_frame,
+            text="Register",
+            command=on_register,
+            style="Login.TButton"
+        ).place(x=0, y=85, width=450, height=65)
+
+        ttk.Button(
+            button_frame,
+            text="Back",
+            command=on_back,
+            style="Login.TButton"
+        ).place(x=0, y=170, width=450, height=65)
