@@ -1,10 +1,10 @@
 {
     "students": [
         {
-            "student_id": "10571753",
-            "name": "Nguyen Anh Nguyen",
-            "email": "nguyen.nguyen@student.uts.edu.au",
-            "password": "Password#3",
+            "student_id": "10575223",
+            "name": "John Smith",
+            "email": "johnsmith@university.com",
+            "password": "Helloworld123",
             "subjects": [
                 {
                     "subject_id": "80109",
@@ -25,10 +25,10 @@
             ]
         },
         {
-            "student_id": "42120265",
+            "student_id": "42124465",
             "name": "Joseph Stalin",
-            "email": "joseph.stalin@student.uts.edu.au",
-            "password": "Password#3",
+            "email": "joseph.stalin@university.com",
+            "password": "Password333",
             "subjects": [
                 {
                     "subject_id": "70848",
