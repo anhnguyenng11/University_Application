@@ -1,4 +1,3 @@
-
 from models.file_handlers.database import Database
 from models.student import Student
 from models.subject import Subject

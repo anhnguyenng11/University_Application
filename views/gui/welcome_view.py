@@ -4,7 +4,7 @@ from views.gui.base_gui_view import BaseGUIView
 
 
 class WelcomeView(BaseGUIView):
-    def __init__(self, parent, on_student):
+    def __init__(self, parent, on_student, on_admin):
         super().__init__(parent)
 
         style = ttk.Style()
@@ -52,6 +52,6 @@ class WelcomeView(BaseGUIView):
         ttk.Button(
             button_frame,
             text="Admin",
-            state="disabled",
+            command=on_admin,
             style="Welcome.TButton"
         ).place(x=0, y=85, width=450, height=65)

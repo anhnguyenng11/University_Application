@@ -43,7 +43,7 @@ class StudentMainView(ttk.Frame):
         body.pack(fill="both", expand=True)
 
         # Sidebar
-        sidebar = ttk.Frame(body, width=275, padding=10)
+        sidebar = ttk.Frame(body, width=250, padding=10)
         sidebar.pack(side="left", fill="y")
         sidebar.pack_propagate(False)
 

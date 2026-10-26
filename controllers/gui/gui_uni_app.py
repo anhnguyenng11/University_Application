@@ -2,9 +2,10 @@ from views.gui.welcome_view import WelcomeView
 from views.gui.error_view import ErrorView
 
 from controllers.gui.gui_student_controller import GUIStudentController
+from controllers.gui.gui_admin_controller import GUIAdminController
 
 class GUIUniApp:
-    def __init__(self, root, student_service):
+    def __init__(self, root, student_service, admin_service):
         self.root = root
         self.current_view = None
 
@@ -13,6 +14,15 @@ class GUIUniApp:
         self.student_controller = GUIStudentController(
             root=root,
             student_service=student_service,
+            show_view=self.show_view,
+            on_exit=self.show_welcome,
+            on_error=self.error_view.show_error,
+            on_success=self.error_view.show_success
+        )
+        
+        self.admin_controller = GUIAdminController(
+            root=root,
+            admin_service=admin_service,
             show_view=self.show_view,
             on_exit=self.show_welcome,
             on_error=self.error_view.show_error,
@@ -31,6 +41,7 @@ class GUIUniApp:
     def show_welcome(self):
         view = WelcomeView(
             self.root,
-            on_student=self.student_controller.start
+            on_student=self.student_controller.start,
+            on_admin=self.admin_controller.start
         )
         self.show_view(view)

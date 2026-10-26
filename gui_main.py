@@ -2,8 +2,12 @@
 import tkinter as tk
 
 from controllers.gui.gui_uni_app import GUIUniApp
+
 from models.file_handlers.student_data_file import StudentDataFile
 from models.student_service import StudentService
+
+from models.file_handlers.admin_data_file import AdminDataFile
+from models.admin_service import AdminService
 
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 700
@@ -21,10 +25,14 @@ def main():
 
     root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{x}+{y}")
     root.resizable(False, False)
-
+    
     student_data_file = StudentDataFile()
     student_service = StudentService(student_data_file)
-    app = GUIUniApp(root, student_service)
+
+    admin_data_file = AdminDataFile()
+    admin_service = AdminService(admin_data_file, student_data_file)
+
+    app = GUIUniApp(root, student_service, admin_service)
 
     root.mainloop()
 

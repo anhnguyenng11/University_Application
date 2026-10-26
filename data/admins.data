@@ -17,6 +17,12 @@
             "name": "Ariana Grande",
             "email": "arianagrande@university.com",
             "password": "Admin@123"
+        },
+                {
+            "admin_id": "11111111",
+            "name": "Admin",
+            "email": "a",
+            "password": "a"
         }
     ]
 }

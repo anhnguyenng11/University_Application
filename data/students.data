@@ -8,15 +8,15 @@
             "subjects": [
                 {
                     "subject_id": "93109",
-                    "mark": 70
+                    "mark": 40
                 },
                 {
                     "subject_id": "89613",
-                    "mark": 80
+                    "mark": 32
                 },
                 {
                     "subject_id": "97195",
-                    "mark": 67
+                    "mark": 55
                 },
                 {
                     "subject_id": "313",
@@ -111,6 +111,789 @@
                     "mark": 80
                 }
             ]
+        },
+        {
+            "student_id": "50000002",
+            "name": "Brian Wilson",
+            "email": "brian.wilson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "124",
+                    "mark": 45
+                },
+                {
+                    "subject_id": "125",
+                    "mark": 32
+                },
+                {
+                    "subject_id": "126",
+                    "mark": 28
+                },
+                {
+                    "subject_id": "127",
+                    "mark": 49
+                }
+            ]
+        },
+        {
+            "student_id": "50000003",
+            "name": "Charlotte Miller",
+            "email": "charlotte.miller@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "128",
+                    "mark": 75
+                },
+                {
+                    "subject_id": "129",
+                    "mark": 77
+                },
+                {
+                    "subject_id": "130",
+                    "mark": 84
+                }
+            ]
+        },
+        {
+            "student_id": "50000004",
+            "name": "Daniel Garcia",
+            "email": "daniel.garcia@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "131",
+                    "mark": 54
+                },
+                {
+                    "subject_id": "132",
+                    "mark": 61
+                }
+            ]
+        },
+        {
+            "student_id": "50000005",
+            "name": "Emma Thompson",
+            "email": "emma.thompson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "133",
+                    "mark": 92
+                }
+            ]
+        },
+        {
+            "student_id": "50000006",
+            "name": "Felix Nguyen",
+            "email": "felix.nguyen@university.com",
+            "password": "Welcome123",
+            "subjects": []
+        },
+        {
+            "student_id": "50000007",
+            "name": "Grace Anderson",
+            "email": "grace.anderson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "134",
+                    "mark": 66
+                },
+                {
+                    "subject_id": "135",
+                    "mark": 71
+                },
+                {
+                    "subject_id": "136",
+                    "mark": 73
+                },
+                {
+                    "subject_id": "137",
+                    "mark": 69
+                }
+            ]
+        },
+        {
+            "student_id": "50000008",
+            "name": "Henry Davis",
+            "email": "henry.davis@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "138",
+                    "mark": 39
+                },
+                {
+                    "subject_id": "139",
+                    "mark": 45
+                },
+                {
+                    "subject_id": "140",
+                    "mark": 50
+                }
+            ]
+        },
+        {
+            "student_id": "50000009",
+            "name": "Isabella Brown",
+            "email": "isabella.brown@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "141",
+                    "mark": 100
+                },
+                {
+                    "subject_id": "142",
+                    "mark": 92
+                },
+                {
+                    "subject_id": "143",
+                    "mark": 87
+                },
+                {
+                    "subject_id": "144",
+                    "mark": 95
+                }
+            ]
+        },
+        {
+            "student_id": "50000010",
+            "name": "Jack Robinson",
+            "email": "jack.robinson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "145",
+                    "mark": 27
+                },
+                {
+                    "subject_id": "146",
+                    "mark": 46
+                }
+            ]
+        },
+        {
+            "student_id": "50000011",
+            "name": "Katherine Lee",
+            "email": "katherine.lee@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "147",
+                    "mark": 63
+                },
+                {
+                    "subject_id": "148",
+                    "mark": 64
+                },
+                {
+                    "subject_id": "149",
+                    "mark": 57
+                },
+                {
+                    "subject_id": "150",
+                    "mark": 68
+                }
+            ]
+        },
+        {
+            "student_id": "50000012",
+            "name": "Liam Walker",
+            "email": "liam.walker@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "151",
+                    "mark": 81
+                },
+                {
+                    "subject_id": "152",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "153",
+                    "mark": 78
+                },
+                {
+                    "subject_id": "154",
+                    "mark": 91
+                }
+            ]
+        },
+        {
+            "student_id": "50000013",
+            "name": "Mia Harris",
+            "email": "mia.harris@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "155",
+                    "mark": 43
+                },
+                {
+                    "subject_id": "156",
+                    "mark": 49
+                },
+                {
+                    "subject_id": "157",
+                    "mark": 47
+                }
+            ]
+        },
+        {
+            "student_id": "50000014",
+            "name": "Noah Clark",
+            "email": "noah.clark@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "158",
+                    "mark": 52
+                },
+                {
+                    "subject_id": "159",
+                    "mark": 58
+                }
+            ]
+        },
+        {
+            "student_id": "50000015",
+            "name": "Olivia Lewis",
+            "email": "olivia.lewis@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "160",
+                    "mark": 73
+                }
+            ]
+        },
+        {
+            "student_id": "50000016",
+            "name": "Peter Martin",
+            "email": "peter.martin@university.com",
+            "password": "Welcome123",
+            "subjects": []
+        },
+        {
+            "student_id": "50000017",
+            "name": "Quinn Young",
+            "email": "quinn.young@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "161",
+                    "mark": 35
+                },
+                {
+                    "subject_id": "162",
+                    "mark": 38
+                },
+                {
+                    "subject_id": "163",
+                    "mark": 42
+                },
+                {
+                    "subject_id": "164",
+                    "mark": 47
+                }
+            ]
+        },
+        {
+            "student_id": "50000018",
+            "name": "Rachel King",
+            "email": "rachel.king@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "165",
+                    "mark": 86
+                },
+                {
+                    "subject_id": "166",
+                    "mark": 90
+                },
+                {
+                    "subject_id": "167",
+                    "mark": 92
+                }
+            ]
+        },
+        {
+            "student_id": "50000019",
+            "name": "Samuel Wright",
+            "email": "samuel.wright@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "168",
+                    "mark": 49
+                },
+                {
+                    "subject_id": "169",
+                    "mark": 52
+                },
+                {
+                    "subject_id": "170",
+                    "mark": 44
+                },
+                {
+                    "subject_id": "171",
+                    "mark": 51
+                }
+            ]
+        },
+        {
+            "student_id": "50000020",
+            "name": "Tara Scott",
+            "email": "tara.scott@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "172",
+                    "mark": 95
+                },
+                {
+                    "subject_id": "173",
+                    "mark": 98
+                }
+            ]
+        },
+        {
+            "student_id": "50000021",
+            "name": "Uma Patel",
+            "email": "uma.patel@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "174",
+                    "mark": 91
+                },
+                {
+                    "subject_id": "175",
+                    "mark": 85
+                },
+                {
+                    "subject_id": "176",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "177",
+                    "mark": 89
+                }
+            ]
+        },
+        {
+            "student_id": "50000022",
+            "name": "Victor Hall",
+            "email": "victor.hall@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "178",
+                    "mark": 45
+                },
+                {
+                    "subject_id": "179",
+                    "mark": 32
+                },
+                {
+                    "subject_id": "180",
+                    "mark": 28
+                },
+                {
+                    "subject_id": "181",
+                    "mark": 49
+                }
+            ]
+        },
+        {
+            "student_id": "50000023",
+            "name": "Wendy Allen",
+            "email": "wendy.allen@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "182",
+                    "mark": 75
+                },
+                {
+                    "subject_id": "183",
+                    "mark": 77
+                },
+                {
+                    "subject_id": "184",
+                    "mark": 84
+                }
+            ]
+        },
+        {
+            "student_id": "50000024",
+            "name": "Xavier Chen",
+            "email": "xavier.chen@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "185",
+                    "mark": 54
+                },
+                {
+                    "subject_id": "186",
+                    "mark": 61
+                }
+            ]
+        },
+        {
+            "student_id": "50000025",
+            "name": "Yasmine Baker",
+            "email": "yasmine.baker@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "187",
+                    "mark": 92
+                }
+            ]
+        },
+        {
+            "student_id": "50000026",
+            "name": "Zachary Adams",
+            "email": "zachary.adams@university.com",
+            "password": "Welcome123",
+            "subjects": []
+        },
+        {
+            "student_id": "50000027",
+            "name": "Amelia Moore",
+            "email": "amelia.moore@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "188",
+                    "mark": 66
+                },
+                {
+                    "subject_id": "189",
+                    "mark": 71
+                },
+                {
+                    "subject_id": "190",
+                    "mark": 73
+                },
+                {
+                    "subject_id": "191",
+                    "mark": 69
+                }
+            ]
+        },
+        {
+            "student_id": "50000029",
+            "name": "Chloe Edwards",
+            "email": "chloe.edwards@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "195",
+                    "mark": 100
+                },
+                {
+                    "subject_id": "196",
+                    "mark": 92
+                },
+                {
+                    "subject_id": "197",
+                    "mark": 87
+                },
+                {
+                    "subject_id": "198",
+                    "mark": 95
+                }
+            ]
+        },
+        {
+            "student_id": "50000030",
+            "name": "David Cooper",
+            "email": "david.cooper@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "199",
+                    "mark": 27
+                },
+                {
+                    "subject_id": "200",
+                    "mark": 46
+                }
+            ]
+        },
+        {
+            "student_id": "50000031",
+            "name": "Ella Turner",
+            "email": "ella.turner@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "201",
+                    "mark": 63
+                },
+                {
+                    "subject_id": "202",
+                    "mark": 64
+                },
+                {
+                    "subject_id": "203",
+                    "mark": 57
+                },
+                {
+                    "subject_id": "204",
+                    "mark": 68
+                }
+            ]
+        },
+        {
+            "student_id": "50000032",
+            "name": "Finn Mitchell",
+            "email": "finn.mitchell@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "205",
+                    "mark": 81
+                },
+                {
+                    "subject_id": "206",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "207",
+                    "mark": 78
+                },
+                {
+                    "subject_id": "208",
+                    "mark": 91
+                }
+            ]
+        },
+        {
+            "student_id": "50000033",
+            "name": "Georgia Campbell",
+            "email": "georgia.campbell@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "209",
+                    "mark": 43
+                },
+                {
+                    "subject_id": "210",
+                    "mark": 49
+                },
+                {
+                    "subject_id": "211",
+                    "mark": 47
+                }
+            ]
+        },
+        {
+            "student_id": "50000034",
+            "name": "Hugo Parker",
+            "email": "hugo.parker@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "212",
+                    "mark": 52
+                },
+                {
+                    "subject_id": "213",
+                    "mark": 58
+                }
+            ]
+        },
+        {
+            "student_id": "50000035",
+            "name": "Ivy Richardson",
+            "email": "ivy.richardson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "214",
+                    "mark": 73
+                }
+            ]
+        },
+        {
+            "student_id": "50000036",
+            "name": "James Collins",
+            "email": "james.collins@university.com",
+            "password": "Welcome123",
+            "subjects": []
+        },
+        {
+            "student_id": "50000037",
+            "name": "Kayla Foster",
+            "email": "kayla.foster@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "215",
+                    "mark": 35
+                },
+                {
+                    "subject_id": "216",
+                    "mark": 38
+                },
+                {
+                    "subject_id": "217",
+                    "mark": 42
+                },
+                {
+                    "subject_id": "218",
+                    "mark": 47
+                }
+            ]
+        },
+        {
+            "student_id": "50000038",
+            "name": "Lucas Morgan",
+            "email": "lucas.morgan@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "219",
+                    "mark": 86
+                },
+                {
+                    "subject_id": "220",
+                    "mark": 90
+                },
+                {
+                    "subject_id": "221",
+                    "mark": 92
+                }
+            ]
+        },
+        {
+            "student_id": "50000039",
+            "name": "Maya Bennett",
+            "email": "maya.bennett@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "222",
+                    "mark": 49
+                },
+                {
+                    "subject_id": "223",
+                    "mark": 52
+                },
+                {
+                    "subject_id": "224",
+                    "mark": 44
+                },
+                {
+                    "subject_id": "225",
+                    "mark": 51
+                }
+            ]
+        },
+        {
+            "student_id": "50000040",
+            "name": "Nathan Reed",
+            "email": "nathan.reed@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "226",
+                    "mark": 95
+                },
+                {
+                    "subject_id": "227",
+                    "mark": 98
+                }
+            ]
+        },
+        {
+            "student_id": "50000041",
+            "name": "Paige Sullivan",
+            "email": "paige.sullivan@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "228",
+                    "mark": 91
+                },
+                {
+                    "subject_id": "229",
+                    "mark": 85
+                },
+                {
+                    "subject_id": "230",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "231",
+                    "mark": 89
+                }
+            ]
+        },
+        {
+            "student_id": "50000042",
+            "name": "Ryan Peterson",
+            "email": "ryan.peterson@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "232",
+                    "mark": 45
+                },
+                {
+                    "subject_id": "233",
+                    "mark": 32
+                },
+                {
+                    "subject_id": "234",
+                    "mark": 28
+                }
+            ]
+        },
+        {
+            "student_id": "50000043",
+            "name": "Sophie Ward",
+            "email": "sophie.ward@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "235",
+                    "mark": 75
+                },
+                {
+                    "subject_id": "236",
+                    "mark": 77
+                }
+            ]
+        },
+        {
+            "student_id": "50000044",
+            "name": "Thomas Brooks",
+            "email": "thomas.brooks@university.com",
+            "password": "Welcome123",
+            "subjects": [
+                {
+                    "subject_id": "237",
+                    "mark": 54
+                }
+            ]
+        },
+        {
+            "student_id": "50000045",
+            "name": "Zoe Phillips",
+            "email": "zoe.phillips@university.com",
+            "password": "Welcome123",
+            "subjects": []
         }
     ]
 }

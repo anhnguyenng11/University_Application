@@ -4,7 +4,6 @@ from models.student import Student
 from models.file_handlers.student_data_file import StudentDataFile
 
 class AdminService:
-   
     def __init__(
         self,
         admin_data_file: AdminDataFile,

@@ -1,20 +1,9 @@
-from pathlib import Path
-
 from models.admin import Admin
 from models.file_handlers.database import Database
 
 
 class AdminDataFile:
     def __init__(self, data_folder=None) -> None:
-        if data_folder is None:
-            data_folder = Path(__file__).resolve().parents[2] / "data"
-
-        file_path = Path(data_folder) / "admins.data"
-
-        # Database resets empty files, so reject an existing empty Admin file first.
-        if file_path.exists() and file_path.stat().st_size == 0:
-            raise ValueError("Admin data file is empty.")
-
         self.database = Database(
             "admins.data",
             {"admins": []},
