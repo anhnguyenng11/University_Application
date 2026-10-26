@@ -1,1 +1,10 @@
-{"admins": []}
+{
+    "admins": [
+        {
+            "admin_id": "A001",
+            "name": "System Admin",
+            "email": "admin@uts.edu.au",
+            "password": "Password123!"
+        }
+    ]
+}
