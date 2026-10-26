@@ -7,7 +7,7 @@ from utils.validator import Validator
 class TestValidator(unittest.TestCase):
 
     def test_valid_email(self):
-        email = "john.smith@student.uts.edu.au"
+        email = "john.smith@university.com"
 
         self.assertTrue(Validator.is_valid_email(email))
 
@@ -17,33 +17,33 @@ class TestValidator(unittest.TestCase):
         )
 
         self.assertFalse(
-            Validator.is_valid_email("john@university.com")
+            Validator.is_valid_email("john@university.au")
         )
 
         self.assertFalse(
-            Validator.is_valid_email("john@student.uts.edu")
+            Validator.is_valid_email("john@student.uts.edu.au")
         )
 
     def test_valid_password(self):
-        password = "Password123!"
-
+        password = "Helloworld123"
         self.assertTrue(Validator.is_valid_password(password))
+        
 
     def test_invalid_password(self):
         self.assertFalse(
-            Validator.is_valid_password("password123!")
+            Validator.is_valid_password("helloworld12")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("PASSWORD123!")
+            Validator.is_valid_password("HELLOWORLD123!")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("Password123")
+            Validator.is_valid_password("Helloworld12")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("Password!!!")
+            Validator.is_valid_password("HELLOWORLD!!!")
         )
 
         self.assertFalse(

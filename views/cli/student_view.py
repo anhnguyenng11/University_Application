@@ -1,7 +1,7 @@
 
 from models.student import Student
 from models.subject import Subject
-from views.base_cli_view import BaseCLIView
+from views.cli.base_cli_view import BaseCLIView
 
 
 class StudentView(BaseCLIView):

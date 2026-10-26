@@ -1,1 +1,22 @@
-{"admins": []}
+{
+    "admins": [
+        {
+            "admin_id": "00000000",
+            "name": "To Lam",
+            "email": "tolam@university.com",
+            "password": "Admin123",
+        },
+        {
+            "admin_id": "00000001",
+            "name": "Elon Musk",
+            "email": "elonmusk@university.com",
+            "password": "Admin123",
+        },
+        {
+            "admin_id": "00000002",
+            "name": "Ariana Grande",
+            "email": "arianagrande@university.com",
+            "password": "Admin123",
+        },
+    ]
+}

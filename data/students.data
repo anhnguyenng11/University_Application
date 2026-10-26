@@ -7,20 +7,20 @@
             "password": "Helloworld123",
             "subjects": [
                 {
-                    "subject_id": "809",
-                    "mark": 55
-                },
-                {
-                    "subject_id": "735",
-                    "mark": 87
-                },
-                {
-                    "subject_id": "939",
+                    "subject_id": "93109",
                     "mark": 70
                 },
                 {
                     "subject_id": "893",
                     "mark": 80
+                },
+                {
+                    "subject_id": "97195",
+                    "mark": 67
+                },
+                {
+                    "subject_id": "313",
+                    "mark": 39
                 }
             ]
         },
@@ -50,10 +50,67 @@
         },
         {
             "student_id": "90153714",
-            "name": "hello",
-            "email": "hello@university.com",
-            "password": "Password223",
-            "subjects": [].
+            "name": "Kim Jong-un",
+            "email": "q",
+            "password": "q",
+            "subjects": [
+                {
+                    "subject_id": "70848",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "22106",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "21976",
+                    "mark": 98
+                }
+            ]
+        },
+        {
+            "student_id": "00000000",
+            "name": "Vladimir Putin",
+            "email": "a",
+            "password": "a",
+            "subjects": [
+                {
+                    "subject_id": "70848",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "22106",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "21976",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "00000",
+                    "mark": 50
+                }
+            ]
+        },
+        {
+            "student_id": "00000001",
+            "name": "Donald Trump",
+            "email": "w",
+            "password": "w",
+            "subjects": [
+                {
+                    "subject_id": "41986",
+                    "mark": 37
+                },
+                {
+                    "subject_id": "28394",
+                    "mark": 94
+                },
+                {
+                    "subject_id": "20682",
+                    "mark": 80
+                }
+            ]
         }
     ]
 }
