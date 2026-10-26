@@ -60,3 +60,8 @@ class AdminService:
 
     def remove_student(self, student_id: str) -> bool:
         return self.student_data_file.remove_student(student_id)
+
+    def clear_all_students(self) -> None:
+        self.student_data_file.clear_all_students()
+
+    

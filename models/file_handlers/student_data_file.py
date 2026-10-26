@@ -132,3 +132,8 @@ class StudentDataFile:
                 self.save_students(students)
                 return True
         return False
+
+    def clear_all_students(self) -> None:
+        students = self.load_students()
+        students.clear()
+        self.save_students(students)
