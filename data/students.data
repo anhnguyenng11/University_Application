@@ -50,8 +50,8 @@
         },
         {
             "student_id": "90153714",
-            "name": "hello",
-            "email": "hello@university.com",
+            "name": "Hitler Adolf",
+            "email": "fuerher@university.com",
             "password": "Password223",
             "subjects": [
                 {
@@ -69,6 +69,54 @@
                 {
                     "subject_id": "478",
                     "mark": 42
+                }
+            ]
+        },
+        {
+            "student_id": "9223714",
+            "name": "JP Xi",
+            "email": "xi@university.com",
+            "password": "Password223",
+            "subjects": [
+                {
+                    "subject_id": "848",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "206",
+                    "mark": 55
+                },
+                {
+                    "subject_id": "276",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "478",
+                    "mark": 42
+                }
+            ]
+        },
+        {
+            "student_id": "93149000",
+            "name": "Test",
+            "email": "test2@university.com",
+            "password": "Password123",
+            "subjects": [
+                {
+                    "subject_id": "818",
+                    "mark": 80
+                },
+                {
+                    "subject_id": "201",
+                    "mark": 98
+                },
+                {
+                    "subject_id": "256",
+                    "mark": 48
+                },
+                {
+                    "subject_id": "448",
+                    "mark": 99
                 }
             ]
         }
