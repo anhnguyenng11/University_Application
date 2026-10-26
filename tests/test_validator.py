@@ -25,25 +25,25 @@ class TestValidator(unittest.TestCase):
         )
 
     def test_valid_password(self):
-        password = "Password123!"
-
+        password = "Helloworld123"
         self.assertTrue(Validator.is_valid_password(password))
+        
 
     def test_invalid_password(self):
         self.assertFalse(
-            Validator.is_valid_password("password123!")
+            Validator.is_valid_password("helloworld12")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("PASSWORD123!")
+            Validator.is_valid_password("HELLOWORLD123!")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("Password123")
+            Validator.is_valid_password("Helloworld12")
         )
 
         self.assertFalse(
-            Validator.is_valid_password("Password!!!")
+            Validator.is_valid_password("HELLOWORLD!!!")
         )
 
         self.assertFalse(
