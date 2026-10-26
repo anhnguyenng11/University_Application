@@ -31,10 +31,30 @@ class AdminService:
 
     def group_students_by_grade(self) -> dict[str, list[Student]]:
         students = self.get_all_students()
-        groups = {}
+        
+        groups = {
+            "HD": [],
+            "D": [],
+            "C": [],
+            "P": [],
+            "Z": [],
+            "N/A": []
+        }
         for student in students:
             _, _, grade = student.get_overall_status()
-            if grade not in groups:
-                groups[grade] = []
             groups[grade].append(student)
         return groups
+
+    def partition_students_by_status(self) -> dict[str, list[Student]]:
+        students = self.get_all_students()
+
+        partitions = {
+            "PASS": [],
+            "FAIL": [],
+            "N/A": []
+        }
+        for student in students:
+            _, status, _ = student.get_overall_status()
+            partitions[status].append(student)
+        return partitions
+    
