@@ -3,8 +3,8 @@
         {
             "student_id": "10571753",
             "name": "Nguyen Anh Nguyen",
-            "email": "nguyen.nguyen@student.uts.edu.au",
-            "password": "Password#3",
+            "email": "nguyen.nguyen@university.com",
+            "password": "Password123",
             "subjects": [
                 {
                     "subject_id": "80109",
@@ -27,8 +27,8 @@
         {
             "student_id": "42120265",
             "name": "Joseph Stalin",
-            "email": "joseph.stalin@student.uts.edu.au",
-            "password": "Password#3",
+            "email": "joseph.stalin@university.com",
+            "password": "Password123",
             "subjects": [
                 {
                     "subject_id": "70848",

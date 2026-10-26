@@ -112,14 +112,14 @@ class StudentController:
             self.view.show_message("Removal failed: " + str(error))
 
     def change_student_password(self, student: Student) -> None:
-        current_password, 
-        new_password = self.view.get_password_change_details(),
-        confirm_password = self.view.get_password_change_details()
+        current_password, new_password, confirm_password = (
+            self.view.get_password_change_details()
+        )
 
         if new_password != confirm_password:
             self.view.show_message("New password and confirmation do not match.")
             return
-        
+
         try:
             self.student_service.change_password(
                 student,
