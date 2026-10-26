@@ -109,7 +109,9 @@ class StudentController:
     def change_student_password(self, student: Student) -> None:
         
         while True:
-            current_password, new_password, confirm_password = self.view.get_password_change_details()
+            current_password, new_password, confirm_password = (
+                self.view.get_password_change_details()
+            )
 
             if new_password != confirm_password:
                 self.view.show_message("New passwords do not match. Please try again.")
