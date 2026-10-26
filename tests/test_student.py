@@ -38,22 +38,29 @@ class TestStudent(unittest.TestCase):
         self.student.add_subject(Subject("001", 40))
         self.student.add_subject(Subject("002", 60))
 
-        self.assertEqual(self.student.average_mark(), 50.0)
+        average, status, grade = self.student.get_overall_status()
+        self.assertEqual(average, 50.0)
 
         self.student.remove_subject("001")
 
-        self.assertEqual(self.student.average_mark(), 60.0)
+        average, status, grade = self.student.get_overall_status()
+        self.assertEqual(average, 60.0)
 
     def test_overall_status(self):
-        self.assertEqual(self.student.get_overall_status(), "PENDING")
+        average, status, grade = self.student.get_overall_status()
+        self.assertIsNone(average)
+        self.assertEqual(status, "N/A")
+        self.assertEqual(grade, "N/A")
 
         self.student.add_subject(Subject("001", 40))
         self.student.add_subject(Subject("002", 55))
         self.student.add_subject(Subject("003", 70))
         self.student.add_subject(Subject("004", 75))
 
-        self.assertEqual(self.student.average_mark(), 60.0)
-        self.assertEqual(self.student.get_overall_status(), "PASS")
+        average, status, grade = self.student.get_overall_status()
+        self.assertEqual(average, 60.0)
+        self.assertEqual(status, "PASS")
+        self.assertEqual(grade, "P")
 
     def test_change_password(self):
         self.student.change_password("Newpassword123")
