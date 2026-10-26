@@ -18,7 +18,7 @@ class Validator:
         if not Validator.is_not_empty(email):
             return False
 
-        pattern = r"[A-Za-z0-9._%+-]+@student\.uts\.edu\.au"
+        pattern = r"[A-Za-z0-9._%+-]+@university\.com"
 
         if re.fullmatch(pattern, email) is None:
             return False
