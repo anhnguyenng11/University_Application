@@ -13,7 +13,6 @@ def main():
     root = tk.Tk()
     root.title("UniApp")
     
-
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
 

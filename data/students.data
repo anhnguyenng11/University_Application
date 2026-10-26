@@ -7,10 +7,6 @@
             "password": "Helloworld123",
             "subjects": [
                 {
-                    "subject_id": "76335",
-                    "mark": 87
-                },
-                {
                     "subject_id": "93109",
                     "mark": 70
                 },
@@ -21,6 +17,10 @@
                 {
                     "subject_id": "97195",
                     "mark": 67
+                },
+                {
+                    "subject_id": "313",
+                    "mark": 39
                 }
             ]
         },
