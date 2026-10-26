@@ -25,10 +25,15 @@ class StudentService:
             raise ValueError("Name cannot be empty.")
 
         if not Validator.is_valid_email(email):
-            raise ValueError("Invalid student email.")
+            raise ValueError("Invalid student email.\nEmail suffix: [@student.uts.edu.au]")
 
         if not Validator.is_valid_password(password):
-            raise ValueError("Invalid password.")
+            raise ValueError("Invalid password." \
+            "\nPassword should contain:" \
+            "\n- At least 8 characters" \
+            "\n- At least 1 symbol (!, @, #, ...)" \
+            "\n- 1 uppercase and 1 lowercase" \
+            )
 
         # Step 2: Check duplicate email
         if self.student_data_file.email_exists(email):
@@ -165,7 +170,13 @@ class StudentService:
 
         # Step 3: Validate the new password
         if not Validator.is_valid_password(new_password):
-            raise ValueError("New password does not meet requirements.")
+            raise ValueError(
+                "New password does not meet requirements." \
+                "\nPassword should contain:" \
+                "\n- At least 8 characters" \
+                "\n- At least 1 symbol (!, @, #, ...)" \
+                "\n- 1 uppercase and 1 lowercase" \
+            )
 
         # Step 4: Prevent reusing the current password
         if saved_student.password == new_password:

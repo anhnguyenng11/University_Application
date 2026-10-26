@@ -12,6 +12,7 @@ WINDOW_HEIGHT = 700
 def main():
     root = tk.Tk()
     root.title("UniApp")
+    
 
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
@@ -20,6 +21,7 @@ def main():
     y = (screen_height - WINDOW_HEIGHT) // 2
 
     root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}+{x}+{y}")
+    root.resizable(False, False)
 
     student_data_file = StudentDataFile()
     student_service = StudentService(student_data_file)
