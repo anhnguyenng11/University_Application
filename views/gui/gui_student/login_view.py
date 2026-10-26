@@ -8,14 +8,9 @@ class LoginView(BaseGUIView):
         super().__init__(parent)
 
         style = ttk.Style()
-        style.configure(
-            "Login.TButton",
-            font=("", 18)
-        )
-        style.configure(
-            "Login.TLabel",
-            font=("", 18)
-        )
+        style.configure("Login.TButton", font=("", 18))
+        style.configure("Login.TLabel", font=("", 18))
+        style.configure("Padded.TEntry", padding=(8, 8, 8, 8))
 
         content = ttk.Frame(self)
         content.pack(expand=True)
@@ -33,36 +28,15 @@ class LoginView(BaseGUIView):
         input_frame = ttk.Frame(content)
         input_frame.pack(fill="x")
 
-        
-        # Email
-        ttk.Label(
-            input_frame,
-            text="Email",
-            style="Login.TLabel"
-        ).pack(anchor="w", pady=5)
-
-        email_entry = ttk.Entry(
-            input_frame,
-            font=("", 18)
+        email_entry = self.create_auth_entry(
+            input_frame, "Email", "Login.TLabel"
         )
-        email_entry.pack(fill="x")
 
         ttk.Frame(input_frame, height=25).pack()
 
-        # Password
-        ttk.Label(
-            input_frame,
-            text="Password",
-            style="Login.TLabel"
-        ).pack(anchor="w", pady=5)
-
-        password_entry = ttk.Entry(
-            input_frame,
-            font=("", 18),
-            show="*"
+        password_entry = self.create_auth_entry(
+            input_frame, "Password", "Login.TLabel", show="*"
         )
-        password_entry.pack(fill="x")
-
 
         ttk.Frame(content, height=40).pack()
 
