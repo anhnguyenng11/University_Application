@@ -123,3 +123,12 @@ class StudentDataFile:
                 return True
 
         return False
+
+    def remove_student(self, student_id: str) -> bool:
+        students = self.load_students()
+        for student in students:
+            if student.student_id == student_id:
+                students.remove(student)
+                self.save_students(students)
+                return True
+        return False

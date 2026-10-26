@@ -57,4 +57,6 @@ class AdminService:
             _, status, _ = student.get_overall_status()
             partitions[status].append(student)
         return partitions
-    
+
+    def remove_student(self, student_id: str) -> bool:
+        return self.student_data_file.remove_student(student_id)
