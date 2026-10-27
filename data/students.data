@@ -335,22 +335,6 @@
             ]
         },
         {
-            "student_id": "500014",
-            "name": "Noah Clark",
-            "email": "noah.clark@university.com",
-            "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "158",
-                    "mark": 52
-                },
-                {
-                    "subject_id": "159",
-                    "mark": 58
-                }
-            ]
-        },
-        {
             "student_id": "500015",
             "name": "Olivia Lewis",
             "email": "olivia.lewis@university.com",
@@ -518,22 +502,6 @@
                 {
                     "subject_id": "184",
                     "mark": 84
-                }
-            ]
-        },
-        {
-            "student_id": "500024",
-            "name": "Xavier Chen",
-            "email": "xavier.chen@university.com",
-            "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "185",
-                    "mark": 54
-                },
-                {
-                    "subject_id": "186",
-                    "mark": 61
                 }
             ]
         },

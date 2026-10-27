@@ -35,5 +35,4 @@ class ErrorView:
         popup.deiconify()
         popup.wait_visibility()
         popup.grab_set()
-        button.focus_set()
         popup.wait_window()
