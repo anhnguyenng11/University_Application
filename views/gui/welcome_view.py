@@ -27,7 +27,7 @@ class WelcomeView(BaseGUIView):
 
         ttk.Label(
             content,
-            text="dedicated to handsome students",
+            text="Just because you never give up\ndoesn't mean you will succeed.",
             font=("", 12, "italic")
         ).pack()
 
