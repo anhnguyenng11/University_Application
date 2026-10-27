@@ -51,8 +51,8 @@
         {
             "student_id": "90153714",
             "name": "Kim Jong-un",
-            "email": "q@university.com",
-            "password": "Hello123",
+            "email": "q",
+            "password": "q"
             "subjects": [
                 {
                     "subject_id": "748",
