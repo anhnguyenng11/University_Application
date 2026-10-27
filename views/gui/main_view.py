@@ -1,15 +1,7 @@
 from tkinter import ttk
 
-class AdminMainView(ttk.Frame):
-    def __init__(
-            self,
-            parent,
-            on_view_students,
-            on_search_students,
-            on_account,
-            on_logout
-        ):
-
+class MainView(ttk.Frame):
+    def __init__(self, parent, title, navigation, on_logout):
         super().__init__(parent)
 
         self.current_content = None
@@ -30,7 +22,7 @@ class AdminMainView(ttk.Frame):
         
         ttk.Label(
             header, 
-            text="Admin Portal"
+            text=title
         ).pack(side="right")
 
         ttk.Separator(
@@ -47,17 +39,12 @@ class AdminMainView(ttk.Frame):
         sidebar.pack(side="left", fill="y")
         sidebar.pack_propagate(False)
 
-        for text, callback in (
-            ("View Students", on_view_students),
-            ("Search Students", on_search_students),
-            ("Account", on_account)
-        ):
+        for text, callback in navigation:
             ttk.Button(
                 sidebar,
                 text=text,
                 style="Sidebar.TButton",
-                command=callback,
-                state="normal" if callback is not None else "disabled"
+                command=callback
             ).pack(fill="x", pady=10, ipady=10)
         
         ttk.Button(

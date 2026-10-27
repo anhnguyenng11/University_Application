@@ -56,3 +56,23 @@ class AdminDataFile:
                 return admin
 
         return None
+
+    def update_admin(self, updated_admin: Admin) -> bool:
+        admins = self.load_admins()
+
+        for index, admin in enumerate(admins):
+            if admin.admin_id == updated_admin.admin_id:
+                admins[index] = updated_admin
+                records = [
+                    {
+                        "admin_id": item.admin_id,
+                        "name": item.name,
+                        "email": item.email,
+                        "password": item.password
+                    }
+                    for item in admins
+                ]
+                self.database.save_data({"admins": records})
+                return True
+
+        return False

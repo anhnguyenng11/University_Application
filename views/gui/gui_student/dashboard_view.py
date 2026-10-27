@@ -6,8 +6,8 @@ class DashboardView(ttk.Frame):
         super().__init__(parent)
 
         style = ttk.Style()
-        style.configure("Section.TLabelframe.Label", font=("", 12, "bold italic"))
-        style.configure("Card.TLabelframe.Label", font=("", 12, ""))
+        style.configure("Section.TLabelframe.Label", font=("", 10, "bold"))
+        style.configure("Card.TLabelframe.Label", font=("", 10, "italic"))
 
         # Header
         ttk.Label(

@@ -54,13 +54,6 @@ class LoginView(BaseGUIView):
             style="Login.TButton"
         ).place(x=0, y=0, width=450, height=65)
 
-        # ttk.Button(
-        #     button_frame,
-        #     text="Register",
-        #     command=on_register,
-        #     style="Login.TButton"
-        # ).place(x=0, y=85, width=450, height=65)
-
         ttk.Button(
             button_frame,
             text="Back",

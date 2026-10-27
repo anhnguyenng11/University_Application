@@ -66,12 +66,12 @@ class StudentsView(ttk.Frame):
         self.column_ratios = {}
 
         for column, title, ratio in (
-            ("id", "ID", 0.15),
-            ("name", "Name", 0.22),
-            ("email", "Email", 0.30),
-            ("average", "Average", 0.13),
-            ("grade", "Grade", 0.09),
-            ("status", "Status", 0.11)
+            ("id", "ID", 0.11),
+            ("name", "Name", 0.27),
+            ("email", "Email", 0.36),
+            ("average", "Average", 0.1),
+            ("grade", "Grade", 0.08),
+            ("status", "Status", 0.08)
         ):
             self.column_ratios[column] = ratio
             self.tree.heading(column, text=title)
