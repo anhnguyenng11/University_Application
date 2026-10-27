@@ -368,3 +368,25 @@ Your showcase will be marked according to the following marking schema:
 | Speech is clear and easy to follow                    | 1    |
 | Includes a walkthrough of the source code to demonstrate individual contributions | 1 |
 | Overall correctness of answers to the questions       | 1    |
+
+---
+
+## 10. Special Consideration
+
+Special consideration for deadline extensions must be arranged beforehand with the subject co-ordinator. Please refer to the UTS Special Consideration Procedure (https://www.uts.edu.au/current-students/managing-your-course/classes-and-assessment/special-circumstances/special-consideration).
+
+---
+
+## 11. Late Penalty
+
+Please refer to the UTS Late Submission Penalties page (https://www.uts.edu.au/current-students/current-students-information-faculty-law/assessment/late-submission-penalties).
+
+---
+
+## 12. Assessment Misconduct
+
+Please see the Subject Information for plagiarism and academic integrity in conjunction with UTS policy and procedures for the assessment for coursework subjects.
+
+---
+
+*University of Technology Sydney, FEIT – Assessment 1*
