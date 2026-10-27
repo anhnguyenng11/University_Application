@@ -1,6 +1,6 @@
 
 import re
-import constants
+from utils import constants
 
 
 class Validator:
