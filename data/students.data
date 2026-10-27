@@ -7,15 +7,15 @@
             "password": "Helloworld123",
             "subjects": [
                 {
-                    "subject_id": "93109",
+                    "subject_id": "939",
                     "mark": 70
                 },
                 {
-                    "subject_id": "89613",
+                    "subject_id": "613",
                     "mark": 80
                 },
                 {
-                    "subject_id": "97195",
+                    "subject_id": "975",
                     "mark": 67
                 },
                 {
@@ -31,19 +31,19 @@
             "password": "Password333",
             "subjects": [
                 {
-                    "subject_id": "70848",
+                    "subject_id": "708",
                     "mark": 80
                 },
                 {
-                    "subject_id": "22106",
+                    "subject_id": "226",
                     "mark": 98
                 },
                 {
-                    "subject_id": "21976",
+                    "subject_id": "216",
                     "mark": 98
                 },
                 {
-                    "subject_id": "47678",
+                    "subject_id": "478",
                     "mark": 42
                 }
             ]
@@ -51,43 +51,43 @@
         {
             "student_id": "90153714",
             "name": "Kim Jong-un",
-            "email": "q",
-            "password": "q",
+            "email": "q@university.com",
+            "password": "Hello123",
             "subjects": [
                 {
-                    "subject_id": "70848",
+                    "subject_id": "748",
                     "mark": 80
                 },
                 {
-                    "subject_id": "22106",
+                    "subject_id": "206",
                     "mark": 98
                 },
                 {
-                    "subject_id": "21976",
+                    "subject_id": "276",
                     "mark": 98
                 }
             ]
         },
         {
-            "student_id": "00000000",
+            "student_id": "00000040",
             "name": "Vladimir Putin",
-            "email": "a",
-            "password": "a",
+            "email": "a@university.com",
+            "password": "Helloworld132",
             "subjects": [
                 {
-                    "subject_id": "70848",
+                    "subject_id": "848",
                     "mark": 80
                 },
                 {
-                    "subject_id": "22106",
+                    "subject_id": "221",
                     "mark": 98
                 },
                 {
-                    "subject_id": "21976",
+                    "subject_id": "216",
                     "mark": 98
                 },
                 {
-                    "subject_id": "00000",
+                    "subject_id": "000",
                     "mark": 50
                 }
             ]
@@ -95,19 +95,19 @@
         {
             "student_id": "00000001",
             "name": "Donald Trump",
-            "email": "w",
-            "password": "w",
+            "email": "w@university.com",
+            "password": "Helloworld123",
             "subjects": [
                 {
-                    "subject_id": "41986",
+                    "subject_id": "486",
                     "mark": 37
                 },
                 {
-                    "subject_id": "28394",
+                    "subject_id": "394",
                     "mark": 94
                 },
                 {
-                    "subject_id": "20682",
+                    "subject_id": "282",
                     "mark": 80
                 }
             ]
