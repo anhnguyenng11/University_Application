@@ -1,5 +1,6 @@
 
 import re
+import constants
 
 
 class Validator:
@@ -18,7 +19,7 @@ class Validator:
         if not Validator.is_not_empty(email):
             return False
 
-        pattern = r"[A-Za-z0-9._%+-]+@university\.com"
+        pattern = constants.EMAIL_REGEX
 
         if re.fullmatch(pattern, email) is None:
             return False
@@ -29,5 +30,5 @@ class Validator:
     def is_valid_password(password: str) -> bool:
         if not Validator.is_not_empty(password):
             return False
-        pattern = r"^[A-Z][a-zA-Z]{5,}[0-9]{3,}$"
+        pattern = constants.PASSWORD_REGEX
         return re.fullmatch(pattern, password) is not None
