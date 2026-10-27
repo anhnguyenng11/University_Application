@@ -41,7 +41,7 @@ class GUIUniApp:
     def show_welcome(self):
         view = WelcomeView(
             self.root,
-            on_student=self.student_controller.start,
-            on_admin=self.admin_controller.start
+            on_student=self.student_controller.show_login,
+            on_admin=self.admin_controller.show_login
         )
         self.show_view(view)

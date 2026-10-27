@@ -9,7 +9,7 @@ class SubjectsView(ttk.Frame):
         self.on_remove = on_remove
 
         style = ttk.Style()
-        style.configure("Subjects.TLabelframe.Label", font=("", 12, "bold italic"))
+        style.configure("Subjects.TLabelframe.Label", font=("", 10, "bold"))
 
         # Header
         header = ttk.Frame(self)

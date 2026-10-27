@@ -1,7 +1,8 @@
 from views.gui.gui_admin.login_view import LoginView
-from views.gui.gui_admin.admin_main_view import AdminMainView
+from views.gui.main_view import MainView
 from views.gui.gui_admin.students_view import StudentsView
-
+from views.gui.gui_admin.search_student_view import SearchStudentsView
+from views.gui.account_view import AccountView
 
 class GUIAdminController:
     def __init__(
@@ -15,9 +16,6 @@ class GUIAdminController:
         self.on_success = on_success
         self.active_admin = None
         self.student_mode = "all"
-
-    def start(self):
-        self.show_login()
 
     def show_login(self):
         self.active_admin = None
@@ -49,12 +47,14 @@ class GUIAdminController:
         self.show_admin_main()
 
     def show_admin_main(self):
-        self.main_view = AdminMainView(
+        self.main_view = MainView(
             self.root,
-            on_view_students=self.show_students,
-            # shortcut: disable unfinished pages, connect callbacks when ready.
-            on_search_students=None,
-            on_account=None,
+            title="Admin Portal",
+            navigation=(
+                ("View Students", self.show_students),
+                ("Search Students", self.show_search_students),
+                ("Account", self.show_account)
+            ),
             on_logout=self.logout
         )
         self.show_view(self.main_view)
@@ -85,6 +85,24 @@ class GUIAdminController:
         self.student_mode = mode
         return True
 
+    def show_search_students(self):
+        self.search_view = SearchStudentsView(
+            self.main_view.content_frame,
+            on_search=self.search_student,
+            on_remove=self.remove_student
+        )
+        self.main_view.show_content(self.search_view)
+        self.student_mode = "search"
+
+    def search_student(self, student_id, email):
+        try:
+            student = self.admin_service.search_student(student_id, email)
+        except (ValueError, OSError) as error:
+            self.on_error(str(error))
+            return
+
+        self.search_view.show_student(student)
+
     def remove_student(self, student_id):
         try:
             removed = self.admin_service.remove_student(student_id)
@@ -96,8 +114,12 @@ class GUIAdminController:
             self.on_error("Student not found.")
             return
 
-        if self.show_students(self.student_mode):
-            self.on_success("Student removed successfully.")
+        if self.student_mode == "search":
+            self.search_view.clear_result()
+        elif not self.show_students(self.student_mode):
+            return
+
+        self.on_success("Student removed successfully.")
 
     def clear_all_students(self):
         try:
@@ -108,6 +130,41 @@ class GUIAdminController:
 
         if self.show_students(self.student_mode):
             self.on_success("All student records cleared.")
+
+    def show_account(self):
+        view = AccountView(
+            self.main_view.content_frame,
+            information_title="Admin Information",
+            information_rows=(
+                ("Name", self.active_admin.name),
+                ("Admin ID", self.active_admin.admin_id),
+                ("Email", self.active_admin.email)
+            ),
+            on_change_password=self.change_password
+        )
+        self.main_view.show_content(view)
+
+    def change_password(self, current_password, new_password, confirm_password):
+        if not current_password or not new_password or not confirm_password:
+            self.on_error("All password fields are required.")
+            return
+
+        if new_password != confirm_password:
+            self.on_error("Passwords do not match.")
+            return
+
+        try:
+            self.admin_service.change_password(
+                self.active_admin,
+                current_password,
+                new_password
+            )
+        except (ValueError, OSError) as error:
+            self.on_error(str(error))
+            return
+
+        self.show_account()
+        self.on_success("Password changed successfully.")
 
     def logout(self):
         self.show_login()

@@ -49,7 +49,7 @@
             ]
         },
         {
-            "student_id": "153714",
+            "student_id": "1",
             "name": "Kim Jong-un",
             "email": "q",
             "password": "q",
@@ -65,6 +65,10 @@
                 {
                     "subject_id": "976",
                     "mark": 98
+                },
+                {
+                    "subject_id": "999",
+                    "mark": 60
                 }
             ]
         },
@@ -109,56 +113,19 @@
                 {
                     "subject_id": "682",
                     "mark": 80
+                },
+                {
+                    "subject_id": "733",
+                    "mark": 59
                 }
             ]
         },
         {
-            "student_id": "500001",
-            "name": "Alice Carter",
-            "email": "alice.carter@university.com",
-            "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "120",
-                    "mark": 91
-                },
-                {
-                    "subject_id": "121",
-                    "mark": 85
-                },
-                {
-                    "subject_id": "122",
-                    "mark": 98
-                },
-                {
-                    "subject_id": "123",
-                    "mark": 89
-                }
-            ]
-        },
-        {
-            "student_id": "500002",
+            "student_id": "000000",
             "name": "Brian Wilson",
-            "email": "brian.wilson@university.com",
+            "email": "w@gmail.com",
             "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "124",
-                    "mark": 45
-                },
-                {
-                    "subject_id": "125",
-                    "mark": 32
-                },
-                {
-                    "subject_id": "126",
-                    "mark": 28
-                },
-                {
-                    "subject_id": "127",
-                    "mark": 49
-                }
-            ]
+            "subjects": []
         },
         {
             "student_id": "500003",
@@ -571,18 +538,6 @@
             ]
         },
         {
-            "student_id": "500025",
-            "name": "Yasmine Baker",
-            "email": "yasmine.baker@university.com",
-            "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "187",
-                    "mark": 92
-                }
-            ]
-        },
-        {
             "student_id": "500026",
             "name": "Zachary Adams",
             "email": "zachary.adams@university.com",
@@ -610,30 +565,6 @@
                 {
                     "subject_id": "191",
                     "mark": 69
-                }
-            ]
-        },
-        {
-            "student_id": "500029",
-            "name": "Chloe Edwards",
-            "email": "chloe.edwards@university.com",
-            "password": "Welcome123",
-            "subjects": [
-                {
-                    "subject_id": "195",
-                    "mark": 100
-                },
-                {
-                    "subject_id": "196",
-                    "mark": 92
-                },
-                {
-                    "subject_id": "197",
-                    "mark": 87
-                },
-                {
-                    "subject_id": "198",
-                    "mark": 95
                 }
             ]
         },

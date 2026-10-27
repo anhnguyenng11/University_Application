@@ -1,9 +1,9 @@
 from views.gui.gui_student.login_view import LoginView
 from views.gui.gui_student.registration_view import RegistrationView
-from views.gui.gui_student.student_main_view import StudentMainView
+from views.gui.main_view import MainView
 from views.gui.gui_student.dashboard_view import DashboardView
 from views.gui.gui_student.subjects_view import SubjectsView
-from views.gui.gui_student.account_view import AccountView
+from views.gui.account_view import AccountView
 
 
 class GUIStudentController:
@@ -24,9 +24,6 @@ class GUIStudentController:
         self.on_success = on_success
 
         self.active_student = None
-
-    def start(self):
-        self.show_login()
 
     def show_login(self):
         view = LoginView(
@@ -80,11 +77,14 @@ class GUIStudentController:
         self.show_login()
 
     def show_student_main(self):
-        self.main_view = StudentMainView(
+        self.main_view = MainView(
             self.root,
-            on_dashboard=self.show_dashboard,
-            on_subjects=self.show_subjects,
-            on_account=self.show_account,
+            title="Student Portal",
+            navigation=(
+                ("Dashboard", self.show_dashboard),
+                ("Subjects", self.show_subjects),
+                ("Account", self.show_account)
+            ),
             on_logout=self.logout
         )
 
@@ -143,7 +143,12 @@ class GUIStudentController:
     def show_account(self):
         view = AccountView(
             self.main_view.content_frame,
-            student=self.active_student,
+            information_title="Student Information",
+            information_rows=(
+                ("Name", self.active_student.name),
+                ("Student ID", self.active_student.student_id),
+                ("Email", self.active_student.email)
+            ),
             on_change_password=self.change_password
         )
 

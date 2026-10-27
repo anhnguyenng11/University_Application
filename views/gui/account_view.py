@@ -1,13 +1,13 @@
 from tkinter import ttk
 
 class AccountView(ttk.Frame):
-    def __init__(self, parent, admin, on_change_password):
+    def __init__(self, parent, information_title, information_rows, on_change_password):
         super().__init__(parent)
 
         self.on_change_password = on_change_password
 
         style = ttk.Style()
-        style.configure("Account.TLabelframe.Label", font=("", 12, "bold italic"))
+        style.configure("Account.TLabelframe.Label", font=("", 10, "bold"))
         style.configure("Account.TButton", font=("", 12, ""))
 
         # Header
@@ -17,20 +17,16 @@ class AccountView(ttk.Frame):
             font=("", 20, "bold")
         ).pack(anchor="w")
 
-        # Admin information
+        # Account information
         info_frame = ttk.LabelFrame(
             self,
-            text="Admin Information",
+            text=information_title,
             style="Account.TLabelframe",
             padding=10
         )
         info_frame.pack(fill="x", pady=20)
 
-        for label, value in (
-            ("Name", admin.name),
-            ("Admin ID", admin.admin_id),
-            ("Email", admin.email)
-        ):
+        for label, value in information_rows:
             ttk.Label(
                 info_frame,
                 text=f"{label}: {value}",

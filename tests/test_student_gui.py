@@ -3,13 +3,14 @@ from tkinter import ttk
 from unittest.mock import Mock, patch
 
 from controllers.gui.gui_student_controller import GUIStudentController
+from controllers.gui.gui_uni_app import GUIUniApp
 from models.student import Student
 from models.subject import Subject
-from views.gui.gui_student.account_view import AccountView
+from views.gui.account_view import AccountView
 from views.gui.gui_student.dashboard_view import DashboardView
 from views.gui.gui_student.login_view import LoginView
 from views.gui.gui_student.registration_view import RegistrationView
-from views.gui.gui_student.student_main_view import StudentMainView
+from views.gui.main_view import MainView
 from views.gui.gui_student.subjects_view import SubjectsView
 
 
@@ -50,7 +51,16 @@ class TestStudentGUIViews(unittest.TestCase):
         callback = Mock()
         values = ["OldPass1!", "NewPass2!", "NewPass2!"]
         self.widgets["Entry"].side_effect = [Mock(get=Mock(return_value=value)) for value in values]
-        view = AccountView(None, self.student, callback)
+        view = AccountView(
+            None,
+            information_title="Student Information",
+            information_rows=(
+                ("Name", self.student.name),
+                ("Student ID", self.student.student_id),
+                ("Email", self.student.email)
+            ),
+            on_change_password=callback
+        )
         view.submit_password()
         callback.assert_called_once_with(*values)
         for call in self.widgets["Entry"].call_args_list:
@@ -82,7 +92,12 @@ class TestStudentGUIViews(unittest.TestCase):
 
     def test_sidebar_buttons_call_their_own_action(self):
         callbacks = [Mock() for _ in range(4)]
-        StudentMainView(None, *callbacks)
+        MainView(
+            None,
+            title="Student Portal",
+            navigation=tuple(zip(("Dashboard", "Subjects", "Account"), callbacks)),
+            on_logout=callbacks[3]
+        )
         for call, callback in zip(self.widgets["Button"].call_args_list, callbacks):
             call.kwargs["command"]()
             callback.assert_called_once_with()
@@ -112,6 +127,40 @@ class TestGUIStudentController(unittest.TestCase):
         self.success = Mock()
         self.controller = GUIStudentController(None, self.service, Mock(), Mock(), self.error, self.success)
         self.student = Student("00000001", "Test Student", "test@student.uts.edu.au", "OldPass1!")
+
+    def test_main_page_preserves_navigation_and_opens_dashboard(self):
+        with patch("controllers.gui.gui_student_controller.MainView") as view:
+            with patch.object(self.controller, "show_dashboard") as dashboard:
+                self.controller.show_student_main()
+                view.assert_called_once_with(
+                    None,
+                    title="Student Portal",
+                    navigation=(
+                        ("Dashboard", dashboard),
+                        ("Subjects", self.controller.show_subjects),
+                        ("Account", self.controller.show_account)
+                    ),
+                    on_logout=self.controller.logout
+                )
+                self.controller.show_view.assert_called_once_with(view.return_value)
+                dashboard.assert_called_once_with()
+
+    def test_account_page_receives_student_details_and_callback(self):
+        self.controller.active_student = self.student
+        self.controller.main_view = Mock()
+        with patch("controllers.gui.gui_student_controller.AccountView") as view:
+            self.controller.show_account()
+            view.assert_called_once_with(
+                self.controller.main_view.content_frame,
+                information_title="Student Information",
+                information_rows=(
+                    ("Name", self.student.name),
+                    ("Student ID", self.student.student_id),
+                    ("Email", self.student.email)
+                ),
+                on_change_password=self.controller.change_password
+            )
+            self.controller.main_view.show_content.assert_called_once_with(view.return_value)
 
     def test_login_only_opens_a_session_for_valid_credentials(self):
         with patch.object(self.controller, "show_student_main") as show_main:
@@ -163,3 +212,19 @@ class TestGUIStudentController(unittest.TestCase):
             self.service.change_password.assert_called_once_with(self.student, "OldPass1!", "NewPass2!")
             show_account.assert_called_once_with()
         self.success.assert_called_once_with("Password changed successfully.")
+
+
+class TestGUIWelcomeNavigation(unittest.TestCase):
+    def test_role_buttons_open_login_and_back_returns_to_welcome(self):
+        with patch("controllers.gui.gui_uni_app.ErrorView"), \
+                patch("controllers.gui.gui_uni_app.WelcomeView") as welcome:
+            app = GUIUniApp(None, Mock(), Mock())
+            for role in ("student", "admin"):
+                with self.subTest(role=role), patch(
+                    f"controllers.gui.gui_{role}_controller.LoginView"
+                ) as login:
+                    welcome.call_args.kwargs[f"on_{role}"]()
+                    self.assertIs(app.current_view, login.return_value)
+                    login.call_args.kwargs["on_back"]()
+                    self.assertIs(app.current_view, welcome.return_value)
+                    login.return_value.destroy.assert_called_once_with()

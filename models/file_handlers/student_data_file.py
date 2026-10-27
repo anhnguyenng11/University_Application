@@ -123,29 +123,6 @@ class StudentDataFile:
 
         return False
 
-    # remove one student by id
-    # return True if removed, False if id not found
-    def remove_student(self, student_id: str) -> bool:
-        students = self.load_students()
-        new_students = []
-        found = False
-
-        for student in students:
-            if student.student_id == student_id:
-                found = True
-            else:
-                new_students.append(student)
-
-        if not found:
-            return False
-
-        self.save_students(new_students)
-        return True
-
-    # delete all students from the file
-    def clear_all_students(self) -> None:
-        self.save_students([])
-
     def remove_student(self, student_id: str) -> bool:
         students = self.load_students()
         for student in students:
