@@ -25,7 +25,7 @@ class StudentService:
             raise ValueError("Name cannot be empty.")
 
         if not Validator.is_valid_email(email):
-            raise ValueError("Invalid student email.\nEmail suffix: [@student.uts.edu.au]")
+            raise ValueError("Invalid student email.\nEmail suffix: [@university.com]")
 
         if not Validator.is_valid_password(password):
             raise ValueError("Invalid password." \
