@@ -81,7 +81,7 @@ class AdminView(BaseCLIView):
     ) -> None:
         print("PASS/FAIL Partition")
 
-        for status in ["PASS", "FAIL"]:
+        for status in ["PASS", "FAIL", "N/A"]:
             students = partitions[status]
             print(status + " -->")
 
