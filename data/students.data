@@ -75,7 +75,7 @@
         {
             "student_id": "000002",
             "name": "Vladimir Putin",
-            "email": "a",
+            "email": "vladimir.putin@university.com",
             "password": "a",
             "subjects": [
                 {
