@@ -7,6 +7,18 @@ class AdminController:
 
     def start(self) -> None:
         while True:
+            choice = self.view.show_admin_login()
+
+            match choice:
+                case "l":
+                    self.login_admin()
+                case "x":
+                    return
+                case _:
+                    self.view.show_message("Invalid option. Please try again.")
+
+    def start_admin_session(self) -> None:
+        while True:
             choice = self.view.show_admin_menu()
 
             match choice:

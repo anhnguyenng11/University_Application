@@ -13,7 +13,7 @@ class StudentController:
 
     def start(self) -> None:
         while True:
-            choice = self.view.show_student_menu()
+            choice = self.view.show_student_login()
 
             match choice:
                 case "l":

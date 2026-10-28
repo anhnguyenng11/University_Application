@@ -1,5 +1,6 @@
 
 from views.cli.admin_view import AdminView
+from models.admin import Admin
 from models.admin_service import AdminService
 
 
@@ -8,9 +9,35 @@ class AdminController:
         self.view = view
         self.admin_service = admin_service
 
-
     def start(self) -> None:
-        #menu
+        # while True:
+        #     choice = self.view.show_admin_login()
+
+        #     match choice:
+        #         case "l":
+        self.login_admin()
+                # case "x":
+                #     return
+                # case _:
+                #     self.view.show_message("Invalid option. Please try again.")
+
+    def login_admin(self) -> None:
+        email, password = self.view.get_login_details()
+
+        admin = self.admin_service.login(
+            email,
+            password
+        )
+
+        if admin is None:
+            self.view.show_message("Invalid email or password.")
+            return
+
+        self.start_admin_session(admin)
+
+    def start_admin_session(self, admin: Admin) -> None:
+        self.view.show_admin_welcome(admin)
+     
         while True:
             choice = self.view.show_admin_menu()
 

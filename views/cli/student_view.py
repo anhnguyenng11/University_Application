@@ -5,7 +5,7 @@ from views.cli.base_cli_view import BaseCLIView
 
 
 class StudentView(BaseCLIView):
-    def show_student_menu(self) -> str:
+    def show_student_login(self) -> str:
         print("\nStudent System")
         print("(l) Login")
         print("(r) Register")

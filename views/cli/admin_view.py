@@ -1,11 +1,31 @@
 from views.cli.base_cli_view import BaseCLIView
+from models.admin import Admin
 from models.student import Student
 
 
 class AdminView(BaseCLIView):
 
+    # def show_admin_login(self) -> str:
+    #     print("\nAdmin System")
+    #     print("(l) Login")
+    #     print("(x) Exit")
+
+    #     choice = input("Admin System (l/x): ")
+    #     return choice.strip().lower()
+
+    def get_login_details(self) -> tuple[str, str]:
+        print("\nAdmin Login")
+
+        email = input("Email: ")
+        password = input("Password: ")
+
+        return email, password
+
+    def show_admin_welcome(self, admin: Admin) -> None:
+        print("\nWelcome, " + admin.name + "!")
+        print("Student ID:", admin.admin_id)
+
     def show_admin_menu(self) -> str:
-        
         print("\nAdmin System")
         print("(c) Clear Database")
         print("(g) Group Students")
