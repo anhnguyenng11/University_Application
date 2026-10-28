@@ -66,16 +66,16 @@ class StudentService:
 
         return new_student
 
-    def login(self, email: str, password: str) -> Student | None:
+    def login(self, email: str, password: str) -> Student:
         email = email.strip()
 
         student = self.student_data_file.find_student_by_email(email)
 
         if student is None:
-            return None
+            raise ValueError("Student email not found.")
 
         if student.password != password:
-            return None
+            raise ValueError("Wrong password.")
 
         return student
 

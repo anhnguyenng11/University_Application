@@ -1,5 +1,7 @@
 
 from models.subject import Subject
+from utils import constants
+from utils.grade_calculator import calculate_grade
 
 
 class Student:
@@ -25,10 +27,7 @@ class Student:
             raise ValueError("Maximum 4 subjects allowed.")
 
     def can_enroll(self) -> bool:
-        if len(self.subjects) < 4:
-            return True
-        else:
-            return False
+        return len(self.subjects) < 4
 
     def add_subject(self, subject: Subject) -> bool:
         if not self.can_enroll():
@@ -66,19 +65,10 @@ class Student:
         average = total_mark / len(self.subjects)
 
         # Calculate overall grade
-        if average < 50:
-            grade = "Z"
-        elif average < 65:
-            grade = "P"
-        elif average < 75:
-            grade = "C"
-        elif average < 85:
-            grade = "D"
-        else:
-            grade = "HD"
+        grade = calculate_grade(average)
 
         # Calculate overall status
-        if average >= 50:
+        if average >= constants.P_THRESHOLD:
             status = "PASS"
         else:
             status = "FAIL"

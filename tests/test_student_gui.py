@@ -8,7 +8,7 @@ from models.student import Student
 from models.subject import Subject
 from views.gui.account_view import AccountView
 from views.gui.gui_student.dashboard_view import DashboardView
-from views.gui.gui_student.login_view import LoginView
+from views.gui.login_view import LoginView
 from views.gui.gui_student.registration_view import RegistrationView
 from views.gui.main_view import MainView
 from views.gui.gui_student.subjects_view import SubjectsView
@@ -38,7 +38,7 @@ class TestStudentGUIViews(unittest.TestCase):
                 self.widgets["Entry"].side_effect = [Mock(get=Mock(return_value=value)) for value in values]
                 callback = Mock()
                 if view_class is LoginView:
-                    view_class(None, callback, Mock(), Mock())
+                    view_class(None, "Student Login", callback, Mock(), Mock())
                 else:
                     view_class(None, callback, Mock())
                 button = next(call for call in self.widgets["Button"].call_args_list if call.kwargs["text"] == button_text)
@@ -46,6 +46,37 @@ class TestStudentGUIViews(unittest.TestCase):
                 callback.assert_called_once_with(*values)
                 masks = [call.kwargs.get("show", "") for call in self.widgets["Entry"].call_args_list]
                 self.assertEqual(masks, [""] * (len(values) - 1) + ["*"])
+
+    def test_shared_login_keeps_registration_student_only(self):
+        for role in ("Student", "Admin"):
+            with self.subTest(role=role):
+                self.widgets["Button"].reset_mock()
+                self.widgets["Label"].reset_mock()
+                self.widgets["Entry"].side_effect = [
+                    Mock(get=Mock(return_value="example@university.com")),
+                    Mock(get=Mock(return_value="Password123"))
+                ]
+                login, back, register = Mock(), Mock(), Mock()
+                LoginView(
+                    None, f"{role} Login", login, back,
+                    register if role == "Student" else None
+                )
+                buttons = {
+                    call.kwargs["text"]: call.kwargs["command"]
+                    for call in self.widgets["Button"].call_args_list
+                }
+                self.assertEqual(set(buttons), {"Login", "Register", "Back"}
+                                 if role == "Student" else {"Login", "Back"})
+                buttons["Login"]()
+                login.assert_called_once_with("example@university.com", "Password123")
+                buttons["Back"]()
+                back.assert_called_once_with()
+                if role == "Student":
+                    buttons["Register"]()
+                    register.assert_called_once_with()
+                self.assertIn(f"{role} Login", [
+                    call.kwargs["text"] for call in self.widgets["Label"].call_args_list
+                ])
 
     def test_account_submits_three_distinct_password_fields(self):
         callback = Mock()
@@ -146,7 +177,7 @@ class TestGUIStudentController(unittest.TestCase):
                 dashboard.assert_called_once_with()
 
     def test_account_page_receives_student_details_and_callback(self):
-        self.controller.active_student = self.student
+        self.controller.active_account = self.student
         self.controller.main_view = Mock()
         with patch("controllers.gui.gui_student_controller.AccountView") as view:
             self.controller.show_account()
@@ -166,17 +197,19 @@ class TestGUIStudentController(unittest.TestCase):
         with patch.object(self.controller, "show_student_main") as show_main:
             self.controller.login("", "")
             self.service.login.assert_not_called()
-            self.service.login.return_value = None
+            self.service.login.side_effect = ValueError("Wrong password.")
             self.controller.login(self.student.email, "wrong")
-            self.assertIsNone(self.controller.active_student)
+            self.assertIsNone(self.controller.active_account)
             show_main.assert_not_called()
+            self.error.assert_called_with("Wrong password.")
+            self.service.login.side_effect = None
             self.service.login.return_value = self.student
             self.controller.login(self.student.email, "OldPass1!")
-            self.assertIs(self.controller.active_student, self.student)
+            self.assertIs(self.controller.active_account, self.student)
             show_main.assert_called_once_with()
 
     def test_service_errors_do_not_refresh_or_report_success(self):
-        self.controller.active_student = self.student
+        self.controller.active_account = self.student
         for action, arguments, refresh in (
             ("login", (self.student.email, "OldPass1!"), "show_student_main"),
             ("remove_subject", ("00001",), "show_subjects"),
@@ -193,7 +226,7 @@ class TestGUIStudentController(unittest.TestCase):
                     self.success.assert_not_called()
 
     def test_removal_refreshes_after_service_success(self):
-        self.controller.active_student = self.student
+        self.controller.active_account = self.student
         self.service.remove_subject.return_value = True
         with patch.object(self.controller, "show_subjects") as show_subjects:
             self.controller.remove_subject("00001")
@@ -203,7 +236,7 @@ class TestGUIStudentController(unittest.TestCase):
         self.error.assert_not_called()
 
     def test_password_confirmation_stays_in_controller(self):
-        self.controller.active_student = self.student
+        self.controller.active_account = self.student
         self.controller.change_password("", "", "")
         self.controller.change_password("OldPass1!", "NewPass2!", "different")
         self.service.change_password.assert_not_called()

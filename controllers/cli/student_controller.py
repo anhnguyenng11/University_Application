@@ -44,21 +44,18 @@ class StudentController:
             self.view.show_message("Registration failed: " + str(error))
 
     def login_student(self) -> None:
-        email, password = self.view.get_login_details()
+        email, password = self.view.get_login_details("Student")
 
-        student = self.student_service.login(
-            email,
-            password
-        )
-
-        if student is None:
-            self.view.show_message("Invalid email or password.")
+        try:
+            student = self.student_service.login(email, password)
+        except ValueError as error:
+            self.view.show_message(str(error))
             return
 
         self.start_student_session(student)
 
     def start_student_session(self, student: Student) -> None:
-        self.view.show_student_welcome(student)
+        self.view.show_welcome(student.name, student.student_id, "Student")
 
         while True:
             choice = self.view.show_subject_course_menu()

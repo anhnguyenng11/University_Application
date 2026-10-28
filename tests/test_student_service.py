@@ -76,13 +76,13 @@ class TestStudentService(unittest.TestCase):
         )
 
         ok = self.service.login("login@university.com", "Password123")
-        bad_password = self.service.login("login@university.com", "Wrongpass123")
-        missing = self.service.login("missing@university.com", "Password123")
 
         self.assertIsNotNone(ok)
         self.assertEqual(ok.email, "login@university.com")
-        self.assertIsNone(bad_password)
-        self.assertIsNone(missing)
+        with self.assertRaisesRegex(ValueError, "Wrong password"):
+            self.service.login("login@university.com", "Wrongpass123")
+        with self.assertRaisesRegex(ValueError, "Student email not found"):
+            self.service.login("missing@university.com", "Wrongpass123")
 
     def test_enroll_up_to_four_then_block(self):
         student = self.service.register(
@@ -153,9 +153,8 @@ class TestStudentService(unittest.TestCase):
             "Newpass123"
         )
 
-        self.assertIsNone(
+        with self.assertRaisesRegex(ValueError, "Wrong password"):
             self.service.login("password@university.com", "Password123")
-        )
         self.assertIsNotNone(
             self.service.login("password@university.com", "Newpass123")
         )

@@ -4,7 +4,7 @@ from views.gui.base_gui_view import BaseGUIView
 
 
 class LoginView(BaseGUIView):
-    def __init__(self, parent, on_login, on_back):
+    def __init__(self, parent, title, on_login, on_back, on_register=None):
         super().__init__(parent)
 
         style = ttk.Style()
@@ -18,7 +18,7 @@ class LoginView(BaseGUIView):
         # Title
         ttk.Label(
             content,
-            text="Admin Login",
+            text=title,
             font=("", 30, "bold")
         ).pack()
 
@@ -54,9 +54,17 @@ class LoginView(BaseGUIView):
             style="Login.TButton"
         ).place(x=0, y=0, width=450, height=65)
 
+        if on_register is not None:
+            ttk.Button(
+                button_frame,
+                text="Register",
+                command=on_register,
+                style="Login.TButton"
+            ).place(x=0, y=85, width=450, height=65)
+
         ttk.Button(
             button_frame,
             text="Back",
             command=on_back,
             style="Login.TButton"
-        ).place(x=0, y=85, width=450, height=65)
+        ).place(x=0, y=170 if on_register is not None else 85, width=450, height=65)

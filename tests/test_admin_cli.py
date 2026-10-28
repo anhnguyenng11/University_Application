@@ -1,7 +1,7 @@
 import io
 import unittest
 from contextlib import redirect_stdout
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, call, patch
 
 from controllers.cli.admin_controller import AdminController
 from models.admin_service import AdminService
@@ -13,8 +13,20 @@ class TestAdminController(unittest.TestCase):
     def setUp(self):
         # fake view and service for each test
         self.view = Mock(spec=AdminView)
+        self.view.get_login_details.return_value = (
+            "admin@university.com", "Password123"
+        )
         self.service = Mock(spec=AdminService)
         self.controller = AdminController(self.view, self.service)
+
+    def test_failed_login_shows_error_without_starting_session(self):
+        for message in ("Admin email not found.", "Wrong password."):
+            with self.subTest(message=message):
+                self.service.login.side_effect = ValueError(message)
+                self.controller.login_admin()
+                self.view.show_message.assert_called_with(message)
+                self.view.show_welcome.assert_not_called()
+                self.view.show_admin_menu.assert_not_called()
 
     def test_menu_routes_each_operation_then_exits(self):
         for choice, method in (
@@ -36,7 +48,9 @@ class TestAdminController(unittest.TestCase):
         self.view.show_message.assert_called_once_with(
             "Invalid option. Please try again."
         )
-        self.assertEqual(self.service.mock_calls, [])
+        self.assertEqual(self.service.mock_calls, [
+            call.login("admin@university.com", "Password123")
+        ])
 
     def test_read_actions_forward_service_results(self):
         for action, service_method, view_method, result in (
@@ -118,6 +132,16 @@ class TestAdminController(unittest.TestCase):
 
 
 class TestAdminView(unittest.TestCase):
+    def test_shared_welcome_preserves_name_id_and_role_label(self):
+        for role in ("Student", "Admin"):
+            with self.subTest(role=role):
+                output = io.StringIO()
+                with redirect_stdout(output):
+                    AdminView().show_welcome("Example", "000001", role)
+                self.assertEqual(
+                    output.getvalue(), f"\nWelcome, Example!\n{role} ID: 000001\n"
+                )
+
     def test_partition_includes_ungraded_student_without_password(self):
         student = Student(
             "000001", "Test Student", "test@university.com", "Password123"

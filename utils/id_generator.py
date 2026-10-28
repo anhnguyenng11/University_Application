@@ -5,43 +5,32 @@ import random
 class IDGenerator:
     @staticmethod
     def generate_student_id(existing_ids: set[str]) -> str:
-        if len(existing_ids) >= 999999:
-            raise ValueError("No available student IDs.")
-
-        number = random.randint(1, 999999)
-        start_number = number
-
-        while True:
-            student_id = str(number).zfill(6)
-
-            if student_id not in existing_ids:
-                return student_id
-
-            number = (number % 999999) + 1
-
-            if number == start_number:
-                raise ValueError("No available student IDs.")
+        return IDGenerator._generate_id(existing_ids, 6, "student")
 
     @staticmethod
     def generate_subject_id(existing_ids: set[str]) -> str:
-        if len(existing_ids) >= 999:
-            raise ValueError("No available subject IDs.")
+        return IDGenerator._generate_id(existing_ids, 3, "subject")
 
-        number = random.randint(1, 999)
+    @staticmethod
+    def _generate_id(existing_ids: set[str], digits: int, label: str) -> str:
+        maximum = 10 ** digits - 1
+        if len(existing_ids) >= maximum:
+            raise ValueError(f"No available {label} IDs.")
+
+        number = random.randint(1, maximum)
         start_number = number
 
         while True:
-            subject_id = str(number).zfill(3)
+            generated_id = str(number).zfill(digits)
 
-            if subject_id not in existing_ids:
-                return subject_id
+            if generated_id not in existing_ids:
+                return generated_id
 
-            number = (number % 999) + 1
+            number = (number % maximum) + 1
 
             if number == start_number:
-                raise ValueError("No available subject IDs.")
+                raise ValueError(f"No available {label} IDs.")
 
     @staticmethod
     def generate_mark() -> int:
-        mark = random.randint(25, 100)
-        return mark
+        return random.randint(25, 100)

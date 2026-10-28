@@ -29,6 +29,10 @@ class TestAdminPassword(unittest.TestCase):
         self.service = AdminService(self.storage, self.students)
         self.admin = self.service.login("one@university.com", "Oldpass123")
 
+    def test_login_rejects_unknown_email_before_checking_password(self):
+        with self.assertRaisesRegex(ValueError, "Admin email not found"):
+            self.service.login("missing@university.com", "Wrongpass123")
+
     def test_change_persists_and_preserves_other_accounts(self):
         self.service.change_password(self.admin, "Oldpass123", "Newpass456")
 
@@ -103,7 +107,7 @@ class TestAdminAccountController(unittest.TestCase):
         self.controller = GUIAdminController(
             None, self.service, Mock(), Mock(), self.error, self.success
         )
-        self.controller.active_admin = Admin(
+        self.controller.active_account = Admin(
             "001", "Test Admin", "admin@university.com", "Oldpass123"
         )
         self.controller.main_view = Mock()
@@ -132,9 +136,9 @@ class TestAdminAccountController(unittest.TestCase):
                 self.controller.main_view.content_frame,
                 information_title="Admin Information",
                 information_rows=(
-                    ("Name", self.controller.active_admin.name),
-                    ("Admin ID", self.controller.active_admin.admin_id),
-                    ("Email", self.controller.active_admin.email)
+                    ("Name", self.controller.active_account.name),
+                    ("Admin ID", self.controller.active_account.admin_id),
+                    ("Email", self.controller.active_account.email)
                 ),
                 on_change_password=self.controller.change_password
             )
@@ -167,7 +171,7 @@ class TestAdminAccountController(unittest.TestCase):
         with patch.object(self.controller, "show_account") as refresh:
             self.controller.change_password("Oldpass123", "Newpass456", "Newpass456")
             self.service.change_password.assert_called_once_with(
-                self.controller.active_admin, "Oldpass123", "Newpass456"
+                self.controller.active_account, "Oldpass123", "Newpass456"
             )
             refresh.assert_called_once_with()
         self.success.assert_called_once_with("Password changed successfully.")

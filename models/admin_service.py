@@ -15,17 +15,16 @@ class AdminService:
         self.admin_data_file = admin_data_file
         self.student_data_file = student_data_file
 
-    def login(self, email: str, password: str) -> Admin | None:
+    def login(self, email: str, password: str) -> Admin:
         email = email.strip()
 
         admin = self.admin_data_file.find_admin_by_email(email)
 
         if admin is None:
-            return None
+            raise ValueError("Admin email not found.")
 
         if admin.password != password:
             raise ValueError("Wrong password.")
-            
 
         return admin
 

@@ -10,33 +10,21 @@ class AdminController:
         self.admin_service = admin_service
 
     def start(self) -> None:
-        # while True:
-        #     choice = self.view.show_admin_login()
-
-        #     match choice:
-        #         case "l":
         self.login_admin()
-                # case "x":
-                #     return
-                # case _:
-                #     self.view.show_message("Invalid option. Please try again.")
 
     def login_admin(self) -> None:
-        email, password = self.view.get_login_details()
+        email, password = self.view.get_login_details("Admin")
 
-        admin = self.admin_service.login(
-            email,
-            password
-        )
-
-        if admin is None:
-            self.view.show_message("Invalid email or password.")
+        try:
+            admin = self.admin_service.login(email, password)
+        except ValueError as error:
+            self.view.show_message(str(error))
             return
 
         self.start_admin_session(admin)
 
     def start_admin_session(self, admin: Admin) -> None:
-        self.view.show_admin_welcome(admin)
+        self.view.show_welcome(admin.name, admin.admin_id, "Admin")
      
         while True:
             choice = self.view.show_admin_menu()

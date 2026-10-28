@@ -23,14 +23,6 @@ class StudentView(BaseCLIView):
 
         return name, email, password
 
-    def get_login_details(self) -> tuple[str, str]:
-        print("\nStudent Login")
-
-        email = input("Email: ")
-        password = input("Password: ")
-
-        return email, password
-
     def show_subject_course_menu(self) -> str:
         print("\nSubject Course Menu")
         print("(c) Change Password")
@@ -56,10 +48,6 @@ class StudentView(BaseCLIView):
         confirm_password = input("Confirm New Password: ")
 
         return current_password, new_password, confirm_password
-
-    def show_student_welcome(self, student: Student) -> None:
-        print("\nWelcome, " + student.name + "!")
-        print("Student ID:", student.student_id)
 
     def show_registration_success(self, student: Student) -> None:
         print("\nRegistration successful!")
