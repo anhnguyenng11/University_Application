@@ -1,10 +1,10 @@
 
-from views.cli.cli_view import CLIView
+from views.cli.admin_view import AdminView
 from models.admin_service import AdminService
 
 
 class AdminController:
-    def __init__(self, view: CLIView, admin_service: AdminService) -> None:
+    def __init__(self, view: AdminView, admin_service: AdminService) -> None:
         self.view = view
         self.admin_service = admin_service
 
@@ -14,27 +14,33 @@ class AdminController:
         while True:
             choice = self.view.show_admin_menu()
 
-            if choice == "c":
-                self.clear_database()
+            try:
+                if choice == "c":
+                    self.clear_database()
 
-            elif choice == "g":
-                self.group_students()
+                elif choice == "g":
+                    self.group_students()
 
-            elif choice == "p":
-                self.partition_students()
+                elif choice == "p":
+                    self.partition_students()
 
-            elif choice == "r":
-                self.remove_student()
+                elif choice == "r":
+                    self.remove_student()
 
-            elif choice == "s":
-                self.show_students()
+                elif choice == "s":
+                    self.show_students()
 
-            elif choice == "x":
-                # go back to university menu
-                return
+                elif choice == "x":
+                    # go back to university menu
+                    return
 
-            else:
-                self.view.show_message("Invalid option. Please try again.")
+                else:
+                    self.view.show_message("Invalid option. Please try again.")
+                    
+            except (ValueError, OSError) as error:
+                self.view.show_message(
+                    "Admin operation failed: " + str(error)
+                )
 
     # show all students
     def show_students(self) -> None:
@@ -45,7 +51,7 @@ class AdminController:
     def group_students(self) -> None:
         groups = self.admin_service.group_students_by_grade()
         self.view.show_grade_grouping(groups)
-
+ 
     #  PASS / FAIL
     def partition_students(self) -> None:
         partitions = self.admin_service.partition_students_by_status()
@@ -54,6 +60,10 @@ class AdminController:
     #  remove one student
     def remove_student(self) -> None:
         student_id = self.view.get_student_id_to_remove()
+        
+        if not student_id:
+            self.view.show_message("Student ID cannot be empty.")
+            return
         removed = self.admin_service.remove_student(student_id)
 
         if removed:
