@@ -18,3 +18,4 @@ STUDENT_ID_LENGTH = 6
 SUBJECT_ID_LENGTH = 3
 
 BREAK_LINE = "-" * 30
+INVALID_OPTION_MESSAGE = "Invalid option. Please try again."

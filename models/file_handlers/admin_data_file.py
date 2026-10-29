@@ -1,18 +1,20 @@
-from models.admin import Admin
+from models import Admin
 from models.file_handlers.database import Database
-from utils.constants import ADMIN_DATABASE
-
+from utils import constants
 
 class AdminDataFile:
     def __init__(self, data_folder=None) -> None:
-        self.database = Database(
-            ADMIN_DATABASE,
-            {"admins": []},
-            data_folder
-        )
+        """
+        Initializes the AdminDataFile for handling admin data.
+        """
+        self._database = Database(constants.ADMIN_DATABASE, {"admins": []}, data_folder)
 
     def load_admins(self) -> list[Admin]:
-        data = self.database.load_data()
+        """
+        Loads the list of Admin objects from the database.
+        Returns: A list of Admin objects.
+        """
+        data = self._database.load_data()
         records = data.get("admins")
 
         if not isinstance(records, list):
@@ -52,6 +54,10 @@ class AdminDataFile:
         return admins
 
     def find_admin_by_email(self, email: str) -> Admin | None:
+        """
+        Finds an Admin object by email.
+        Returns: The Admin object if found, otherwise None.
+        """
         for admin in self.load_admins():
             if admin.email.lower() == email.lower():
                 return admin
@@ -59,6 +65,10 @@ class AdminDataFile:
         return None
 
     def update_admin(self, updated_admin: Admin) -> bool:
+        """
+        Updates an Admin object in the database.
+        Returns: True if the update is successful, otherwise False.
+        """
         admins = self.load_admins()
 
         for index, admin in enumerate(admins):
@@ -73,7 +83,7 @@ class AdminDataFile:
                     }
                     for item in admins
                 ]
-                self.database.save_data({"admins": records})
+                self._database.save_data({"admins": records})
                 return True
 
         return False

@@ -1,8 +1,8 @@
-
-from views.cli.cli_view import CLIView
-from controllers.cli.student_controller import StudentController
-from controllers.cli.admin_controller import AdminController
-
+"""
+This module defines the CLIUniApp class, which serves as the entry point for the command-line interface of the university application.
+"""
+from views import CLIView
+from controllers import StudentController, AdminController
 
 class CLIUniApp:
     def __init__(
