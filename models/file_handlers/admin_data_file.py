@@ -1,11 +1,12 @@
 from models.admin import Admin
 from models.file_handlers.database import Database
+from utils.constants import ADMIN_DATABASE
 
 
 class AdminDataFile:
     def __init__(self, data_folder=None) -> None:
         self.database = Database(
-            "admins.data",
+            ADMIN_DATABASE,
             {"admins": []},
             data_folder
         )

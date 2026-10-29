@@ -75,7 +75,7 @@
         {
             "student_id": "000002",
             "name": "Vladimir Putin",
-            "email": "a",
+            "email": "vladimir.putin@university.com",
             "password": "a",
             "subjects": [
                 {
@@ -119,13 +119,6 @@
                     "mark": 59
                 }
             ]
-        },
-        {
-            "student_id": "000000",
-            "name": "Brian Wilson",
-            "email": "w@gmail.com",
-            "password": "Welcome123",
-            "subjects": []
         },
         {
             "student_id": "500003",

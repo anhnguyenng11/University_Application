@@ -17,7 +17,7 @@ class StudentsView(ttk.Frame):
 
         # Page title
         ttk.Label(
-            self, text=f"View All Students [{count}]", font=("", 20, "bold")
+            self, text=f"View Students [{count}]", font=("", 20, "bold")
         ).pack(anchor="w", pady=(0, 15))
 
         # Toolbar

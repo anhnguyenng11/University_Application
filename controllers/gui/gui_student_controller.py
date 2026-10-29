@@ -1,4 +1,5 @@
-from views.gui.gui_student.login_view import LoginView
+from views.gui.login_view import LoginView
+from controllers.gui.base_gui_controller import BaseGUIController
 from views.gui.gui_student.registration_view import RegistrationView
 from views.gui.main_view import MainView
 from views.gui.gui_student.dashboard_view import DashboardView
@@ -6,28 +7,11 @@ from views.gui.gui_student.subjects_view import SubjectsView
 from views.gui.account_view import AccountView
 
 
-class GUIStudentController:
-    def __init__(
-        self,
-        root,
-        student_service,
-        show_view,
-        on_exit,
-        on_error,
-        on_success
-    ):
-        self.root = root
-        self.student_service = student_service
-        self.show_view = show_view
-        self.on_exit = on_exit
-        self.on_error = on_error
-        self.on_success = on_success
-
-        self.active_student = None
-
+class GUIStudentController(BaseGUIController):
     def show_login(self):
         view = LoginView(
             self.root,
+            title="Student Login",
             on_login=self.login,
             on_register=self.show_registration,
             on_back=self.on_exit
@@ -48,22 +32,18 @@ class GUIStudentController:
             return
 
         try:
-            student = self.student_service.login(email, password)
+            student = self.service.login(email, password)
 
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
 
-        if student is None:
-            self.on_error("Invalid email or password.")
-            return
-
-        self.active_student = student
+        self.active_account = student
         self.show_student_main()
 
     def register(self, name, email, password):
         try:
-            student = self.student_service.register(name, email, password)
+            student = self.service.register(name, email, password)
 
         except (ValueError, OSError) as error:
             self.on_error(str(error))
@@ -73,7 +53,7 @@ class GUIStudentController:
         self.on_success(f"Registration successful. Your student ID is {student.student_id}.")
 
     def logout(self):
-        self.active_student = None
+        self.active_account = None
         self.show_login()
 
     def show_student_main(self):
@@ -92,10 +72,10 @@ class GUIStudentController:
         self.show_dashboard()
 
     def show_dashboard(self):
-        overall = self.active_student.get_overall_status()
+        overall = self.active_account.get_overall_status()
         view = DashboardView(
             self.main_view.content_frame,
-            student=self.active_student,
+            student=self.active_account,
             overall=overall
         )
 
@@ -104,7 +84,7 @@ class GUIStudentController:
     def show_subjects(self):
         view = SubjectsView(
             self.main_view.content_frame,
-            student=self.active_student,
+            student=self.active_account,
             on_enroll=self.enroll_subject,
             on_remove=self.remove_subject
         )
@@ -113,8 +93,8 @@ class GUIStudentController:
 
     def enroll_subject(self):
         try:
-            subject = self.student_service.enroll_subject(
-                self.active_student
+            subject = self.service.enroll_subject(
+                self.active_account
             )
 
         except (ValueError, OSError) as error:
@@ -128,8 +108,8 @@ class GUIStudentController:
 
     def remove_subject(self, subject_id):
         try:
-            self.student_service.remove_subject(
-                self.active_student,
+            self.service.remove_subject(
+                self.active_account,
                 subject_id
             )
 
@@ -145,34 +125,11 @@ class GUIStudentController:
             self.main_view.content_frame,
             information_title="Student Information",
             information_rows=(
-                ("Name", self.active_student.name),
-                ("Student ID", self.active_student.student_id),
-                ("Email", self.active_student.email)
+                ("Name", self.active_account.name),
+                ("Student ID", self.active_account.student_id),
+                ("Email", self.active_account.email)
             ),
             on_change_password=self.change_password
         )
 
         self.main_view.show_content(view)
-
-    def change_password(self, current_password, new_password, confirm_password):
-        if not current_password or not new_password or not confirm_password:
-            self.on_error("All password fields are required.")
-            return
-
-        if new_password != confirm_password:
-            self.on_error("Passwords do not match.")
-            return
-
-        try:
-            self.student_service.change_password(
-                self.active_student,
-                current_password,
-                new_password
-            )
-
-        except (ValueError, OSError) as error:
-            self.on_error(str(error))
-            return
-
-        self.show_account()
-        self.on_success("Password changed successfully.")

@@ -1,4 +1,6 @@
-
+"""
+This is the main entry point of the application. It initializes the models, views, and controllers, and starts the CLI application.
+"""
 from views.cli.cli_view import CLIView
 from views.cli.student_view import StudentView
 from views.cli.admin_view import AdminView
@@ -14,15 +16,21 @@ from models.admin_service import AdminService
 from models.file_handlers.admin_data_file import AdminDataFile
 
 def main() -> None:
+    """
+    Main function to initialize and start the university application CLI.
+    """
 
     # Models
-        # Data handlers
+        # Getting data files ready for use
     student_data_file = StudentDataFile()
     admin_data_file = AdminDataFile()
 
-        # Services
+        # Passing data files to services for logic handling
     student_service = StudentService(student_data_file)
-    admin_service = AdminService(admin_data_file, student_data_file)
+    admin_service = AdminService(
+        admin_data_file, 
+        student_data_file
+    )
 
     # Views
     cli_view = CLIView()

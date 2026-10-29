@@ -13,7 +13,7 @@ class GUIUniApp:
 
         self.student_controller = GUIStudentController(
             root=root,
-            student_service=student_service,
+            service=student_service,
             show_view=self.show_view,
             on_exit=self.show_welcome,
             on_error=self.error_view.show_error,
@@ -22,7 +22,7 @@ class GUIUniApp:
         
         self.admin_controller = GUIAdminController(
             root=root,
-            admin_service=admin_service,
+            service=admin_service,
             show_view=self.show_view,
             on_exit=self.show_welcome,
             on_error=self.error_view.show_error,

@@ -1,26 +1,20 @@
-from views.gui.gui_admin.login_view import LoginView
+from views.gui.login_view import LoginView
+from controllers.gui.base_gui_controller import BaseGUIController
 from views.gui.main_view import MainView
 from views.gui.gui_admin.students_view import StudentsView
 from views.gui.gui_admin.search_student_view import SearchStudentsView
 from views.gui.account_view import AccountView
 
-class GUIAdminController:
-    def __init__(
-        self, root, admin_service, show_view, on_exit, on_error, on_success
-    ):
-        self.root = root
-        self.admin_service = admin_service
-        self.show_view = show_view
-        self.on_exit = on_exit
-        self.on_error = on_error
-        self.on_success = on_success
-        self.active_admin = None
+class GUIAdminController(BaseGUIController):
+    def __init__(self, root, service, show_view, on_exit, on_error, on_success):
+        super().__init__(root, service, show_view, on_exit, on_error, on_success)
         self.student_mode = "all"
 
     def show_login(self):
-        self.active_admin = None
+        self.active_account = None
         view = LoginView(
             self.root,
+            title="Admin Login",
             on_login=self.login,
             on_back=self.on_exit
         )
@@ -34,16 +28,12 @@ class GUIAdminController:
             return
 
         try:
-            admin = self.admin_service.login(email, password)
+            admin = self.service.login(email, password)
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
 
-        if admin is None:
-            self.on_error("Invalid email or password.")
-            return
-
-        self.active_admin = admin
+        self.active_account = admin
         self.show_admin_main()
 
     def show_admin_main(self):
@@ -63,11 +53,11 @@ class GUIAdminController:
     def show_students(self, mode="all"):
         try:
             if mode == "grade":
-                groups = self.admin_service.group_students_by_grade()
+                groups = self.service.group_students_by_grade()
             elif mode == "status":
-                groups = self.admin_service.partition_students_by_status()
+                groups = self.service.partition_students_by_status()
             else:
-                groups = {"": self.admin_service.get_all_students()}
+                groups = {"": self.service.get_all_students()}
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return False
@@ -96,7 +86,7 @@ class GUIAdminController:
 
     def search_student(self, student_id, email):
         try:
-            student = self.admin_service.search_student(student_id, email)
+            student = self.service.search_student(student_id, email)
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
@@ -105,7 +95,7 @@ class GUIAdminController:
 
     def remove_student(self, student_id):
         try:
-            removed = self.admin_service.remove_student(student_id)
+            removed = self.service.remove_student(student_id)
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
@@ -123,7 +113,7 @@ class GUIAdminController:
 
     def clear_all_students(self):
         try:
-            self.admin_service.clear_all_students()
+            self.service.clear_all_students()
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
@@ -136,35 +126,13 @@ class GUIAdminController:
             self.main_view.content_frame,
             information_title="Admin Information",
             information_rows=(
-                ("Name", self.active_admin.name),
-                ("Admin ID", self.active_admin.admin_id),
-                ("Email", self.active_admin.email)
+                ("Name", self.active_account.name),
+                ("Admin ID", self.active_account.admin_id),
+                ("Email", self.active_account.email)
             ),
             on_change_password=self.change_password
         )
         self.main_view.show_content(view)
-
-    def change_password(self, current_password, new_password, confirm_password):
-        if not current_password or not new_password or not confirm_password:
-            self.on_error("All password fields are required.")
-            return
-
-        if new_password != confirm_password:
-            self.on_error("Passwords do not match.")
-            return
-
-        try:
-            self.admin_service.change_password(
-                self.active_admin,
-                current_password,
-                new_password
-            )
-        except (ValueError, OSError) as error:
-            self.on_error(str(error))
-            return
-
-        self.show_account()
-        self.on_success("Password changed successfully.")
 
     def logout(self):
         self.show_login()

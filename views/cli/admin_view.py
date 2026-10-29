@@ -1,11 +1,27 @@
-from views.base_cli_view import BaseCLIView
+"""
+This module contains the AdminView class, which provides methods for displaying the admin menu and related information in the CLI.
+"""
+from views.cli.cli_view import CLIView
 from models.student import Student
 
-
-class AdminView(BaseCLIView):
+class AdminView(CLIView):
+    """
+    Displays the admin menu and related information in the CLI.
+    Methods:
+    - show_admin_menu: Displays the admin menu and prompts the admin for their choice.
+    - show_student_list: Displays the list of students in the system.
+    - student_grade_text: Returns a formatted string representing the student's name, ID, grade, and average mark.
+    - show_grade_grouping: Displays the grouping of students based on their grades.
+    - show_pass_fail_partition: Displays the partitioning of students based on their pass/fail status.
+    - get_student_id_to_remove: Prompts the admin for the student ID they want to remove.
+    - show_student_removed: Displays a message indicating that the student with the given ID has been removed.
+    - confirm_clear_database: Prompts the admin to confirm if they want to clear the database.
+    """
 
     def show_admin_menu(self) -> str:
-        
+        """
+        Displays the admin menu and prompts the admin for their choice.
+        """
         print("\nAdmin System")
         print("(c) Clear Database")
         print("(g) Group Students")
@@ -15,10 +31,14 @@ class AdminView(BaseCLIView):
         print("(x) Exit")
 
         choice = input("Admin System (c/g/p/r/s/x): ")
+        # Accept both uppercase and lowercase inputs for the choice
         return choice.strip().lower()
 
 
     def show_student_list(self, students: list[Student]) -> None:
+        """
+        Displays the list of students in the system, including their names, IDs, and email addresses.
+        """
         print("Student List")
 
         if len(students) == 0:
@@ -34,9 +54,11 @@ class AdminView(BaseCLIView):
                 + student.email
             )
 
-    # used by group and partition
-    # example: John Smith :: 673358 --> GRADE: C - MARK: 69.25
     def student_grade_text(self, student: Student) -> str:
+        """
+        Returns a formatted string representing the student's name, ID, grade, and average mark.
+        Example: John Smith :: 673358 --> GRADE: C - MARK: 69.25
+        """
         average, status, grade = student.get_overall_status()
 
         if average is None:
@@ -55,6 +77,9 @@ class AdminView(BaseCLIView):
         )
 
     def show_grade_grouping(self, groups: dict[str, list[Student]]) -> None:
+        """
+        Displays the grouping of students based on their grades (HD, D, C, P, Z, N/A).
+        """
         print("Grade Grouping")
 
         found_any = False
@@ -79,9 +104,12 @@ class AdminView(BaseCLIView):
         self,
         partitions: dict[str, list[Student]]
     ) -> None:
+        """
+        Displays the partitioning of students based on their pass/fail status (PASS, FAIL, N/A).
+        """
         print("PASS/FAIL Partition")
 
-        for status in ["PASS", "FAIL"]:
+        for status in ["PASS", "FAIL", "N/A"]:
             students = partitions[status]
             print(status + " -->")
 
@@ -93,22 +121,25 @@ class AdminView(BaseCLIView):
                     print("  " + self.student_grade_text(student))
 
     def get_student_id_to_remove(self) -> str:
+        """
+        Prompts the admin for the student ID they want to remove.
+        """
         student_id = input("Remove by ID: ")
         return student_id.strip()
 
     def show_student_removed(self, student_id: str) -> None:
+        """
+        Displays a message indicating that the student with the given ID has been removed.
+        """
         print("Removing student " + student_id + " Account")
 
     def confirm_clear_database(self) -> bool:
+        """
+        Prompts the admin to confirm if they want to clear the database.
+        """
         answer = input(
             "Are you sure you want to clear the database (Y)ES/(N)O: "
         )
         answer = answer.strip().lower()
 
-        if answer == "y":
-            return True
-
-        if answer == "yes":
-            return True
-
-        return False
+        return answer in ("y", "yes")

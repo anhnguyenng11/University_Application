@@ -1,12 +1,13 @@
 from models.file_handlers.database import Database
 from models.student import Student
 from models.subject import Subject
+from utils.constants import STUDENT_DATABASE
 
 
 class StudentDataFile:
     def __init__(self, data_folder=None) -> None:
         self.database = Database(
-            "students.data",
+            STUDENT_DATABASE,
             {"students": []},
             data_folder
         )
@@ -58,12 +59,7 @@ class StudentDataFile:
         return None
 
     def email_exists(self, email: str) -> bool:
-        student = self.find_student_by_email(email)
-
-        if student is not None:
-            return True
-
-        return False
+        return self.find_student_by_email(email) is not None
 
     def save_students(self, students: list[Student]) -> None:
         student_records = []

@@ -7,9 +7,14 @@ STUDENT_DATABASE = "students.data"
 ADMIN_DATABASE = "admins.data"
 
 EMAIL_REGEX = r"[A-Za-z0-9._%+-]+@university\.com"
-PASSWORD_REGEX = r"^[A-Z][a-zA-Z]{5,}[0-9]{3,}$"
+PASSWORD_REGEX = r"^[A-Z][a-zA-Z]{4,}[0-9]{3,}$"
 
 HD_THRESHOLD = 85
 D_THRESHOLD = 75
 C_THRESHOLD = 65
 P_THRESHOLD = 50
+
+STUDENT_ID_LENGTH = 6
+SUBJECT_ID_LENGTH = 3
+
+BREAK_LINE = "-" * 30
