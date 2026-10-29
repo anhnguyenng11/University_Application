@@ -1,3 +1,6 @@
+"""
+This module defines the Subject class, which represents a subject in the university application.
+"""
 from utils import constants
 from utils.grade_calculator import calculate_grade
 
