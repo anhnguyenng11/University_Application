@@ -24,10 +24,17 @@ GRADE_DEFINITIONS = {
 
 STUDENT_ID_LENGTH = 6
 SUBJECT_ID_LENGTH = 3
+SUBJECT_LIMIT = 4
 
 # Message templates, to be shared across both CLI and GUI interfaces
 BREAK_LINE = "-" * 30
 INVALID_OPTION_MESSAGE = "Invalid option. Please try again."
+SUBJECT_LIMIT_MESSAGE = f"Cannot enroll in more than {SUBJECT_LIMIT} subjects."
+PASSWORD_REQUIREMENTS_MESSAGE = "A password should meet the following criteria: \
+    \n(i) It starts with an upper-case character,  \
+    \n(ii) It contains at least five (5) letters,  \
+    \n(iii) It is followed by three (3) or more digits."
+
 
 
 # GUI Pallette

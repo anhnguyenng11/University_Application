@@ -2,6 +2,7 @@
 from models.student import Student
 from models.subject import Subject
 from models.file_handlers.student_data_file import StudentDataFile
+from utils import constants
 from utils.validator import Validator
 from utils.id_generator import IDGenerator
 
@@ -16,6 +17,11 @@ class StudentService:
         email: str,
         password: str
     ) -> Student:
+        """
+        Registers a new student with the provided name, email, and password.
+        Raises ValueError if the name, email, or password is invalid or if the email is already registered.
+        Returns the newly created Student object.
+        """
 
         name = name.strip()
         email = email.strip()
@@ -28,12 +34,7 @@ class StudentService:
             raise ValueError("Invalid student email.\nEmail suffix: [@university.com]")
 
         if not Validator.is_valid_password(password):
-            raise ValueError("Invalid password." \
-            "\nPassword should contain:" \
-            "\n- At least 8 characters" \
-            "\n- At least 1 symbol (!, @, #, ...)" \
-            "\n- 1 uppercase and 1 lowercase" \
-            )
+            raise ValueError("Invalid password. " + constants.PASSWORD_REQUIREMENTS_MESSAGE)
 
         # Step 2: Check duplicate email
         if self.student_data_file.email_exists(email):
@@ -67,6 +68,11 @@ class StudentService:
         return new_student
 
     def login(self, email: str, password: str) -> Student:
+        """
+        Authenticates a student using email and password. Calls the StudentDataFile model to find the student.
+        Raises ValueError if the email is not found or the password is incorrect.
+        Returns the authenticated Student object.
+        """
         email = email.strip()
 
         student = self.student_data_file.find_student_by_email(email)
@@ -81,6 +87,11 @@ class StudentService:
 
     
     def enroll_subject(self, student: Student) -> Subject:
+        """
+        Enrolls the currently active student in a new subject, given a valid student ID, and they are not over their enrollment limit. Calls the StudentDataFile model to update the student's subjects.
+        Raises ValueError if the student is not found, if the student has reached the maximum number of subjects, or if the enrollment fails.
+        Returns the newly enrolled Subject object.
+        """
         # Step 1: Load the student's latest saved record
         saved_student = self.student_data_file.find_student_by_id(
             student.student_id
@@ -91,7 +102,7 @@ class StudentService:
 
         # Step 2: Check enrollment limit
         if not saved_student.can_enroll():
-            raise ValueError("Maximum 4 subjects allowed.")
+            raise ValueError(constants.SUBJECT_LIMIT_MESSAGE)
 
         # Step 3: Collect existing subject IDs
         existing_ids = set()
@@ -125,6 +136,11 @@ class StudentService:
 
     
     def remove_subject(self, student: Student, subject_id: str) -> bool:
+        """
+        Removes a subject from the currently active student's enrolled subjects, given a valid student ID and subject ID. Calls the StudentDataFile model to update the student's subjects.
+        Raises ValueError if the student is not found, if the subject is not found, or if the removal fails.
+        Returns True if the removal is successful, otherwise False.
+        """
         subject_id = subject_id.strip()
 
         # Load the latest student record
@@ -157,6 +173,10 @@ class StudentService:
         current_password: str,
         new_password: str
     ) -> None:
+        """
+        Changes the password of a student, given their email is valid and the current password matches. The new password must meet specific criteria.
+        Raises ValueError if any of the conditions are not met.
+        """
 
         # Step 1: Load the latest student record
         saved_student = self.student_data_file.find_student_by_id(student.student_id)
@@ -170,20 +190,14 @@ class StudentService:
 
         # Step 3: Validate the new password
         if not Validator.is_valid_password(new_password):
-            raise ValueError(
-                "New password does not meet requirements." \
-                "\nPassword should contain:" \
-                "\n- At least 8 characters" \
-                "\n- At least 1 symbol (!, @, #, ...)" \
-                "\n- 1 uppercase and 1 lowercase" \
-            )
+            raise ValueError("New password does not meet requirements. " + constants.PASSWORD_REQUIREMENTS_MESSAGE)          
 
         # Step 4: Prevent reusing the current password
         if saved_student.password == new_password:
             raise ValueError("New password must be different.")
 
         # Step 5: Update the Student object
-        saved_student.change_password(new_password)
+        saved_student._change_password(new_password)
 
         # Step 6: Save changes to JSON
         success = self.student_data_file.update_student(saved_student)

@@ -1,4 +1,5 @@
 class Admin:
+    """ Represents an admin user with an ID, name, email, and password."""
     def __init__(
         self,
         admin_id: str,
