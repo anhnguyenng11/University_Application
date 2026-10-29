@@ -1,11 +1,13 @@
-from views.gui.login_view import LoginView
+"""
+Warning: This module is not a part of the assignment.
+"""
+from views import LoginView, MainView, StudentsView, SearchStudentsView, AccountView
 from controllers.gui.base_gui_controller import BaseGUIController
-from views.gui.main_view import MainView
-from views.gui.gui_admin.students_view import StudentsView
-from views.gui.gui_admin.search_student_view import SearchStudentsView
-from views.gui.account_view import AccountView
 
 class GUIAdminController(BaseGUIController):
+    """
+    GUIAdminController is responsible for managing the admin interface of the university application.
+    """
     def __init__(self, root, service, show_view, on_exit, on_error, on_success):
         super().__init__(root, service, show_view, on_exit, on_error, on_success)
         self.student_mode = "all"

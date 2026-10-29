@@ -4,8 +4,19 @@ from models.student import Student
 from models.file_handlers.student_data_file import StudentDataFile
 from utils.validator import Validator
 
-
 class AdminService:
+    """
+    A service class for managing admin operations.
+    Methods:
+    - login: Authenticates an admin using email and password.
+    - change_password: Changes the password of an admin.
+    - get_all_students: Retrieves all student records.
+    - group_students_by_grade: Groups students by their overall grade.
+    - partition_students_by_status: Partitions students by their overall status.
+    - remove_student: Removes a student from the database.
+    - clear_all_students: Clears all student records from the database.
+    - search_student: Searches for a student by ID and email.
+    """
 
     def __init__(
         self,
@@ -16,6 +27,10 @@ class AdminService:
         self.student_data_file = student_data_file
 
     def login(self, email: str, password: str) -> Admin:
+        """
+        Authenticates an admin using email and password.
+        Raises ValueError if the email is not found or the password is incorrect.
+        """
         email = email.strip()
 
         admin = self.admin_data_file.find_admin_by_email(email)
@@ -28,9 +43,11 @@ class AdminService:
 
         return admin
 
-    def change_password(
-        self, admin: Admin, current_password: str, new_password: str
-    ) -> None:
+    def change_password(self, admin: Admin, current_password: str, new_password: str) -> None:
+        """
+        Changes the password of an admin, given their email is valid and the current password matches. The new password must meet specific criteria.
+        Raises ValueError if any of the conditions are not met.
+        """
         saved_admin = self.admin_data_file.find_admin_by_email(admin.email)
 
         if saved_admin is None or saved_admin.admin_id != admin.admin_id:
@@ -56,9 +73,16 @@ class AdminService:
         admin.password = saved_admin.password
 
     def get_all_students(self) -> list[Student]:
+        """
+        Retrieves all student records from the database. Calls the StudentDataFile model to load the students.
+        Returns: A list of Student objects.
+        """
         return self.student_data_file.load_students()
 
     def group_students_by_grade(self) -> dict[str, list[Student]]:
+        """
+        Call get_all_students to retrieve the list of students and then group them by their overall grade.
+        """
         students = self.get_all_students()
 
         groups = {
@@ -77,6 +101,9 @@ class AdminService:
         return groups
 
     def partition_students_by_status(self) -> dict[str, list[Student]]:
+        """
+        Call get_all_students to retrieve the list of students and then partition them by their overall status (PASS, FAIL, N/A).
+        """
         students = self.get_all_students()
 
         partitions = {
@@ -92,12 +119,23 @@ class AdminService:
         return partitions
 
     def remove_student(self, student_id: str) -> bool:
+        """
+        Removes a student from the database. Calls the StudentDataFile model to remove the student.
+        Returns: True if the removal is successful, otherwise False.
+        """
         return self.student_data_file.remove_student(student_id)
 
     def clear_all_students(self) -> None:
+        """
+        Clears all student records from the database. Calls the StudentDataFile model to clear the students.
+        """
         self.student_data_file.clear_all_students()
 
     def search_student(self, student_id: str, email: str) -> Student | None:
+        """
+        Searches for a student by ID and email. Calls the StudentDataFile model to find the student.
+        Returns: The Student object if found, otherwise None.
+        """
         student_id = student_id.strip()
         email = email.strip().lower()
 

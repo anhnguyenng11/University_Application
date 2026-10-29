@@ -1,5 +1,5 @@
 """
-This module defines the CLIUniApp class, which serves as the entry point for the command-line interface of the university application.
+This module defines the CLIUniApp class, which serves as the entry point for the CLI of the university application.
 """
 from views import CLIView
 from controllers import StudentController, AdminController

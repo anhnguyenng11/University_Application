@@ -1,4 +1,8 @@
 class BaseGUIController:
+    """
+    Base class for GUI controllers, providing common functionality for managing views and handling user interactions.
+    Children: GUIStudentController, GUIAdminController
+    """
     def __init__(self, root, service, show_view, on_exit, on_error, on_success):
         self.root = root
         self.service = service

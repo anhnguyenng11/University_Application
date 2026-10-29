@@ -1,8 +1,16 @@
-from models import Admin
+from models.admin import Admin
 from models.file_handlers.database import Database
 from utils import constants
 
 class AdminDataFile:
+    """
+    AdminDataFile is responsible for handling the storage and retrieval of admin data.
+    Methods:
+    - load_admins: Loads the list of Admin objects from the database.
+    - find_admin_by_email: Finds an Admin object by email.
+    - update_admin: Updates an Admin object in the database.
+    """
+    
     def __init__(self, data_folder=None) -> None:
         """
         Initializes the AdminDataFile for handling admin data.

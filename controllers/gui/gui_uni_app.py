@@ -1,6 +1,4 @@
-from views.gui.welcome_view import WelcomeView
-from views.gui.error_view import ErrorView
-
+from views import ErrorView, WelcomeView
 from controllers.gui.gui_student_controller import GUIStudentController
 from controllers.gui.gui_admin_controller import GUIAdminController
 

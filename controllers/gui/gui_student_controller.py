@@ -1,8 +1,25 @@
+"""
+GUIStudentController is responsible for managing the student interface of UniApp.
+"""
 from views import LoginView, RegistrationView, MainView, DashboardView, SubjectsView, AccountView
 from controllers.gui.base_gui_controller import BaseGUIController
 
-
 class GUIStudentController(BaseGUIController):
+    """
+    GUIStudentController is responsible for managing the student interface of the university application.
+    Methods:
+    - show_login: Displays the login view for students.
+    - show_registration: Displays the registration view for new students.
+    - login: Logs in a student with the provided email and password.
+    - register: Registers a new student with the provided name, email, and password.
+    - logout: Logs out the currently active student and returns to the login view.
+    - show_student_main: Displays the main view for the currently active student.
+    - show_dashboard: Displays the dashboard view for the currently active student.
+    - show_subjects: Displays the subjects view for the currently active student.
+    - enroll_subject: Enrolls the currently active student in a new subject.
+    - remove_subject: Removes a subject from the currently active student's enrolled subjects.
+    - show_account: Displays the account view for the currently active student.
+    """
     def show_login(self):
         """
         GUI: Displays the login view for students.
