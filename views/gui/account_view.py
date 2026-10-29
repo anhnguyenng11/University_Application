@@ -5,66 +5,75 @@ class AccountView(ttk.Frame):
         super().__init__(parent)
 
         self.on_change_password = on_change_password
+        self.columnconfigure(0, weight=1)
 
-        style = ttk.Style()
-        style.configure("Account.TLabelframe.Label", font=("", 10, "bold"))
-        style.configure("Account.TButton", font=("", 12, ""))
-
-        # Header
         ttk.Label(
             self,
             text="Account",
-            font=("", 20, "bold")
-        ).pack(anchor="w")
+            style="Title.TLabel"
+        ).grid(row=0, column=0, sticky="W", pady=(0, 20))
 
         # Account information
-        info_frame = ttk.LabelFrame(
+        ttk.Label(
             self,
             text=information_title,
-            style="Account.TLabelframe",
-            padding=10
-        )
-        info_frame.pack(fill="x", pady=20)
+            style="Heading.TLabel"
+        ).grid(row=1, column=0, sticky="W", pady=(0, 10))
 
-        for label, value in information_rows:
+        info_card = ttk.Frame(self, style="Card.TFrame", padding=20)
+        info_card.grid(row=2, column=0, sticky="WE", pady=(0, 25))
+        info_card.columnconfigure(1, weight=1) 
+
+        # Splitting the label and value into separate grid columns for tabular alignment
+        for index, (label, value) in enumerate(information_rows):
             ttk.Label(
-                info_frame,
-                text=f"{label}: {value}",
-                font=("", 12)
-            ).pack(anchor="w", pady=5)
+                info_card, text=f"{label}:", style="Muted.TLabel"
+            ).grid(row=index, column=0, sticky="W", pady=8, padx=(0, 15))
+            
+            ttk.Label(
+                info_card, text=value, style="Form.TLabel"
+            ).grid(row=index, column=1, sticky="W", pady=8)
 
         # Change password
-        password_frame = ttk.LabelFrame(
+        ttk.Label(
             self,
             text="Change Password",
-            style="Account.TLabelframe",
-            padding=20
-        )
-        password_frame.pack(fill="x")
+            style="Heading.TLabel"
+        ).grid(row=3, column=0, sticky="W", pady=(0, 10))
+
+        password_card = ttk.Frame(self, style="Card.TFrame", padding=20)
+        password_card.grid(row=4, column=0, sticky="WE")
+        password_card.columnconfigure(0, weight=1)
 
         entries = []
+        current_row = 0
+        
+        # Grid iterations to map labels above their respective entry fields
         for label, bottom_padding in (
             ("Current Password", 15),
             ("New Password", 15),
-            ("Confirm New Password", 20)
+            ("Confirm New Password", 25)
         ):
             ttk.Label(
-                password_frame,
+                password_card,
                 text=label,
-                font=("", 12)
-            ).pack(anchor="w", pady=(0, 3))
-            entry = ttk.Entry(password_frame, show="*")
-            entry.pack(fill="x", ipady=5, pady=(0, bottom_padding))
+                style="Form.TLabel"
+            ).grid(row=current_row, column=0, sticky="W", pady=(0, 5))
+            
+            entry = ttk.Entry(password_card, show="*", style="Padded.TEntry")
+            entry.grid(row=current_row + 1, column=0, sticky="WE", pady=(0, bottom_padding))
             entries.append(entry)
+            
+            current_row += 2
 
         self.current_password, self.new_password, self.confirm_password = entries
 
         ttk.Button(
-            password_frame,
+            password_card,
             text="Update Password",
-            style="Account.TButton",
+            style="Primary.TButton",
             command=self.submit_password
-        ).pack(fill="x", ipady=10)
+        ).grid(row=current_row, column=0, sticky="WE")
 
     def submit_password(self):
         current_password = self.current_password.get()

@@ -4,6 +4,7 @@ class MainView(ttk.Frame):
     def __init__(self, parent, title, navigation, on_logout):
         super().__init__(parent, style="App.TFrame")
 
+        self.winfo_toplevel().title(f"UniApp - {title}")
         self.current_content = None
 
         header = ttk.Frame(

@@ -1,14 +1,12 @@
-from views.gui.login_view import LoginView
+from views import LoginView, RegistrationView, MainView, DashboardView, SubjectsView, AccountView
 from controllers.gui.base_gui_controller import BaseGUIController
-from views.gui.gui_student.registration_view import RegistrationView
-from views.gui.main_view import MainView
-from views.gui.gui_student.dashboard_view import DashboardView
-from views.gui.gui_student.subjects_view import SubjectsView
-from views.gui.account_view import AccountView
 
 
 class GUIStudentController(BaseGUIController):
     def show_login(self):
+        """
+        GUI: Displays the login view for students.
+        """
         view = LoginView(
             self.root,
             title="Student Login",
@@ -19,21 +17,27 @@ class GUIStudentController(BaseGUIController):
         self.show_view(view)
 
     def show_registration(self):
+        """
+        GUI: Displays the registration view for new students.
+        """
         view = RegistrationView(
             self.root,
+            title="Student Registration",
             on_register=self.register,
             on_back=self.show_login
         )
         self.show_view(view)
 
     def login(self, email, password):
+        """
+        GUI: Logs in a student with the provided email and password. 
+        """
         if not email or not password:
             self.on_error("Email and password are required.")
             return
 
         try:
             student = self.service.login(email, password)
-
         except (ValueError, OSError) as error:
             self.on_error(str(error))
             return
@@ -42,6 +46,9 @@ class GUIStudentController(BaseGUIController):
         self.show_student_main()
 
     def register(self, name, email, password):
+        """
+        GUI: Registers a new student with the provided name, email, and password.
+        """
         try:
             student = self.service.register(name, email, password)
 
@@ -53,6 +60,9 @@ class GUIStudentController(BaseGUIController):
         self.on_success(f"Registration successful. Your student ID is {student.student_id}.")
 
     def logout(self):
+        """
+        GUI: Logs out the currently active student and returns to the login view.
+        """
         self.active_account = None
         self.show_login()
 
@@ -72,8 +82,12 @@ class GUIStudentController(BaseGUIController):
         self.show_dashboard()
 
     def show_dashboard(self):
+        """
+        GUI: Displays the dashboard view for the currently active student.
+        """
         overall = self.active_account.get_overall_status()
         view = DashboardView(
+            "Student Portal",
             self.main_view.content_frame,
             student=self.active_account,
             overall=overall
@@ -82,6 +96,9 @@ class GUIStudentController(BaseGUIController):
         self.main_view.show_content(view)
 
     def show_subjects(self):
+        """
+        GUI: Displays the subjects view for the currently active student.
+        """
         view = SubjectsView(
             self.main_view.content_frame,
             student=self.active_account,
@@ -92,6 +109,9 @@ class GUIStudentController(BaseGUIController):
         self.main_view.show_content(view)
 
     def enroll_subject(self):
+        """
+        GUI: Enrolls the currently active student in a new subject.
+        """
         try:
             subject = self.service.enroll_subject(
                 self.active_account
@@ -107,6 +127,9 @@ class GUIStudentController(BaseGUIController):
         )
 
     def remove_subject(self, subject_id):
+        """
+        GUI: Removes a subject from the currently active student's enrolled subjects.
+        """
         try:
             self.service.remove_subject(
                 self.active_account,

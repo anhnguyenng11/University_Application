@@ -14,15 +14,25 @@ D_THRESHOLD = 75
 C_THRESHOLD = 65
 P_THRESHOLD = 50
 
+GRADE_DEFINITIONS = {
+    "HD": "High Distinction",
+    "D": "Distinction",
+    "C": "Credit",
+    "P": "Pass",
+    "Z": "Fail"
+}
+
 STUDENT_ID_LENGTH = 6
 SUBJECT_ID_LENGTH = 3
 
+# Message templates, to be shared across both CLI and GUI interfaces
 BREAK_LINE = "-" * 30
 INVALID_OPTION_MESSAGE = "Invalid option. Please try again."
 
+
 # GUI Pallette
 COLORS = {
-    "background": "#F4F7FB",
+    "background": "#F2F2F7",
     "surface": "#FFFFFF",
     "primary": "#2F80ED",
     "primary_hover": "#1769C2",
