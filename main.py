@@ -2,14 +2,8 @@
 This is the main entry point of the application. It initializes the models, views, and controllers, and starts the CLI application.
 """
 from views import CLIView, StudentView, AdminView
-
 from controllers import CLIUniApp, StudentController, AdminController
-
-from models import StudentService
-from models.file_handlers.student_data_file import StudentDataFile
-
-from models import AdminService
-from models.file_handlers.admin_data_file import AdminDataFile
+from models import StudentService, StudentDataFile, AdminService, AdminDataFile
 
 def main() -> None:
     """

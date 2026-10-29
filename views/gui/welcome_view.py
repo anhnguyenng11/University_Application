@@ -7,51 +7,34 @@ class WelcomeView(BaseGUIView):
     def __init__(self, parent, on_student, on_admin):
         super().__init__(parent)
 
-        style = ttk.Style()
-        style.configure(
-            "Welcome.TButton",
-            font=("", 18)
-        )
+        card = ttk.Frame(self, padding=45, style="Card.TFrame")
+        card.place(relx=0.5, rely=0.5, anchor="center")
 
-        content = ttk.Frame(self)
-        content.pack(expand=True)
-
-        # Title
         ttk.Label(
-            content,
+            card,
             text="Welcome to UniApp",
-            font=("", 40, "bold")
+            style="Title.TLabel"
         ).pack()
-
-        ttk.Frame(content, height=15).pack()
 
         ttk.Label(
-            content,
-            text="Just because you never give up\ndoesn't mean you will succeed.",
-            font=("", 12, "italic")
-        ).pack()
+            card,
+            text="Manage university applications with ease.",
+            style="Subtitle.TLabel"
+        ).pack(pady=(8, 30))
 
         # Space between title and buttons
-        ttk.Frame(content, height=100).pack()
-
-        # Button container
-        button_frame = ttk.Frame(
-            content,
-            width=450,
-            height=165
-        )
-        button_frame.pack()
+        ttk.Frame(card, height=100).pack()
 
         ttk.Button(
-            button_frame,
-            text="Student",
-            command=on_student,
-            style="Welcome.TButton"
-        ).place(x=0, y=0, width=450, height=65)
+            card,
+            text="Continue as Student",
+            style="Primary.TButton",
+            command=on_student
+        ).pack(fill="x", pady=6)
 
         ttk.Button(
-            button_frame,
-            text="Admin",
-            command=on_admin,
-            style="Welcome.TButton"
-        ).place(x=0, y=85, width=450, height=65)
+            card,
+            text="Continue as Admin",
+            style="Secondary.TButton",
+            command=on_admin
+        ).pack(fill="x", pady=6)

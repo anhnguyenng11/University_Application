@@ -1,4 +1,4 @@
-
+import tkinter as tk
 from tkinter import ttk
 from views.gui.base_gui_view import BaseGUIView
 
@@ -7,64 +7,68 @@ class LoginView(BaseGUIView):
     def __init__(self, parent, title, on_login, on_back, on_register=None):
         super().__init__(parent)
 
-        style = ttk.Style()
-        style.configure("Login.TButton", font=("", 18))
-        style.configure("Login.TLabel", font=("", 18))
-        style.configure("Padded.TEntry", padding=(8, 8, 8, 8))
+        content = ttk.Frame(self, padding=40, style="Card.TFrame")
+        content.pack(expand=True, padx=20, pady=20)
 
-        content = ttk.Frame(self)
-        content.pack(expand=True)
-
-        # Title
         ttk.Label(
             content,
             text=title,
-            font=("", 30, "bold")
-        ).pack()
-
-        ttk.Frame(content, height=50).pack()
-
-        # Input Frame
-        input_frame = ttk.Frame(content)
-        input_frame.pack(fill="x")
+            style="Heading.TLabel"
+        ).pack(pady=(0, 30))
 
         email_entry = self.create_auth_entry(
-            input_frame, "Email", "Login.TLabel"
+            content, "Email", "Form.TLabel"
         )
 
-        ttk.Frame(input_frame, height=25).pack()
+        ttk.Frame(content, height=18, style="Card.TFrame").pack()
 
         password_entry = self.create_auth_entry(
-            input_frame, "Password", "Login.TLabel", show="*"
+            content, "Password", "Form.TLabel", show="*"
         )
 
-        ttk.Frame(content, height=40).pack()
+        password_visible = tk.BooleanVar(value=False)
 
-        # Buttons
-        button_frame = ttk.Frame(content, width=450, height=235)
-        button_frame.pack()
+        def toggle_password():
+            password_entry.configure(
+                show="" if password_visible.get() else "*"
+            )
+
+        ttk.Checkbutton(
+            content,
+            text="Show password",
+            variable=password_visible,
+            command=toggle_password
+        ).pack(anchor="w", pady=(8, 0))
+
+        def submit_login():
+            on_login(email_entry.get(), password_entry.get())
+
+        button_frame = ttk.Frame(
+            content,
+            style="CardContent.TFrame"
+        )
 
         ttk.Button(
             button_frame,
             text="Login",
-            command=lambda: on_login(
-                email_entry.get(),
-                password_entry.get()
-            ),
-            style="Login.TButton"
-        ).place(x=0, y=0, width=450, height=65)
+            command=submit_login,
+            style="Primary.TButton"
+        ).pack(fill="x", pady=(0, 8))
 
         if on_register is not None:
             ttk.Button(
                 button_frame,
                 text="Register",
                 command=on_register,
-                style="Login.TButton"
-            ).place(x=0, y=85, width=450, height=65)
+                style="Secondary.TButton"
+            ).pack(fill="x", pady=(0, 8))
 
         ttk.Button(
             button_frame,
             text="Back",
             command=on_back,
-            style="Login.TButton"
-        ).place(x=0, y=170 if on_register is not None else 85, width=450, height=65)
+            style="Secondary.TButton"
+        ).pack(fill="x")
+
+        content.bind("<Return>", lambda event: submit_login())
+        email_entry.focus_set()

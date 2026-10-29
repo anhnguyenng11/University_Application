@@ -3,7 +3,7 @@ from tkinter import ttk
 
 class BaseGUIView(ttk.Frame):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
     def create_auth_entry(self, parent, text, label_style, show=""):
         ttk.Label(
