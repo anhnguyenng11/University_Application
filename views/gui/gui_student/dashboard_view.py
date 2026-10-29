@@ -1,119 +1,149 @@
+import tkinter as tk
 from tkinter import ttk
-
+from utils import constants
 
 class DashboardView(ttk.Frame):
-    def __init__(self, parent, student, overall):
+    def __init__(self, title, parent, student, overall):
         super().__init__(parent)
 
-        style = ttk.Style()
-        style.configure("Section.TLabelframe.Label", font=("", 10, "bold"))
-        style.configure("Card.TLabelframe.Label", font=("", 10, "italic"))
+        self.winfo_toplevel().title(f"UniApp - {title}")
+        
+        # Grant the master container spatial elasticity
+        self.columnconfigure(0, weight=1)
+        # Permits the subjects area to absorb vertical space
+        self.rowconfigure(1, weight=1) 
 
-        # Header
         ttk.Label(
             self,
             text="Dashboard",
-            font=("", 20, "bold")
-        ).pack(anchor="w", pady=(0, 20))
+            style="Title.TLabel" 
+        ).grid(row=0, column=0, sticky="W", pady=(0, 20))
 
-        # SUBJECTS OVERVIEW
-        subjects_frame = ttk.LabelFrame(
-            self,
-            text="Subjects Overview",
-            style="Section.TLabelframe",
-            padding=15
+        # Scrollable container
+        canvas_frame = ttk.Frame(self)
+        canvas_frame.grid(row=1, column=0, sticky="NSEW", pady=(0, 15))
+        canvas_frame.columnconfigure(0, weight=1)
+        canvas_frame.rowconfigure(0, weight=1)
+
+        canvas = tk.Canvas(canvas_frame, highlightthickness=0, bg=constants.COLORS["background"])
+        scrollbar = ttk.Scrollbar(canvas_frame, orient="vertical", command=canvas.yview)
+        
+        scrollable_subjects = ttk.Frame(canvas, style="App.TFrame")
+        
+        # Dynamically update the scroll region when internal widgets resize
+        scrollable_subjects.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
         )
-        subjects_frame.pack(fill="x", pady=(0, 15))
+        
+        # Embed the frame inside the canvas
+        canvas_window = canvas.create_window((0, 0), window=scrollable_subjects, anchor="nw")
+        
+        # Force the interior frame to expand horizontally with the canvas
+        canvas.bind(
+            "<Configure>", 
+            lambda e: canvas.itemconfig(canvas_window, width=e.width)
+        )
+        
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.grid(row=0, column=0, sticky="NSEW")
+        scrollbar.grid(row=0, column=1, sticky="NS")
 
-        # Four subject cards
-        for row_index in range(2):
-            row = ttk.Frame(subjects_frame)
-            row.pack(fill="x", pady=10)
+        # Subjects overview
+        ttk.Label(
+            scrollable_subjects,
+            text="Subjects Overview",
+            style="Heading.TLabel"
+        ).grid(row=0, column=0, columnspan=2, sticky="W", pady=(0, 15))
 
-            for col_index in range(2):
-                index = row_index * 2 + col_index
+        scrollable_subjects.columnconfigure(0, weight=1, uniform="col")
+        scrollable_subjects.columnconfigure(1, weight=1, uniform="col")
 
-                subject = student.subjects[index] if index < len(student.subjects) else None
-                card = ttk.LabelFrame(
-                    row,
-                    text=f"Subject {subject.subject_id}" if subject is not None else "Empty slot",
-                    style="Card.TLabelframe",
-                    padding=15
-                )
+        # Replicating the 4-slot rendering logic via grid mathematics
+        for index in range(4):
+            row_index = (index // 2) + 1
+            col_index = index % 2
 
-                content = ttk.Frame(card)
-                content.pack(fill="x", expand=True)
+            subject = student.subjects[index] if index < len(student.subjects) else None
+            
+            card = ttk.Frame(scrollable_subjects, style="Card.TFrame", padding=15)
+            card.grid(
+                row=row_index, 
+                column=col_index, 
+                sticky="WE", 
+                padx=(0, 10) if col_index == 0 else (10, 0),
+                pady=(0, 15)
+            )
 
-                if subject is not None:
+            if subject is not None:
+                ttk.Label(
+                    card, text=f"Subject {subject.subject_id}", style="Form.TLabel"
+                ).grid(row=0, column=0, sticky="W", pady=(0, 10))
+                
+                ttk.Label(
+                    card, text=f"Mark: {subject.mark}", style="Body.TLabel"
+                ).grid(row=1, column=0, sticky="W")
+
+                if subject.grade == "Z":
                     ttk.Label(
-                        content,
-                        text=f"Mark: {subject.mark}",
-                        font=("", 12)
-                    ).pack(anchor="w")
-
-                    ttk.Label(
-                        content,
-                        text=f"Grade: {subject.grade}",
-                        font=("", 14, "bold")
-                    ).pack(anchor="w", pady=(10, 0))
-
+                        card, text=f"Grade: {subject.grade} - {constants.GRADE_DEFINITIONS[subject.grade]}", style="Error.TLabel"
+                    ).grid(row=2, column=0, sticky="W", pady=(10, 0))
                 else:
                     ttk.Label(
-                        content,
-                        text="N/A",
-                        font=("", 14, "")
-                    ).pack(anchor="w")
+                        card, text=f"Grade: {subject.grade} - {constants.GRADE_DEFINITIONS[subject.grade]}", style="Success.TLabel"
+                    ).grid(row=2, column=0, sticky="W", pady=(10, 0))
+            else:
+                ttk.Label(
+                    card, text="Empty subject slot", style="Muted.TLabel"
+                ).grid(row=0, column=0, sticky="W", pady=(0, 10))
+                
+                ttk.Label(
+                    card, text="N/A", style="Body.TLabel"
+                ).grid(row=1, column=0, sticky="W")
 
-                card.configure(height=120)
-                card.pack_propagate(False)
+        # Overall statistics
+        overall_frame = ttk.Frame(self)
+        overall_frame.grid(row=2, column=0, sticky="WE")
+        
+        # Distribute horizontal space equally across the 3 statistical pillars
+        for i in range(3):
+            overall_frame.columnconfigure(i, weight=1, uniform="stat")
 
-                card.pack(
-                    side="left",
-                    fill="x",
-                    expand=True,
-                    padx=(0, 10) if col_index == 0 else (10, 0)
-                )
-
-        ttk.Frame(self, height=5).pack()
-        # OVERALL STATISTICS
-        average, status, grade = overall
-
-        overall_frame = ttk.LabelFrame(
-            self,
+        ttk.Label(
+            overall_frame,
             text="Overall Statistics",
-            style="Section.TLabelframe",
-            padding=15
-        )
-        overall_frame.pack(fill="x")
+            style="Heading.TLabel"
+        ).grid(row=0, column=0, columnspan=3, sticky="W", pady=(0, 15))
 
+        average, status, grade = overall
         data = [
             ("Average Mark", f"{average:.2f}" if average is not None else "N/A"),
             ("Status", status),
             ("Grade", grade)
         ]
 
+        # Iterative column indexing
+        # Iterative column indexing
         for index, (title, value) in enumerate(data):
-            card = ttk.LabelFrame(
-                overall_frame,
-                text=title,
-                style="Card.TLabelframe",
-                padding=10,
-                width=200,
-                height=85
-            )
-
-            card.pack_propagate(False)
-
-            card.pack(
-                side="left",
-                fill="both",
-                expand=True,
-                padx=(0, 15) if index < 2 else 0,
-                pady=(0, 5)
+            card = ttk.Frame(overall_frame, style="Card.TFrame", padding=15)
+            card.grid(
+                row=1, 
+                column=index, 
+                sticky="WE", 
+                padx=(0, 15) if index < 2 else 0
             )
 
             ttk.Label(
-                card,
-                text=value,
-                font=("", 14, "bold")
-            ).pack(side="left", anchor="w")
+                card, text=title, style="Muted.TLabel"
+            ).grid(row=0, column=0, sticky="W")
+            
+            value_style = "Form.TLabel"
+            if status == "FAIL" and title in ("Status", "Grade"):
+                value_style = "Error.TLabel"
+            else:
+                value_style = "Success.TLabel"
+            
+            ttk.Label(
+                card, text=value, style=value_style
+            ).grid(row=1, column=0, sticky="W", pady=(5, 0))
