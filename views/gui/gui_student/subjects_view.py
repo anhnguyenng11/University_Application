@@ -78,13 +78,13 @@ class SubjectsView(ttk.Frame):
             ttk.Label(
                 card,
                 text=f"Subject {subject.subject_id}",
-                style="UniApp.Strong.TLabel"
+                style="UniApp.PageStrong.TLabel"
             ).pack(side="left", padx=(0, 30))
             
             ttk.Button(
                 card,
                 text="Remove",
-                style="UniApp.Secondary.TButton",
+                style="UniApp.Danger.TButton",
                 command=lambda sid=subject.subject_id: self.confirm_remove(sid)
             ).pack(side="right")
 

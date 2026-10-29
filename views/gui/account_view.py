@@ -29,6 +29,7 @@ class AccountView(ttk.Frame):
             ttk.Label(
                 info_frame,
                 text=f"{label}: {value}",
+                style="UniApp.PageText.TLabel",
                 wraplength=640,
                 justify="left"
             ).pack(anchor="w", pady=2)
@@ -42,7 +43,7 @@ class AccountView(ttk.Frame):
         )
         password_frame.pack(fill="x")
 
-        form = ttk.Frame(password_frame)
+        form = ttk.Frame(password_frame, style="UniApp.Page.TFrame")
         form.pack(anchor="w")
         form.columnconfigure(0, minsize=450)
 
@@ -53,7 +54,7 @@ class AccountView(ttk.Frame):
             ttk.Label(
                 form,
                 text=label,
-                style="UniApp.Caption.TLabel"
+                style="UniApp.PageCaption.TLabel"
             ).grid(row=index * 2, column=0, sticky="w", pady=(0, 4))
             entry = ttk.Entry(form, show="*", font="UniApp.Body", style="UniApp.TEntry")
             entry.grid(row=index * 2 + 1, column=0, sticky="ew", pady=(0, 12))

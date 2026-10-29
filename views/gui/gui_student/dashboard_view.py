@@ -39,27 +39,27 @@ class DashboardView(ttk.Frame):
                     padding=24
                 )
 
-                content = ttk.Frame(card)
+                content = ttk.Frame(card, style="UniApp.Page.TFrame")
                 content.pack(fill="x", expand=True)
 
                 if subject is not None:
                     ttk.Label(
                         content,
                         text=f"Mark: {subject.mark}",
-                        style="UniApp.Muted.TLabel"
+                        style="UniApp.PageText.TLabel"
                     ).pack(anchor="w")
 
                     ttk.Label(
                         content,
                         text=f"Grade: {subject.grade}",
-                        style="UniApp.Strong.TLabel"
+                        style="UniApp.PageStrong.TLabel"
                     ).pack(anchor="w", pady=(8, 0))
 
                 else:
                     ttk.Label(
                         content,
                         text="N/A",
-                        style="UniApp.Metric.TLabel"
+                        style="UniApp.PageMetric.TLabel"
                     ).pack(anchor="w")
 
                 card.grid(
@@ -102,5 +102,5 @@ class DashboardView(ttk.Frame):
             ttk.Label(
                 card,
                 text=value,
-                style="UniApp.Metric.TLabel"
+                style="UniApp.PageMetric.TLabel"
             ).pack(side="left", anchor="w")

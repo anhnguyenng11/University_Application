@@ -19,12 +19,12 @@ class StudentsView(ttk.Frame):
 
         # Page title
         ttk.Label(
-            self, text=f"View Students [{count}]", style="UniApp.PageTitle.TLabel"
-        ).pack(anchor="w", pady=(0, 24))
+            self, text=f"View Students [{count}]", style="UniApp.AdminTitle.TLabel"
+        ).pack(anchor="w", pady=(0, 16))
 
         # Toolbar
         toolbar = ttk.Frame(self, style="UniApp.Page.TFrame")
-        toolbar.pack(fill="x", pady=(0, 16))
+        toolbar.pack(fill="x", pady=(0, 12))
 
         for text, callback in (
             ("Show All", on_show_all),
@@ -32,8 +32,8 @@ class StudentsView(ttk.Frame):
             ("PASS/FAIL", on_partition)
         ):
             ttk.Button(
-                toolbar, text=text, command=callback, style="UniApp.Secondary.TButton"
-            ).pack(side="left", padx=(0, 12))
+                toolbar, text=text, command=callback, style="Compact.UniApp.Secondary.TButton"
+            ).pack(side="left", padx=(0, 8))
 
         # Main table container
         table_frame = ttk.Frame(self)
@@ -70,12 +70,12 @@ class StudentsView(ttk.Frame):
         self.column_minimums = {}
 
         for column, title, ratio, minimum, anchor in (
-            ("id", "ID", 0.11, 104, "center"),
-            ("name", "Name", 0.27, 180, "w"),
-            ("email", "Email", 0.36, 300, "w"),
-            ("average", "Average", 0.1, 104, "center"),
-            ("grade", "Grade", 0.08, 84, "center"),
-            ("status", "Status", 0.08, 92, "center")
+            ("id", "ID", 0.11, 76, "center"),
+            ("name", "Name", 0.27, 140, "w"),
+            ("email", "Email", 0.36, 240, "w"),
+            ("average", "Average", 0.1, 80, "center"),
+            ("grade", "Grade", 0.08, 64, "center"),
+            ("status", "Status", 0.08, 64, "center")
         ):
             self.column_ratios[column] = ratio
             self.column_minimums[column] = minimum
@@ -132,27 +132,26 @@ class StudentsView(ttk.Frame):
 
         # Bottom action buttons
         actions = ttk.Frame(self, style="UniApp.Page.TFrame")
-        actions.pack(fill="x", pady=(16, 0))
+        actions.pack(fill="x", pady=(12, 0))
 
         ttk.Button(
             actions,
             text="Remove Selected",
-            style="UniApp.Secondary.TButton",
+            style="Compact.UniApp.Danger.TButton",
             command=self.confirm_remove
         ).pack(side="left")
 
         ttk.Button(
             actions,
             text="Clear All",
-            style="UniApp.Utility.TButton",
+            style="Compact.UniApp.Danger.TButton",
             command=self.confirm_clear
         ).pack(side="right")
 
     def resize_columns(self, event):
+        extra_width = max(0, event.width - 2 - sum(self.column_minimums.values()))
         for column, ratio in self.column_ratios.items():
-            self.tree.column(column, width=max(
-                self.column_minimums[column], int(event.width * ratio)
-            ))
+            self.tree.column(column, width=self.column_minimums[column] + int(extra_width * ratio))
 
     def confirm_remove(self):
         selected = self.tree.selection()
