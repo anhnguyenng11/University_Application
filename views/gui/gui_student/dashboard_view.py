@@ -1,44 +1,42 @@
 from tkinter import ttk
+from views.gui.base_gui_view import setup_styles
 
 
 class DashboardView(ttk.Frame):
     def __init__(self, parent, student, overall):
-        super().__init__(parent)
-
-        style = ttk.Style()
-        style.configure("Section.TLabelframe.Label", font=("", 10, "bold"))
-        style.configure("Card.TLabelframe.Label", font=("", 10, "italic"))
+        super().__init__(parent, style="UniApp.Page.TFrame")
+        setup_styles()
 
         # Header
         ttk.Label(
             self,
             text="Dashboard",
-            font=("", 20, "bold")
-        ).pack(anchor="w", pady=(0, 20))
+            style="UniApp.PageTitle.TLabel"
+        ).pack(anchor="w", pady=(0, 24))
 
         # SUBJECTS OVERVIEW
         subjects_frame = ttk.LabelFrame(
             self,
             text="Subjects Overview",
-            style="Section.TLabelframe",
-            padding=15
+            style="UniApp.Section.TLabelframe",
+            padding=(0, 12, 0, 0)
         )
-        subjects_frame.pack(fill="x", pady=(0, 15))
+        subjects_frame.pack(fill="x", pady=(0, 24))
+        for index in range(2):
+            subjects_frame.columnconfigure(index, weight=1, uniform="subjects")
+            subjects_frame.rowconfigure(index, weight=1, uniform="subjects")
 
         # Four subject cards
         for row_index in range(2):
-            row = ttk.Frame(subjects_frame)
-            row.pack(fill="x", pady=10)
-
             for col_index in range(2):
                 index = row_index * 2 + col_index
 
                 subject = student.subjects[index] if index < len(student.subjects) else None
                 card = ttk.LabelFrame(
-                    row,
+                    subjects_frame,
                     text=f"Subject {subject.subject_id}" if subject is not None else "Empty slot",
-                    style="Card.TLabelframe",
-                    padding=15
+                    style="UniApp.Card.TLabelframe",
+                    padding=24
                 )
 
                 content = ttk.Frame(card)
@@ -48,41 +46,36 @@ class DashboardView(ttk.Frame):
                     ttk.Label(
                         content,
                         text=f"Mark: {subject.mark}",
-                        font=("", 12)
+                        style="UniApp.Muted.TLabel"
                     ).pack(anchor="w")
 
                     ttk.Label(
                         content,
                         text=f"Grade: {subject.grade}",
-                        font=("", 14, "bold")
-                    ).pack(anchor="w", pady=(10, 0))
+                        style="UniApp.Strong.TLabel"
+                    ).pack(anchor="w", pady=(8, 0))
 
                 else:
                     ttk.Label(
                         content,
                         text="N/A",
-                        font=("", 14, "")
+                        style="UniApp.Metric.TLabel"
                     ).pack(anchor="w")
 
-                card.configure(height=120)
-                card.pack_propagate(False)
-
-                card.pack(
-                    side="left",
-                    fill="x",
-                    expand=True,
-                    padx=(0, 10) if col_index == 0 else (10, 0)
+                card.grid(
+                    row=row_index, column=col_index, sticky="nsew",
+                    padx=(0, 12) if col_index == 0 else 0,
+                    pady=(0, 12) if row_index == 0 else 0
                 )
 
-        ttk.Frame(self, height=5).pack()
         # OVERALL STATISTICS
         average, status, grade = overall
 
         overall_frame = ttk.LabelFrame(
             self,
             text="Overall Statistics",
-            style="Section.TLabelframe",
-            padding=15
+            style="UniApp.Section.TLabelframe",
+            padding=(0, 12, 0, 0)
         )
         overall_frame.pack(fill="x")
 
@@ -93,27 +86,21 @@ class DashboardView(ttk.Frame):
         ]
 
         for index, (title, value) in enumerate(data):
+            overall_frame.columnconfigure(index, weight=1, uniform="statistics")
             card = ttk.LabelFrame(
                 overall_frame,
                 text=title,
-                style="Card.TLabelframe",
-                padding=10,
-                width=200,
-                height=85
+                style="UniApp.Card.TLabelframe",
+                padding=(16, 20)
             )
 
-            card.pack_propagate(False)
-
-            card.pack(
-                side="left",
-                fill="both",
-                expand=True,
-                padx=(0, 15) if index < 2 else 0,
-                pady=(0, 5)
+            card.grid(
+                row=0, column=index, sticky="nsew",
+                padx=(0, 12) if index < 2 else 0
             )
 
             ttk.Label(
                 card,
                 text=value,
-                font=("", 14, "bold")
+                style="UniApp.Metric.TLabel"
             ).pack(side="left", anchor="w")

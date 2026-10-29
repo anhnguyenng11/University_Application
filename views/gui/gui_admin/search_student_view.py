@@ -1,75 +1,76 @@
 from tkinter import ttk, messagebox
+from views.gui.base_gui_view import setup_styles
+
 
 class SearchStudentsView(ttk.Frame):
     def __init__(self, parent, on_search, on_remove):
-        super().__init__(parent)
+        super().__init__(parent, style="UniApp.Page.TFrame")
+        setup_styles()
 
         self.on_search = on_search
         self.on_remove = on_remove
         self.displayed_student_id = None
 
-        style = ttk.Style()
-        style.configure("Search.TLabelframe.Label", font=("", 10, "bold"))
-        style.configure("Search.TButton", font=("", 12, ""))
-
-        header = ttk.Frame(self)
-        header.pack(fill='x')
+        header = ttk.Frame(self, style="UniApp.Page.TFrame")
+        header.pack(fill="x", pady=(0, 16))
 
         ttk.Label(
             header,
             text="Search Students",
-            font=("", 20, "bold")
-        ).pack(side="left", anchor="w", pady=(0, 15))
+            style="UniApp.PageTitle.TLabel"
+        ).pack(side="left", anchor="w")
 
         ttk.Button(
             header,
             text="Search",
-            style= "Search.TButton",
+            style="UniApp.Primary.TButton",
             command=self.submit_search
-        ).pack(side="right", anchor="e", ipady=5)
+        ).pack(side="right", anchor="e")
 
         self.remove_button = ttk.Button(
             header,
             text="Remove",
-            style= "Search.TButton",
+            style="UniApp.Secondary.TButton",
             command=self.confirm_remove,
             state="disabled"
         )
-        self.remove_button.pack(side="right", anchor="e", ipady=5, padx=(0, 8))
+        self.remove_button.pack(side="right", anchor="e", padx=(0, 12))
 
         search_frame = ttk.LabelFrame(
             self, 
             text="Search by ID and Email", 
-            style="Search.TLabelframe",
-            padding=10)
+            style="UniApp.Card.TLabelframe",
+            padding=(16, 8))
         search_frame.pack(fill="x")
 
+        search_frame.columnconfigure(0, minsize=180)
         search_frame.columnconfigure(1, weight=1)
 
         ttk.Label(
             search_frame,
             text="Student ID",
-            font=("", 12)
-        ).grid(row=0, column=0, sticky="w", padx=(0, 15))
+            style="UniApp.Caption.TLabel"
+        ).grid(row=0, column=0, sticky="w", pady=(0, 8))
 
-        self.student_id_entry = ttk.Entry(search_frame)
+        self.student_id_entry = ttk.Entry(search_frame, width=16, font="UniApp.Body",
+                                          style="UniApp.TEntry")
         self.student_id_entry.grid(
-            row=0, column=1, sticky="ew", ipady=5, pady=5
+            row=1, column=0, sticky="ew", padx=(0, 24)
         )
 
         ttk.Label(
             search_frame,
             text="Email",
-            font=("", 12)
-        ).grid(row=1, column=0, sticky="w", padx=(0, 15))
+            style="UniApp.Caption.TLabel"
+        ).grid(row=0, column=1, sticky="w", pady=(0, 8))
 
-        self.email_entry = ttk.Entry(search_frame)
+        self.email_entry = ttk.Entry(search_frame, font="UniApp.Body", style="UniApp.TEntry")
         self.email_entry.grid(
-            row=1, column=1, sticky="ew", ipady=5, pady=5
+            row=1, column=1, sticky="ew"
         )
 
-        self.result_frame = ttk.Frame(self)
-        self.result_frame.pack(fill="both", expand=True, pady=(15, 0))
+        self.result_frame = ttk.Frame(self, style="UniApp.Page.TFrame")
+        self.result_frame.pack(fill="both", expand=True, pady=(12, 0))
 
     def clear_result(self):
         self.displayed_student_id = None
@@ -90,7 +91,9 @@ class SearchStudentsView(ttk.Frame):
         if student is None:
             ttk.Label(
                 self.result_frame,
-                text="No student matches that ID and email."
+                text="No student matches that ID and email.",
+                style="UniApp.PageText.TLabel",
+                wraplength=640
             ).pack(anchor="w")
             return
 
@@ -100,8 +103,8 @@ class SearchStudentsView(ttk.Frame):
         info_frame = ttk.LabelFrame(
             self.result_frame,
             text="Student Information",
-            style='Search.TLabelframe',
-            padding=15
+            style="UniApp.Card.TLabelframe",
+            padding=(12, 6)
         )
         info_frame.pack(fill="x")
 
@@ -110,7 +113,8 @@ class SearchStudentsView(ttk.Frame):
             columns=("id", "name", "email"),
             show="headings",
             height=1,
-            selectmode="none"
+            selectmode="none",
+            style="UniApp.Treeview"
         )
 
         for column, title, width in (
@@ -118,21 +122,26 @@ class SearchStudentsView(ttk.Frame):
             ("name", "Name", 200),
             ("email", "Email", 300)
         ):
-            info_table.heading(column, text=title)
-            info_table.column(column, width=width, anchor="center")
+            anchor = "center" if column == "id" else "w"
+            info_table.heading(column, text=title, anchor=anchor)
+            info_table.column(column, width=width, minwidth=width, anchor=anchor)
 
         info_table.insert(
             "", "end", values=(student.student_id, student.name, student.email)
         )
         info_table.pack(fill="x")
+        info_table.bind("<Map>", lambda event: self.size_identity_columns(info_table, student))
+        horizontal = ttk.Scrollbar(info_frame, orient="horizontal", command=info_table.xview)
+        horizontal.pack(fill="x")
+        info_table.configure(xscrollcommand=horizontal.set)
 
         subjects_frame = ttk.LabelFrame(
             self.result_frame,
             text="Enrollments and Overall Statistics",
-            style='Search.TLabelframe',
-            padding=15
+            style="UniApp.Card.TLabelframe",
+            padding=(12, 6)
         )
-        subjects_frame.pack(fill="x", pady=(10, 0))
+        subjects_frame.pack(fill="x", pady=(12, 0))
 
         if not student.subjects:
             ttk.Label(
@@ -145,7 +154,8 @@ class SearchStudentsView(ttk.Frame):
                 columns=("id", "mark", "grade"),
                 show="headings",
                 height=4,
-                selectmode="none"
+                selectmode="none",
+                style="UniApp.Treeview"
             )
 
             for column, title in (
@@ -167,7 +177,8 @@ class SearchStudentsView(ttk.Frame):
 
             overall_frame = ttk.LabelFrame(
                 self.result_frame,
-                padding=15
+                padding=(0, 8, 0, 0),
+                style="UniApp.Plain.TLabelframe"
             )
             overall_frame.pack(fill="x", pady=(0, 0))
 
@@ -176,7 +187,8 @@ class SearchStudentsView(ttk.Frame):
                 columns=("average", "grade", "status"),
                 show="headings",
                 height=1,
-                selectmode="none"
+                selectmode="none",
+                style="UniApp.Treeview"
             )
 
             for column, title in (
@@ -192,6 +204,15 @@ class SearchStudentsView(ttk.Frame):
 
         self.displayed_student_id = student.student_id
         self.remove_button.configure(state="normal")
+
+    def size_identity_columns(self, table, student):
+        for column, value, minimum in (
+            ("id", student.student_id, 100),
+            ("name", student.name, 200),
+            ("email", student.email, 300)
+        ):
+            text_width = table.tk.call("font", "measure", "UniApp.Body", str(value))
+            table.column(column, width=max(minimum, text_width + 24), stretch=False)
 
     def confirm_remove(self):
         if self.displayed_student_id is None:

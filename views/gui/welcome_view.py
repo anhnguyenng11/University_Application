@@ -7,51 +7,35 @@ class WelcomeView(BaseGUIView):
     def __init__(self, parent, on_student, on_admin):
         super().__init__(parent)
 
-        style = ttk.Style()
-        style.configure(
-            "Welcome.TButton",
-            font=("", 18)
-        )
-
-        content = ttk.Frame(self)
+        content = ttk.Frame(self, padding=32)
         content.pack(expand=True)
+        content.columnconfigure(0, minsize=450)
 
         # Title
         ttk.Label(
             content,
             text="Welcome to UniApp",
-            font=("", 40, "bold")
-        ).pack()
-
-        ttk.Frame(content, height=15).pack()
+            style="UniApp.Hero.TLabel"
+        ).grid(row=0, column=0)
 
         ttk.Label(
             content,
             text="Just because you never give up\ndoesn't mean you will succeed.",
-            font=("", 12, "italic")
-        ).pack()
-
-        # Space between title and buttons
-        ttk.Frame(content, height=100).pack()
-
-        # Button container
-        button_frame = ttk.Frame(
-            content,
-            width=450,
-            height=165
-        )
-        button_frame.pack()
+            style="UniApp.Muted.TLabel",
+            justify="center",
+            wraplength=450
+        ).grid(row=1, column=0, pady=(24, 48))
 
         ttk.Button(
-            button_frame,
+            content,
             text="Student",
             command=on_student,
-            style="Welcome.TButton"
-        ).place(x=0, y=0, width=450, height=65)
+            style="UniApp.Primary.TButton"
+        ).grid(row=2, column=0, sticky="ew")
 
         ttk.Button(
-            button_frame,
+            content,
             text="Admin",
             command=on_admin,
-            style="Welcome.TButton"
-        ).place(x=0, y=85, width=450, height=65)
+            style="UniApp.Primary.TButton"
+        ).grid(row=3, column=0, sticky="ew", pady=(12, 0))

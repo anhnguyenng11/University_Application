@@ -7,60 +7,45 @@ class RegistrationView(BaseGUIView):
     def __init__(self, parent, on_register, on_back):
         super().__init__(parent)
 
-        style = ttk.Style()
-        style.configure("Registration.TButton", font=("", 18))
-        style.configure("Registration.TLabel", font=("", 18))
-        style.configure("Padded.TEntry", padding=(8, 8, 8, 8))
-
-        content = ttk.Frame(self)
+        content = ttk.Frame(self, padding=32)
         content.pack(expand=True)
+        content.columnconfigure(0, minsize=450)
 
         ttk.Label(
             content,
             text="Student Registration",
-            font=("", 30, "bold")
-        ).pack()
-
-        ttk.Frame(content, height=30).pack()
+            style="UniApp.Title.TLabel"
+        ).grid(row=0, column=0, pady=(0, 32))
 
         input_frame = ttk.Frame(content)
-        input_frame.pack(fill="x")
+        input_frame.grid(row=1, column=0, sticky="ew")
 
         name_entry = self.create_auth_entry(
-            input_frame, "Name", "Registration.TLabel"
+            input_frame, "Name", "UniApp.Caption.TLabel"
         )
-
-        ttk.Frame(input_frame, height=25).pack()
 
         email_entry = self.create_auth_entry(
-            input_frame, "Email", "Registration.TLabel"
+            input_frame, "Email", "UniApp.Caption.TLabel"
         )
-
-        ttk.Frame(input_frame, height=20).pack()
 
         password_entry = self.create_auth_entry(
-            input_frame, "Password", "Registration.TLabel", show="*"
+            input_frame, "Password", "UniApp.Caption.TLabel", show="*"
         )
 
-        ttk.Frame(content, height=40).pack()
-
-        button_frame = ttk.Frame(content, width=450, height=150)
-        button_frame.pack()
-
         ttk.Button(
-            button_frame,
+            content,
             text="Register",
             command=lambda: on_register(
                 name_entry.get(),
                 email_entry.get(),
                 password_entry.get()
             ),
-            style="Registration.TButton"
-        ).place(x=0, y=0, width=450, height=65)
+            style="UniApp.Primary.TButton"
+        ).grid(row=2, column=0, sticky="ew")
 
         ttk.Button(
-            button_frame,
+            content,
             text="Back",
             command=on_back,
-            style="Registration.TButton"
-        ).place(x=0, y=85, width=450, height=65)
+            style="UniApp.Utility.TButton"
+        ).grid(row=3, column=0, sticky="ew", pady=(12, 0))

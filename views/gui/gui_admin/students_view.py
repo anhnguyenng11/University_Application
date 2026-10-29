@@ -1,5 +1,6 @@
 
 from tkinter import Frame, ttk, messagebox
+from views.gui.base_gui_view import COLORS, setup_styles
 
 
 class StudentsView(ttk.Frame):
@@ -7,7 +8,8 @@ class StudentsView(ttk.Frame):
         self, parent, groups, on_show_all, on_group, on_partition,
         on_remove, on_clear
     ):
-        super().__init__(parent)
+        super().__init__(parent, style="UniApp.Page.TFrame")
+        setup_styles()
 
         # Student count
         count = sum(len(students) for students in groups.values())
@@ -17,12 +19,12 @@ class StudentsView(ttk.Frame):
 
         # Page title
         ttk.Label(
-            self, text=f"View Students [{count}]", font=("", 20, "bold")
-        ).pack(anchor="w", pady=(0, 15))
+            self, text=f"View Students [{count}]", style="UniApp.PageTitle.TLabel"
+        ).pack(anchor="w", pady=(0, 24))
 
         # Toolbar
-        toolbar = ttk.Frame(self)
-        toolbar.pack(fill="x", pady=(0, 15))
+        toolbar = ttk.Frame(self, style="UniApp.Page.TFrame")
+        toolbar.pack(fill="x", pady=(0, 16))
 
         for text, callback in (
             ("Show All", on_show_all),
@@ -30,19 +32,20 @@ class StudentsView(ttk.Frame):
             ("PASS/FAIL", on_partition)
         ):
             ttk.Button(
-                toolbar, text=text, command=callback
-            ).pack(side="left", padx=(0, 8))
+                toolbar, text=text, command=callback, style="UniApp.Secondary.TButton"
+            ).pack(side="left", padx=(0, 12))
 
         # Main table container
         table_frame = ttk.Frame(self)
-        table_frame.pack(fill="both", expand=True, ipadx=2)
+        table_frame.pack(fill="both", expand=True)
 
         table_frame.rowconfigure(0, weight=1)
         table_frame.columnconfigure(0, weight=1)
 
         border_frame = Frame(
             table_frame,
-            highlightbackground="#707070",
+            background=COLORS["canvas"],
+            highlightbackground=COLORS["hairline"],
             highlightthickness=1,
             borderwidth=0
         )
@@ -64,18 +67,21 @@ class StudentsView(ttk.Frame):
         )
 
         self.column_ratios = {}
+        self.column_minimums = {}
 
-        for column, title, ratio in (
-            ("id", "ID", 0.11),
-            ("name", "Name", 0.27),
-            ("email", "Email", 0.36),
-            ("average", "Average", 0.1),
-            ("grade", "Grade", 0.08),
-            ("status", "Status", 0.08)
+        for column, title, ratio, minimum, anchor in (
+            ("id", "ID", 0.11, 104, "center"),
+            ("name", "Name", 0.27, 180, "w"),
+            ("email", "Email", 0.36, 300, "w"),
+            ("average", "Average", 0.1, 104, "center"),
+            ("grade", "Grade", 0.08, 84, "center"),
+            ("status", "Status", 0.08, 92, "center")
         ):
             self.column_ratios[column] = ratio
-            self.tree.heading(column, text=title)
-            self.tree.column(column, width=1, minwidth=1, stretch=False)
+            self.column_minimums[column] = minimum
+            self.tree.heading(column, text=title, anchor=anchor)
+            self.tree.column(column, width=minimum, minwidth=minimum,
+                             stretch=False, anchor=anchor)
 
         self.tree.bind("<Configure>", self.resize_columns)
 
@@ -125,24 +131,28 @@ class StudentsView(ttk.Frame):
                 )
 
         # Bottom action buttons
-        actions = ttk.Frame(self)
-        actions.pack(fill="x", pady=(15, 0))
+        actions = ttk.Frame(self, style="UniApp.Page.TFrame")
+        actions.pack(fill="x", pady=(16, 0))
 
         ttk.Button(
             actions,
             text="Remove Selected",
+            style="UniApp.Secondary.TButton",
             command=self.confirm_remove
         ).pack(side="left")
 
         ttk.Button(
             actions,
             text="Clear All",
+            style="UniApp.Utility.TButton",
             command=self.confirm_clear
         ).pack(side="right")
 
     def resize_columns(self, event):
         for column, ratio in self.column_ratios.items():
-            self.tree.column(column, width=int(event.width * ratio))
+            self.tree.column(column, width=max(
+                self.column_minimums[column], int(event.width * ratio)
+            ))
 
     def confirm_remove(self):
         selected = self.tree.selection()

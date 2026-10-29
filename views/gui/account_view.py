@@ -1,70 +1,72 @@
 from tkinter import ttk
+from views.gui.base_gui_view import setup_styles
+
 
 class AccountView(ttk.Frame):
     def __init__(self, parent, information_title, information_rows, on_change_password):
-        super().__init__(parent)
+        super().__init__(parent, style="UniApp.Page.TFrame")
+        setup_styles()
 
         self.on_change_password = on_change_password
-
-        style = ttk.Style()
-        style.configure("Account.TLabelframe.Label", font=("", 10, "bold"))
-        style.configure("Account.TButton", font=("", 12, ""))
 
         # Header
         ttk.Label(
             self,
             text="Account",
-            font=("", 20, "bold")
-        ).pack(anchor="w")
+            style="UniApp.PageTitle.TLabel"
+        ).pack(anchor="w", pady=(0, 24))
 
         # Account information
         info_frame = ttk.LabelFrame(
             self,
             text=information_title,
-            style="Account.TLabelframe",
-            padding=10
+            style="UniApp.Card.TLabelframe",
+            padding=(24, 12)
         )
-        info_frame.pack(fill="x", pady=20)
+        info_frame.pack(fill="x", pady=(0, 16))
 
         for label, value in information_rows:
             ttk.Label(
                 info_frame,
                 text=f"{label}: {value}",
-                font=("", 12)
-            ).pack(anchor="w", pady=5)
+                wraplength=640,
+                justify="left"
+            ).pack(anchor="w", pady=2)
 
         # Change password
         password_frame = ttk.LabelFrame(
             self,
             text="Change Password",
-            style="Account.TLabelframe",
-            padding=20
+            style="UniApp.Card.TLabelframe",
+            padding=(24, 16)
         )
         password_frame.pack(fill="x")
 
+        form = ttk.Frame(password_frame)
+        form.pack(anchor="w")
+        form.columnconfigure(0, minsize=450)
+
         entries = []
-        for label, bottom_padding in (
-            ("Current Password", 15),
-            ("New Password", 15),
-            ("Confirm New Password", 20)
-        ):
+        for index, label in enumerate((
+            "Current Password", "New Password", "Confirm New Password"
+        )):
             ttk.Label(
-                password_frame,
+                form,
                 text=label,
-                font=("", 12)
-            ).pack(anchor="w", pady=(0, 3))
-            entry = ttk.Entry(password_frame, show="*")
-            entry.pack(fill="x", ipady=5, pady=(0, bottom_padding))
+                style="UniApp.Caption.TLabel"
+            ).grid(row=index * 2, column=0, sticky="w", pady=(0, 4))
+            entry = ttk.Entry(form, show="*", font="UniApp.Body", style="UniApp.TEntry")
+            entry.grid(row=index * 2 + 1, column=0, sticky="ew", pady=(0, 12))
             entries.append(entry)
 
         self.current_password, self.new_password, self.confirm_password = entries
 
         ttk.Button(
-            password_frame,
+            form,
             text="Update Password",
-            style="Account.TButton",
+            style="UniApp.Primary.TButton",
             command=self.submit_password
-        ).pack(fill="x", ipady=10)
+        ).grid(row=6, column=0, sticky="ew")
 
     def submit_password(self):
         current_password = self.current_password.get()

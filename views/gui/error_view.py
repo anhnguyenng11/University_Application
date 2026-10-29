@@ -1,4 +1,5 @@
 from tkinter import Toplevel, ttk
+from views.gui.base_gui_view import COLORS, setup_styles
 
 
 class ErrorView:
@@ -12,21 +13,27 @@ class ErrorView:
         self._show_message("Success", message, "\u2713", "green")
 
     def _show_message(self, title, message, symbol, color):
+        setup_styles()
         popup = Toplevel(self.parent)
         popup.withdraw()
         popup.title(title)
         popup.transient(self.parent)
         popup.resizable(False, False)
+        popup.configure(background=COLORS["canvas"])
+
+        content = ttk.Frame(popup, padding=24)
+        content.pack(fill="both", expand=True)
 
         ttk.Label(
-            popup, text=symbol, foreground=color,
-            font=("", 40, "bold")
-        ).pack(padx=25, pady=(20, 10))
+            content, text=symbol, foreground=color, font="UniApp.Title"
+        ).pack(pady=(0, 12))
+        ttk.Label(content, text=title, font="UniApp.Section").pack(pady=(0, 12))
         ttk.Label(
-            popup, text=message, wraplength=360, justify="center"
-        ).pack(padx=25)
-        button = ttk.Button(popup, text="OK", command=popup.destroy)
-        button.pack(pady=20)
+            content, text=message, wraplength=400, justify="center"
+        ).pack()
+        button = ttk.Button(content, text="OK", command=popup.destroy,
+                            style="UniApp.Primary.TButton")
+        button.pack(pady=(24, 0))
 
         popup.update_idletasks()
         x = max(0, self.parent.winfo_rootx() + (self.parent.winfo_width() - popup.winfo_reqwidth()) // 2)

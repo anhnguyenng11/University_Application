@@ -1,28 +1,28 @@
 from tkinter import ttk
+from views.gui.base_gui_view import setup_styles
+
 
 class MainView(ttk.Frame):
     def __init__(self, parent, title, navigation, on_logout):
         super().__init__(parent)
+        setup_styles()
 
         self.current_content = None
 
-        style = ttk.Style()
-
-        style.configure("Sidebar.TButton", font=("", 15, ""), anchor="w")
-
         # Header
-        header = ttk.Frame(self, padding=20)
+        header = ttk.Frame(self, padding=(24, 12), style="UniApp.Header.TFrame")
         header.pack(fill="x")
 
         ttk.Label(
             header, 
             text="UniApp",
-            font=("", 25, "bold")
+            style="UniApp.Brand.TLabel"
         ).pack(side="left")
         
         ttk.Label(
             header, 
-            text=title
+            text=title,
+            style="UniApp.Role.TLabel"
         ).pack(side="right")
 
         ttk.Separator(
@@ -35,7 +35,8 @@ class MainView(ttk.Frame):
         body.pack(fill="both", expand=True)
 
         # Sidebar
-        sidebar = ttk.Frame(body, width=250, padding=10)
+        sidebar = ttk.Frame(body, width=216, padding=(12, 24),
+                            style="UniApp.Page.TFrame")
         sidebar.pack(side="left", fill="y")
         sidebar.pack_propagate(False)
 
@@ -43,16 +44,16 @@ class MainView(ttk.Frame):
             ttk.Button(
                 sidebar,
                 text=text,
-                style="Sidebar.TButton",
+                style="UniApp.Nav.TButton",
                 command=callback
-            ).pack(fill="x", pady=10, ipady=10)
+            ).pack(fill="x", pady=(0, 12))
         
         ttk.Button(
             sidebar, 
             text="Logout", 
-            style="Sidebar.TButton",
+            style="UniApp.Nav.TButton",
             command=on_logout
-        ).pack(side="bottom", fill="x", pady=10, ipady=10)
+        ).pack(side="bottom", fill="x")
 
         ttk.Separator(
             body,
@@ -60,7 +61,7 @@ class MainView(ttk.Frame):
         ).pack(side="left", fill="y")
 
         # Content area
-        self.content_frame = ttk.Frame(body, padding=20)
+        self.content_frame = ttk.Frame(body, padding=24, style="UniApp.Page.TFrame")
         self.content_frame.pack(side="left", fill="both", expand=True)
 
     def show_content(self, view):
