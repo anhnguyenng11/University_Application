@@ -33,11 +33,11 @@ class TestSearchStudentsView(unittest.TestCase):
             previous_result.destroy.assert_called_once_with()
             on_search.assert_called_once_with("000001", "alice@university.com")
 
-    def test_overall_table_follows_subjects_including_empty_enrollment(self):
+    def test_subject_and_overall_tables_only_appear_with_enrollment(self):
         for marks, expected in (
             ([80, 98, 98, 60], ("84.00", "D", "PASS")),
             ([40], ("40.00", "Z", "FAIL")),
-            ([], ("N/A", "N/A", "N/A"))
+            ([], None)
         ):
             with self.subTest(marks=marks), ExitStack() as stack:
                 stack.enter_context(patch.object(ttk.Frame, "__init__", return_value=None))
@@ -49,7 +49,7 @@ class TestSearchStudentsView(unittest.TestCase):
                 widgets["LabelFrame"].reset_mock()
                 info_table, subject_table, overall_table = Mock(), Mock(), Mock()
                 widgets["Treeview"].side_effect = (
-                    [info_table, subject_table, overall_table] if marks else [info_table, overall_table]
+                    [info_table, subject_table, overall_table] if marks else [info_table]
                 )
                 student = Student(
                     "000001", "Alice", "alice@university.com", "Password123",
@@ -59,15 +59,25 @@ class TestSearchStudentsView(unittest.TestCase):
                 view.show_student(student)
 
                 titles = [call.kwargs.get("text", "") for call in widgets["LabelFrame"].call_args_list]
-                self.assertEqual(titles[:2], ["Student Information", "Enrolled Subjects"])
-                self.assertEqual(len(titles), 3)
+                self.assertEqual(titles[:2], [
+                    "Student Information", "Enrollments and Overall Statistics"
+                ])
                 info_table.insert.assert_called_once_with(
                     "", "end", values=(student.student_id, student.name, student.email)
                 )
-                overall_table.insert.assert_called_once_with("", "end", values=expected)
-                self.assertEqual(widgets["Treeview"].call_args.kwargs["height"], 1)
                 if marks:
+                    self.assertEqual(len(titles), 3)
+                    self.assertEqual(widgets["Treeview"].call_count, 3)
                     self.assertEqual(subject_table.insert.call_count, len(marks))
+                    overall_table.insert.assert_called_once_with("", "end", values=expected)
+                    self.assertEqual(widgets["Treeview"].call_args.kwargs["height"], 1)
+                else:
+                    self.assertEqual(len(titles), 2)
+                    self.assertEqual(widgets["Treeview"].call_count, 1)
+                    widgets["Label"].assert_called_with(
+                        widgets["LabelFrame"].return_value,
+                        text="No subjects enrolled."
+                    )
 
     def test_remove_state_and_confirmation_use_the_displayed_student(self):
         with ExitStack() as stack:
