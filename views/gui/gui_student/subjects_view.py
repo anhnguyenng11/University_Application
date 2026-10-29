@@ -55,7 +55,7 @@ class SubjectsView(ttk.Frame):
             text="Enrolled subjects",
             style="Subjects.TLabelframe",
             padding=(15, 5, 15, 15),
-            height=410
+            height=415
         )
         subjects_frame.pack(fill="x", pady=(0, 5))
         subjects_frame.pack_propagate(False)
