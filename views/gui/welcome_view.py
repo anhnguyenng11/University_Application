@@ -1,6 +1,6 @@
 
 from tkinter import ttk
-from views.gui.base_gui_view import BaseGUIView
+from views.gui.base_gui_view import BUTTON_CURSOR, BaseGUIView
 
 
 class WelcomeView(BaseGUIView):
@@ -29,6 +29,7 @@ class WelcomeView(BaseGUIView):
         ttk.Button(
             content,
             text="Student",
+            cursor=BUTTON_CURSOR,
             command=on_student,
             style="UniApp.Primary.TButton"
         ).grid(row=2, column=0, sticky="ew")
@@ -36,6 +37,7 @@ class WelcomeView(BaseGUIView):
         ttk.Button(
             content,
             text="Admin",
+            cursor=BUTTON_CURSOR,
             command=on_admin,
             style="UniApp.Primary.TButton"
         ).grid(row=3, column=0, sticky="ew", pady=(12, 0))

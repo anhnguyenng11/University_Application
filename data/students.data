@@ -55,10 +55,6 @@
             "password": "q",
             "subjects": [
                 {
-                    "subject_id": "106",
-                    "mark": 98
-                },
-                {
                     "subject_id": "976",
                     "mark": 98
                 },
@@ -102,10 +98,6 @@
             "email": "w",
             "password": "w",
             "subjects": [
-                {
-                    "subject_id": "394",
-                    "mark": 94
-                },
                 {
                     "subject_id": "682",
                     "mark": 80

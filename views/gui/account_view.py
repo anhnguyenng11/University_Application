@@ -1,5 +1,5 @@
 from tkinter import ttk
-from views.gui.base_gui_view import setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, setup_styles
 
 
 class AccountView(ttk.Frame):
@@ -65,6 +65,7 @@ class AccountView(ttk.Frame):
         ttk.Button(
             form,
             text="Update Password",
+            cursor=BUTTON_CURSOR,
             style="UniApp.Primary.TButton",
             command=self.submit_password
         ).grid(row=6, column=0, sticky="ew")

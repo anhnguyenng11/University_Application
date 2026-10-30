@@ -1,37 +1,65 @@
+import sys
 from tkinter import ttk
+
+
+BUTTON_CURSOR = "pointinghand" if sys.platform == "darwin" else "hand2"
 
 
 COLORS = {
     "primary": "#0066cc",
-    "primary_pressed": "#0052a3",
-    "blue_hover": "#e8f1fb",
-    "blue_pressed": "#d2e5f9",
-    "danger": "#c62828",
-    "red_hover": "#fff1f0",
-    "red_pressed": "#ffe0dd",
+    "primary_hover": "#00488f",
+    "primary_pressed": "#003163",
+    "link": "#2997ff",
+    "on_primary": "#ffffff",
+    "danger": "#ff6961",
+    "success": "#30d158",
+    "red_hover": "#c62828",
+    "red_pressed": "#a51f24",
     "focus": "#0071e3",
-    "ink": "#1d1d1f",
-    "secondary": "#333333",
-    "disabled": "#7a7a7a",
-    "canvas": "#ffffff",
-    "parchment": "#f5f5f7",
-    "pearl": "#fafafc",
-    "neutral_hover": "#ededf0",
-    "hairline": "#e0e0e0",
+    "ink": "#f5f5f7",
+    "secondary": "#cccccc",
+    "disabled": "#8e8e93",
+    # Dark equivalents of the surfaces in DESIGN.md.
+    "canvas": "#1d1d1f",
+    "parchment": "#1d1d1f",
+    "pearl": "#272729",
+    "field": "#272729",
+    "neutral_hover": "#d1d1d6",
+    "neutral_pressed": "#b8b8bd",
+    "hairline": "#48484a",
     "black": "#000000",
 }
 
 
+def result_color(value):
+    if value == "HD":
+        return COLORS["link"]
+    if value in ("D", "C", "P", "PASS"):
+        return COLORS["success"]
+    if value in ("Z", "FAIL"):
+        return COLORS["danger"]
+    return COLORS["ink"]
+
+
+def color_result_cell(tree, item, column, value):
+    tag = f"result_{value}"
+    tree.tag_configure(tag, foreground=result_color(value))
+    # Tk 9 cell tags let grades and statuses have different colors in the same row.
+    tree.tk.call(tree, "tag", "cell", "add", tag, ((item, column),))
+
+
 def update_button_cursor(event):
-    event.widget.configure(cursor="" if event.widget.instate(["disabled"]) else "hand2")
+    button = event.widget
+    button.configure(cursor="arrow" if button.instate(["disabled"]) else BUTTON_CURSOR)
 
 
 def setup_styles():
     style = ttk.Style()
-    if style.lookup("UniApp.Page.TFrame", "background") == COLORS["parchment"]:
+    if str(style.lookup("UniApp.PageTitle.TLabel", "font")) == "UniApp.Title":
         return
 
     style.theme_use("clam")
+    style.master.configure(background=COLORS["canvas"])
     families = style.tk.splitlist(style.tk.call("font", "families"))
     family = style.tk.call("font", "actual", "TkDefaultFont", "-family")
     for candidate in ("SF Pro Text", "Helvetica Neue"):
@@ -59,6 +87,13 @@ def setup_styles():
             "-size", size, "-weight", weight
         )
 
+    style.configure(".", background=COLORS["canvas"], foreground=COLORS["ink"],
+                    fieldbackground=COLORS["field"], troughcolor=COLORS["parchment"],
+                    bordercolor=COLORS["hairline"], lightcolor=COLORS["canvas"],
+                    darkcolor=COLORS["canvas"])
+    style.map(".", background=[("disabled", COLORS["parchment"]),
+                               ("active", COLORS["canvas"])],
+              foreground=[("disabled", COLORS["disabled"])])
     style.configure("TFrame", background=COLORS["canvas"])
     style.configure("TLabel", background=COLORS["canvas"],
                     foreground=COLORS["ink"], font="UniApp.Body")
@@ -77,8 +112,8 @@ def setup_styles():
         ("Caption", "Caption", "canvas", "secondary"),
         ("Strong", "Strong", "canvas", "ink"),
         ("Metric", "Metric", "canvas", "ink"),
-        ("Brand", "Section", "black", "canvas"),
-        ("Role", "Caption", "black", "canvas"),
+        ("Brand", "Section", "black", "ink"),
+        ("Role", "Caption", "black", "ink"),
     ):
         style.configure(f"UniApp.{name}.TLabel", font=f"UniApp.{font}",
                         background=COLORS[background], foreground=COLORS[foreground])
@@ -98,31 +133,41 @@ def setup_styles():
     style.configure("TSeparator", background=COLORS["hairline"])
 
     for name, background, foreground, border, hover, pressed in (
-        ("Primary", "primary", "canvas", "primary", "focus", "primary_pressed"),
-        ("Secondary", "canvas", "primary", "primary", "blue_hover", "blue_pressed"),
-        ("Utility", "pearl", "secondary", "secondary", "neutral_hover", "hairline"),
-        ("Nav", "parchment", "primary", "primary", "blue_hover", "blue_pressed"),
+        ("Primary", "primary", "on_primary", "primary", "primary_hover", "primary_pressed"),
+        ("Secondary", "canvas", "link", "link", "primary_hover", "primary_pressed"),
+        ("Utility", "canvas", "secondary", "secondary", "neutral_hover", "neutral_pressed"),
+        ("Nav", "parchment", "link", "link", "primary_hover", "primary_pressed"),
         ("Danger", "canvas", "danger", "danger", "red_hover", "red_pressed"),
     ):
         button_style = f"UniApp.{name}.TButton"
         style.configure(button_style, font="UniApp.Body", padding=(22, 11),
                         background=COLORS[background], foreground=COLORS[foreground],
                         bordercolor=COLORS[border], lightcolor=COLORS[background],
-                        darkcolor=COLORS[background], borderwidth=1, relief="solid",
+                        darkcolor=COLORS[background], borderwidth=0, relief="flat",
                         focusthickness=2,
-                        focuscolor=COLORS["canvas"] if name == "Primary" else COLORS[foreground],
+                        focuscolor=COLORS["on_primary"] if name == "Primary" else COLORS[foreground],
                         anchor="w" if name == "Nav" else "center")
         fill_states = [("disabled", COLORS["parchment"]),
                        ("pressed", COLORS[pressed]),
                        ("active", COLORS[hover])]
+        hover_foreground = COLORS["black"] if name == "Utility" else COLORS["on_primary"]
         style.map(button_style,
-                  foreground=[("disabled", COLORS["disabled"])],
+                  foreground=[("disabled", COLORS["disabled"]),
+                              ("pressed", hover_foreground),
+                              ("active", hover_foreground)],
                   background=fill_states,
                   bordercolor=[("disabled", COLORS["hairline"]),
+                               ("pressed", COLORS[pressed]),
+                               ("active", COLORS[hover]),
                                ("focus", COLORS[border])],
+                  focuscolor=[("disabled", COLORS["disabled"]),
+                              ("pressed", hover_foreground),
+                              ("active", hover_foreground)],
                   lightcolor=fill_states,
                   darkcolor=fill_states,
-                  relief=[("disabled", "flat"), ("pressed", "sunken")])
+                  relief=[("disabled", "flat"), ("pressed", "flat")])
+
+    style.configure("Sidebar.UniApp.Danger.TButton", anchor="w")
 
     for name in ("Primary", "Secondary", "Utility", "Danger"):
         style.configure(f"Compact.UniApp.{name}.TButton", font="UniApp.Caption",
@@ -130,12 +175,17 @@ def setup_styles():
 
     style.master.bind_class("TButton", "<Enter>", update_button_cursor, add="+")
     style.master.bind_class("TButton", "<Motion>", update_button_cursor, add="+")
+    style.master.bind_class("TButton", "<Map>", update_button_cursor, add="+")
 
     style.configure("UniApp.TEntry", font="UniApp.Body", padding=(12, 10),
-                    fieldbackground=COLORS["canvas"], foreground=COLORS["ink"],
-                    bordercolor=COLORS["hairline"], lightcolor=COLORS["canvas"],
-                    darkcolor=COLORS["canvas"], insertcolor=COLORS["ink"])
-    style.map("UniApp.TEntry", bordercolor=[("focus", COLORS["focus"])],
+                    fieldbackground=COLORS["field"], foreground=COLORS["ink"],
+                    bordercolor=COLORS["hairline"], lightcolor=COLORS["field"],
+                    darkcolor=COLORS["field"], insertcolor=COLORS["ink"],
+                    selectbackground=COLORS["primary"], selectforeground=COLORS["on_primary"])
+    style.map("UniApp.TEntry", fieldbackground=[("disabled", COLORS["field"]),
+                                                ("readonly", COLORS["field"])],
+              foreground=[("disabled", COLORS["disabled"])],
+              bordercolor=[("focus", COLORS["focus"])],
               lightcolor=[("focus", COLORS["focus"])],
               darkcolor=[("focus", COLORS["focus"])])
     style.configure("Compact.UniApp.TEntry", padding=(10, 6))
@@ -148,15 +198,15 @@ def setup_styles():
         ("AdminStudents.Treeview", "UniApp.Caption", compact_row_height),
     ):
         style.configure(tree_style, font=font, rowheight=height,
-                        background=COLORS["canvas"], fieldbackground=COLORS["canvas"],
+                        background=COLORS["field"], fieldbackground=COLORS["field"],
                         foreground=COLORS["ink"], bordercolor=COLORS["hairline"],
-                        lightcolor=COLORS["canvas"], darkcolor=COLORS["canvas"],
+                        lightcolor=COLORS["field"], darkcolor=COLORS["field"],
                         borderwidth=1)
         style.configure(f"{tree_style}.Heading", font="UniApp.CaptionStrong", padding=(8, 4),
                         background=COLORS["parchment"], foreground=COLORS["ink"],
                         relief="flat", bordercolor=COLORS["hairline"])
         style.map(tree_style, background=[("selected", COLORS["primary"])],
-                  foreground=[("selected", COLORS["canvas"])])
+                  foreground=[("selected", COLORS["on_primary"])])
         style.map(f"{tree_style}.Heading", background=[("active", COLORS["parchment"])])
 
     for scrollbar in ("Horizontal.TScrollbar", "Vertical.TScrollbar"):

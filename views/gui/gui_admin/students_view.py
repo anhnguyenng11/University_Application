@@ -1,6 +1,6 @@
 
 from tkinter import Frame, ttk, messagebox
-from views.gui.base_gui_view import COLORS, setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, COLORS, color_result_cell, setup_styles
 
 
 class StudentsView(ttk.Frame):
@@ -32,7 +32,8 @@ class StudentsView(ttk.Frame):
             ("PASS/FAIL", on_partition)
         ):
             ttk.Button(
-                toolbar, text=text, command=callback, style="Compact.UniApp.Secondary.TButton"
+                toolbar, text=text, command=callback, cursor=BUTTON_CURSOR,
+                style="Compact.UniApp.Secondary.TButton"
             ).pack(side="left", padx=(0, 8))
 
         # Main table container
@@ -129,6 +130,8 @@ class StudentsView(ttk.Frame):
                     ),
                     tags=("student",)
                 )
+                color_result_cell(self.tree, student.student_id, "grade", grade)
+                color_result_cell(self.tree, student.student_id, "status", status)
 
         # Bottom action buttons
         actions = ttk.Frame(self, style="UniApp.Page.TFrame")
@@ -137,6 +140,7 @@ class StudentsView(ttk.Frame):
         ttk.Button(
             actions,
             text="Remove Selected",
+            cursor=BUTTON_CURSOR,
             style="Compact.UniApp.Danger.TButton",
             command=self.confirm_remove
         ).pack(side="left")
@@ -144,6 +148,7 @@ class StudentsView(ttk.Frame):
         ttk.Button(
             actions,
             text="Clear All",
+            cursor=BUTTON_CURSOR,
             style="Compact.UniApp.Danger.TButton",
             command=self.confirm_clear
         ).pack(side="right")

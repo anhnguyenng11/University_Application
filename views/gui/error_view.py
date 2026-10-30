@@ -1,5 +1,5 @@
 from tkinter import Toplevel, ttk
-from views.gui.base_gui_view import COLORS, setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, COLORS, setup_styles
 
 
 class ErrorView:
@@ -7,10 +7,10 @@ class ErrorView:
         self.parent = parent
 
     def show_error(self, message):
-        self._show_message("Error", message, "\u2715", "red")
+        self._show_message("Error", message, "\u2715", COLORS["danger"])
 
     def show_success(self, message):
-        self._show_message("Success", message, "\u2713", "green")
+        self._show_message("Success", message, "\u2713", COLORS["success"])
 
     def _show_message(self, title, message, symbol, color):
         setup_styles()
@@ -31,7 +31,7 @@ class ErrorView:
         ttk.Label(
             content, text=message, wraplength=400, justify="center"
         ).pack()
-        button = ttk.Button(content, text="OK", command=popup.destroy,
+        button = ttk.Button(content, text="OK", command=popup.destroy, cursor=BUTTON_CURSOR,
                             style="UniApp.Primary.TButton")
         button.pack(pady=(24, 0))
 

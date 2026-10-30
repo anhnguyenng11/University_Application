@@ -1,5 +1,5 @@
 from tkinter import ttk
-from views.gui.base_gui_view import setup_styles
+from views.gui.base_gui_view import result_color, setup_styles
 
 
 class DashboardView(ttk.Frame):
@@ -52,6 +52,7 @@ class DashboardView(ttk.Frame):
                     ttk.Label(
                         content,
                         text=f"Grade: {subject.grade}",
+                        foreground=result_color(subject.grade),
                         style="UniApp.PageStrong.TLabel"
                     ).pack(anchor="w", pady=(8, 0))
 
@@ -102,5 +103,6 @@ class DashboardView(ttk.Frame):
             ttk.Label(
                 card,
                 text=value,
+                foreground=result_color(value),
                 style="UniApp.PageMetric.TLabel"
             ).pack(side="left", anchor="w")

@@ -1,5 +1,5 @@
 from tkinter import ttk, messagebox
-from views.gui.base_gui_view import setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, setup_styles
 
 
 class SubjectsView(ttk.Frame):
@@ -46,6 +46,7 @@ class SubjectsView(ttk.Frame):
         ttk.Button(
             right,
             text="+ Enroll Subject",
+            cursor=BUTTON_CURSOR,
             style="UniApp.Primary.TButton",
             command=self.confirm_enroll,
             state="normal" if student.can_enroll() else "disabled"
@@ -84,6 +85,7 @@ class SubjectsView(ttk.Frame):
             ttk.Button(
                 card,
                 text="Remove",
+                cursor=BUTTON_CURSOR,
                 style="UniApp.Danger.TButton",
                 command=lambda sid=subject.subject_id: self.confirm_remove(sid)
             ).pack(side="right")

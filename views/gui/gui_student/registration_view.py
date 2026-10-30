@@ -1,6 +1,6 @@
 from tkinter import ttk
 
-from views.gui.base_gui_view import BaseGUIView
+from views.gui.base_gui_view import BUTTON_CURSOR, BaseGUIView
 
 
 class RegistrationView(BaseGUIView):
@@ -35,6 +35,7 @@ class RegistrationView(BaseGUIView):
         ttk.Button(
             content,
             text="Register",
+            cursor=BUTTON_CURSOR,
             command=lambda: on_register(
                 name_entry.get(),
                 email_entry.get(),
@@ -46,6 +47,7 @@ class RegistrationView(BaseGUIView):
         ttk.Button(
             content,
             text="Back",
+            cursor=BUTTON_CURSOR,
             command=on_back,
             style="UniApp.Utility.TButton"
         ).grid(row=3, column=0, sticky="ew", pady=(12, 0))

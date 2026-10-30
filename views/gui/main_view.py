@@ -1,5 +1,5 @@
 from tkinter import ttk
-from views.gui.base_gui_view import setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, setup_styles
 
 
 class MainView(ttk.Frame):
@@ -44,6 +44,7 @@ class MainView(ttk.Frame):
             ttk.Button(
                 sidebar,
                 text=text,
+                cursor=BUTTON_CURSOR,
                 style="UniApp.Nav.TButton",
                 command=callback
             ).pack(fill="x", pady=(0, 12))
@@ -51,7 +52,8 @@ class MainView(ttk.Frame):
         ttk.Button(
             sidebar, 
             text="Logout", 
-            style="UniApp.Nav.TButton",
+            cursor=BUTTON_CURSOR,
+            style="Sidebar.UniApp.Danger.TButton",
             command=on_logout
         ).pack(side="bottom", fill="x")
 

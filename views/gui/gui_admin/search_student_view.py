@@ -1,5 +1,5 @@
 from tkinter import ttk, messagebox
-from views.gui.base_gui_view import setup_styles
+from views.gui.base_gui_view import BUTTON_CURSOR, color_result_cell, setup_styles
 
 
 class SearchStudentsView(ttk.Frame):
@@ -23,6 +23,7 @@ class SearchStudentsView(ttk.Frame):
         ttk.Button(
             header,
             text="Search",
+            cursor=BUTTON_CURSOR,
             style="Compact.UniApp.Primary.TButton",
             command=self.submit_search
         ).pack(side="right", anchor="e")
@@ -30,6 +31,7 @@ class SearchStudentsView(ttk.Frame):
         self.remove_button = ttk.Button(
             header,
             text="Remove",
+            cursor=BUTTON_CURSOR,
             style="Compact.UniApp.Danger.TButton",
             command=self.confirm_remove,
             state="disabled"
@@ -169,11 +171,12 @@ class SearchStudentsView(ttk.Frame):
                 table.column(column, width=100, anchor="center")
 
             for subject in student.subjects:
-                table.insert(
+                item = table.insert(
                     "",
                     "end",
                     values=(subject.subject_id, subject.mark, subject.grade)
                 )
+                color_result_cell(table, item, "grade", subject.grade)
 
             table.pack(fill="x")
 
@@ -201,7 +204,9 @@ class SearchStudentsView(ttk.Frame):
                 overall_table.heading(column, text=title)
                 overall_table.column(column, width=100, anchor="center")
 
-            overall_table.insert("", "end", values=(average_text, grade, status))
+            item = overall_table.insert("", "end", values=(average_text, grade, status))
+            color_result_cell(overall_table, item, "grade", grade)
+            color_result_cell(overall_table, item, "status", status)
             overall_table.pack(fill="x")
 
         self.displayed_student_id = student.student_id
