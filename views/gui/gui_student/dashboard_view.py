@@ -4,7 +4,7 @@ from utils import constants
 
 class DashboardView(ttk.Frame):
     def __init__(self, title, parent, student, overall):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
         self.winfo_toplevel().title(f"UniApp - {title}")
         
@@ -103,7 +103,7 @@ class DashboardView(ttk.Frame):
                 ).grid(row=1, column=0, sticky="W")
 
         # Overall statistics
-        overall_frame = ttk.Frame(self)
+        overall_frame = ttk.Frame(self, style="Card.TFrame", padding=15)
         overall_frame.grid(row=2, column=0, sticky="WE")
         
         # Distribute horizontal space equally across the 3 statistical pillars

@@ -48,6 +48,7 @@ class LoginView(BaseGUIView):
         ttk.Checkbutton(
             content,
             text="Show password",
+            style="Form.TCheckbutton",
             variable=password_visible,
             command=toggle_password
         ).grid(row=5, column=0, sticky="W", pady=(0, 20))

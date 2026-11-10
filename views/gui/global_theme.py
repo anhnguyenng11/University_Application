@@ -17,14 +17,14 @@ def apply_global_theme(root: tk.Tk) -> None:
 
     style.configure(
         "Card.TFrame",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         relief="solid",
         borderwidth=1
     )
 
     style.configure(
         "CardContent.TFrame",
-        background=constants.COLORS["surface"]
+        background=constants.COLORS["background"]
     )
 
     style.configure(
@@ -36,7 +36,7 @@ def apply_global_theme(root: tk.Tk) -> None:
 
     style.configure(
         "Heading.TLabel",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         foreground=constants.COLORS["navy"],
         font=constants.FONTS["heading"]
     )
@@ -57,7 +57,7 @@ def apply_global_theme(root: tk.Tk) -> None:
 
     style.configure(
         "Form.TLabel",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         foreground=constants.COLORS["text"],
         font=constants.FONTS["body_bold"]
     )
@@ -85,7 +85,7 @@ def apply_global_theme(root: tk.Tk) -> None:
 
     style.configure(
         "Secondary.TButton",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         foreground=constants.COLORS["navy"],
         font=constants.FONTS["button"],
         padding=(18, 11),
@@ -155,7 +155,7 @@ def apply_global_theme(root: tk.Tk) -> None:
     style.configure(
         "Padded.TEntry",
         padding=(10, 8),
-        fieldbackground=constants.COLORS["surface"],
+        fieldbackground=constants.COLORS["background"],
         foreground=constants.COLORS["text"]
     )
 
@@ -169,15 +169,30 @@ def apply_global_theme(root: tk.Tk) -> None:
 
     style.configure(
         "Success.TLabel",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         foreground=constants.COLORS["success"],
         font=constants.FONTS["body_bold"]
     )
 
     style.configure(
         "Error.TLabel",
-        background=constants.COLORS["surface"],
+        background=constants.COLORS["background"],
         foreground=constants.COLORS["error"],
         font=constants.FONTS["body_bold"]
     )
+
+    style.configure(
+        "Form.TCheckbutton",
+        background=constants.COLORS["background"],
+        foreground=constants.COLORS["navy"],
+        font=constants.FONTS["small"]
+    )
+    
+    style.configure(
+        "Subtitle.TLabel",
+        background=constants.COLORS["background"],
+        foreground=constants.COLORS["navy"],
+        font=constants.FONTS["small"]
+    )
+    
 
