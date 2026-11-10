@@ -36,10 +36,9 @@ PASSWORD_REQUIREMENTS_MESSAGE = "A password should meet the following criteria: 
     \n(iii) It is followed by three (3) or more digits."
 
 
-
 # GUI Pallette
 COLORS = {
-    "background": "#F2F2F7",
+    "background": "#FFFFFF",
     "surface": "#FFFFFF",
     "primary": "#2F80ED",
     "primary_hover": "#1769C2",

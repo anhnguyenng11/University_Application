@@ -2,7 +2,7 @@ from tkinter import ttk, messagebox
 
 class SearchStudentsView(ttk.Frame):
     def __init__(self, parent, on_search, on_remove):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
         self.on_search = on_search
         self.on_remove = on_remove

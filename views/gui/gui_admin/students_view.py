@@ -7,7 +7,7 @@ class StudentsView(ttk.Frame):
         self, parent, groups, on_show_all, on_group, on_partition,
         on_remove, on_clear
     ):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
         # Student count
         count = sum(len(students) for students in groups.values())

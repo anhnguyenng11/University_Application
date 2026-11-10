@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 
 class SubjectsView(ttk.Frame):
     def __init__(self, parent, student, on_enroll, on_remove):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
         self.on_enroll = on_enroll
         self.on_remove = on_remove

@@ -8,6 +8,14 @@ from utils.id_generator import IDGenerator
 
 
 class StudentService:
+    """
+    This class provides services for managing student-related operations.
+    Methods:
+    - register: Registers a new student with the provided name, email, and password.
+    - login: Authenticates a student using email and password. 
+    - enroll_subject: Enrolls a student in a new subject.
+    """
+
     def __init__(self, student_data_file: StudentDataFile) -> None:
         self.student_data_file = student_data_file
 

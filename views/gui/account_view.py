@@ -2,7 +2,7 @@ from tkinter import ttk
 
 class AccountView(ttk.Frame):
     def __init__(self, parent, information_title, information_rows, on_change_password):
-        super().__init__(parent)
+        super().__init__(parent, style="App.TFrame")
 
         self.on_change_password = on_change_password
         self.columnconfigure(0, weight=1)
