@@ -1,28 +1,21 @@
-import random
-from utils.constants import HD_GRADE_THRESHOLD, D_GRADE_THRESHOLD, C_GRADE_THRESHOLD, P_GRADE_THRESHOLD
+"""
+This module defines the Subject class, which represents a subject in the university application.
+"""
+from utils import constants
+from utils.grade_calculator import calculate_grade
+
 
 class Subject:
-    def __init__(self):
-        self.enrol_sub = random_subject = random.randint(1, 999)
-        self.marks = random.randint(25, 100) # mark as generated >=25 and <=100
-        self.grade = self.defgrade()
-        
+    def __init__(self, subject_id: str, mark: int) -> None:
+        self.subject_id = subject_id
+        self.mark = mark
+        self.grade = self.calculate_grade()
 
-    def defgrade(self):
-            
-        if self.marks >= HD_GRADE_THRESHOLD:
-            defgrade = 'HD'
-        elif self.marks >= D_GRADE_THRESHOLD:
-            defgrade = 'D'
-        elif self.marks >= C_GRADE_THRESHOLD:
-            defgrade = 'C'
-        elif self.marks >= P_GRADE_THRESHOLD:
-            defgrade = 'P'
+    def calculate_grade(self) -> str:
+        return calculate_grade(self.mark)
+
+    def get_pass_fail_status(self) -> str:
+        if self.mark >= constants.P_THRESHOLD:
+            return "PASS"
         else:
-            defgrade = 'Z'
-        
-        return defgrade
-         
-##testing
-test = Subject()
-print(test.enrol_sub, test.marks, test.grade)
+            return "FAIL"
