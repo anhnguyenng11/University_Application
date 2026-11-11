@@ -11,9 +11,8 @@ Students register and log in, enrol in up to four subjects, view marks and grade
 
 ## Requirements
 
-- **Python 3.10+** (stdlib only; no third-party packages)
-- **CLI:** any Python 3.10+ interpreter
-- **GUI:** Python with Tkinter (`_tkinter`). On macOS Homebrew Python this often means using the python.org framework build, or installing `python-tk@3.10`
+- **Python 3.10+** (standard library only; no third-party packages)
+- **GUI:** a Python installation with Tkinter (`_tkinter`)
 
 ---
 
@@ -29,8 +28,12 @@ python3 main.py
 
 University menu:
 
-```
-University System: (A)dmin, (S)tudent, or X
+```text
+University System
+(A) Admin
+(S) Student
+(X) Exit
+University System (A/S/X):
 ```
 
 | Key | Action |
@@ -45,17 +48,13 @@ University System: (A)dmin, (S)tudent, or X
 python3 gui_main.py
 ```
 
-If Homebrew Python lacks Tkinter:
-
-```bash
-/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 gui_main.py
-```
-
-Confirm Tk is available:
+Confirm Tkinter is available before launching the GUI:
 
 ```bash
 python3 -c "import tkinter; print(tkinter.TkVersion)"
 ```
+
+If that command fails, install or use a Tk-enabled Python distribution for your operating system.
 
 CLI and GUI share `data/students.data` and `data/admins.data`.
 
@@ -87,7 +86,7 @@ Admins sign in with an account from `data/admins.data`. From the university menu
 
 ### Admin (GUI)
 
-Includes student search and related management screens on top of the shared admin service.
+Provides the same student-management actions, account password changes, and search by student ID and email.
 
 ---
 
@@ -118,7 +117,7 @@ A student **PASS**es when the average of enrolled subjects is ≥ 50; otherwise 
 ## Project structure
 
 ```text
-University_Application/
+./
 ├── main.py                 # CLI entry point
 ├── gui_main.py             # GUI entry point
 ├── Assessment_brief.md     # Assignment requirements and sample I/O
@@ -146,7 +145,7 @@ Architecture is MVC-style: views handle I/O, controllers wire menus to services,
 
 ---
 
-## Running tests
+## Tests
 
 From the project root:
 
@@ -154,14 +153,7 @@ From the project root:
 python3 -B -m unittest discover -s tests -v
 ```
 
-Run a single module:
-
-```bash
-python3 -B -m unittest tests.test_student_service -v
-python3 -B -m unittest tests.test_admin_cli -v
-```
-
-GUI tests need a Tk-enabled Python. Prefer non-GUI suites if `_tkinter` is unavailable.
+Some tests still target older GUI and model APIs, so the full suite does not currently pass as one run. Use the command above to see the complete status, and run focused modules while working on a specific area.
 
 ---
 
@@ -172,7 +164,7 @@ GUI tests need a Tk-enabled Python. Prefer non-GUI suites if `_tkinter` is unava
 | `data/students.data` | Registered students and enrolments |
 | `data/admins.data` | Admin accounts |
 
-Files are created automatically if missing. Clearing the database from Admin empties `students.data`.
+These are JSON files despite their `.data` extension and are created automatically if missing. Clearing the database from Admin empties `students.data`.
 
 ## Security note
 
@@ -183,7 +175,12 @@ This is an educational local application. Passwords are stored in plaintext JSON
 ## Sample CLI session
 
 ```text
-University System: (A)dmin, (S)tudent, or X : S
+University System
+(A) Admin
+(S) Student
+(X) Exit
+University System (A/S/X): S
+
 Student System (l/r/x): r
 ... register with email @university.com and a valid password ...
 Student System (l/r/x): l
@@ -194,8 +191,8 @@ Student Course Menu (c/e/r/s/x): s
 ... show enrolments ...
 Student Course Menu (c/e/r/s/x): x
 Student System (l/r/x): x
-University System: (A)dmin, (S)tudent, or X : X
-Thank You
+University System (A/S/X): X
+Exiting University System.
 ```
 
 See `Assessment_brief.md` for full sample I/O and grading criteria.
