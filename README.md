@@ -135,25 +135,12 @@ A student **PASS**es when the average of enrolled subjects is ≥ 50; otherwise 
 │   ├── cli/                # Terminal menus and prompts
 │   └── gui/                # Tkinter screens
 ├── utils/                  # Constants, validation, IDs, grades
-├── data/
+└── data/
 │   ├── students.data
 │   └── admins.data
-└── tests/                  # unittest suite
 ```
 
 Architecture is MVC-style: views handle I/O, controllers wire menus to services, and models own domain logic and file storage. Both front ends use the same `StudentService` and `AdminService`.
-
----
-
-## Tests
-
-From the project root:
-
-```bash
-python3 -B -m unittest discover -s tests -v
-```
-
-Some tests still target older GUI and model APIs, so the full suite does not currently pass as one run. Use the command above to see the complete status, and run focused modules while working on a specific area.
 
 ---
 
@@ -204,6 +191,6 @@ See `Assessment_brief.md` for full sample I/O and grading criteria.
 | Name | Contribution |
 |------|----------------|
 | Duc Manh Duong | GUI (`gui_main.py`, controllers, views), utils |
-| Hiu Ying Lee | Admin model, admin service, admin data file, admin tests |
+| Hiu Ying Lee | Admin model, admin service, and admin data file |
 | Anh Nguyen Nguyen | CLI (`main.py`, controllers, views) |
 | Ching Ha To | Student model, subject model, student service, data / file handlers |
